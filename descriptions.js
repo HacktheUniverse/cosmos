@@ -3,47 +3,47 @@ var descriptions_data = {
         {
             "name": "Cassiopeia",
             "nickname": null,
-            "description": "Visible all year round in the northern hemisphere"
+            "description": "Visible all year round in the northern hemisphere. Cassiopeia has a distinct 'w' shape, which makes it easy to spot in the sky."
         },{
             "name": "Sagittarius",
             "nickname": "Archer",
             "description": "Best seen in August. Sagittarius is in the direction of the center of the galaxy"
         },{
             "name": "Ursa Major",
-            "nickname": "Great Bear, Big Dipper, Seven Stars",
-            "description": "Visible all year round"
+            "nickname": "Great Bear",
+            "description": "Visible all year round. Ursa Major contains the Big Dipper (or Seven Stars)"
         },{
             "name": "Ursa Minor",
             "nickname": "Little Bear",
-            "description": "Best seen in spring"
+            "description": "Best seen in spring. Ursa Minor has Polaris, which is the brightest star in the constellation."
         },{
             "name": "Lyra",
             "nickname": "Harp",
-            "description": "Best seen in summer"
+            "description": "Best seen in summer. Vega is the brightest star in Lyra."
         },{
             "name": "Centaurus",
             "nickname": null,
-            "description": "Best seen in spring in the southern hemisphere"
+            "description": "Best seen in spring in the southern hemisphere. Centaurus is the home for the Sun's closest neighbor, Alpha Centauri."
         },{
             "name": "Canis Major",
             "nickname": "Great Dog",
-            "description": "Best seen in winter"
+            "description": "Best seen in winter. Canis Major has two remarkable stars: Sirius and VY Canis Majoris."
         },{
             "name": "Orion",
             "nickname": null,
-            "description": "Best seen in winter"
+            "description": "Best seen in winter. Orion has Betelgeuse, which is one of the brightest stars in the night sky."
         },{
             "name": "Gemini",
             "nickname": "Twins",
-            "description": "Best seen in winter"
+            "description": "Best seen in winter. Castor and Pollux are the heads of the twins."
         },{
             "name": "Cygnus",
             "nickname": "Swan, Northern Cross",
-            "description": "Visible in spring and summer"
+            "description": "Visible in spring and summer. The brightest star in Cygnus is Deneb."
         },{
             "name": "Aquila",
             "nickname": "Eagle",
-            "description": "Best seen in summer"
+            "description": "Best seen in summer. Altair is the brightest star in Aquila."
         }
     ],
     stars: [
