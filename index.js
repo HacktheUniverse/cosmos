@@ -8,6 +8,7 @@ var stars    = require('./stars.js');
 var lspm     = require('./lspm.js');
 var constll  = require('./constellations.js');
 var labels   = require('./labels.js');
+var orbits   = require('./orbits.js');
 var shipLoader = require('./ship.js');
 var ship;
 
@@ -72,7 +73,8 @@ var init = function() {
   // STAR DATA
   stars.init(scene, universeScale);
   lspm.init(scene, universeScale);
-  constll.init(scene, camera, universeScale);
+  orbits.init(scene, universeScale);
+  constll.init(scene, universeScale);
 
   // CONTROLS
   controls = new THREE.OrbitControls( camera, renderer.domElement );

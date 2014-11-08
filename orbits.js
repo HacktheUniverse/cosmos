@@ -1,13 +1,12 @@
 var THREE = require('three');
-var labels   = require('./labels.js');
 
-var Constll = {
+var Orbits = {
 	init: function(scene, scaleFactor) {
 		var that = this;
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		var material = new THREE.LineBasicMaterial({
-			color: 0x00ffff
+			color: 0xffff00
 		});
 
 		// Opera 8.0+, Firefox, Chrome, Safari
@@ -16,10 +15,10 @@ var Constll = {
 			if (http_request.readyState === 4) {
 				// Javascript function JSON.parse to parse JSON data
 				//console.log("wut ");
-				var constll = JSON.parse(http_request.responseText);
+				var orbits = JSON.parse(http_request.responseText);
 
-				constll.forEach(function(con) {
-
+				orbits.forEach(function(orbitsObj) {
+					/*
 					var starArrs = con.stars;
 					var pos = new THREE.Vector3(
 					  starArrs[0][0].x * scaleFactor,
@@ -45,16 +44,16 @@ var Constll = {
 						var line = new THREE.Line( geometry, material );
 						scene.add( line );
 					});
-					
+					*/
 				});
 
-				console.log("Constellations Drawn");
+				console.log("Orbits Drawn");
 			}
 		};
-		http_request.open("GET", "data/constellations.json", true);
+		http_request.open("GET", "data/starorbits.json", true);
 		http_request.send();
 	}
 
 };
 
-module.exports = Constll;
+module.exports = Orbits;
