@@ -9,6 +9,8 @@ var constll  = require('./constellations.js');
 var universe = require('./universe-sphere.js');
 var shipLoader = require('./ship.js');
 
+var universeScale = 100;
+
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 
 window.scene = null;
@@ -62,7 +64,7 @@ var init = function() {
   });
 
   // camera moves with ship
-  // camera.position.set(0,2,2);
+   camera.position.set(0,2,2);
   // camera.up = new THREE.Vector3(0,1,0);
   // camera.lookAt(15,3,200);
 
@@ -72,16 +74,17 @@ var init = function() {
 	scene.add(steeringCube);
 
   // STAR DATA
-  stars.init(scene);
-  constll.init(scene, camera);
+  stars.init(scene, universeScale);
+  constll.init(scene, camera, universeScale);
 
   // ORBIT CONTROLS
-  //controls = new THREE.OrbitControls( camera, renderer.domElement );
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
 };
 
 var render = function() {
   requestAnimationFrame( render );
 
+  /*
   var relativeCameraOffset = new THREE.Vector3(0,0,0.3);
   var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
   camera.position.x = cameraOffset.x;
@@ -90,12 +93,13 @@ var render = function() {
   camera.lookAt(steeringCube.position);
   steeringCube.translateZ(-0.1);
   steeringCube.rotateY(-0.001);
+  */
 
   constll.updateLabels(camera);
   renderer.render(scene, camera);
   
   stats.update();
-  //controls.update();
+  controls.update();
 };
 
 init();

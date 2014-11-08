@@ -1,24 +1,23 @@
 html,body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 10px;
   margin: 0;
   padding: 0;
 }
-/*
 #container {
   height: 100%;
+  overflow: hidden;
   position: absolute;
     top: 0;
     left: 0;
   width: 100%;
 }
-canvas {
-  height: 100%;
-  width: 100%;
-}
-*/
 
 div.label {
+  color: #FFF;
+	font-size: 2.2rem;
+	font-weight: 100;
+	height: 15px;
 	position: absolute;
 	width: 20px;
-	height: 15px;
-	background: red;
 }

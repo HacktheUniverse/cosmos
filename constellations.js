@@ -11,7 +11,7 @@ var Constll = {
 			item.text.style.left = newPos.x + 'px';
 		});
 	},
-	init: function(scene, camera) {
+	init: function(scene, camera, scaleFactor) {
 		var that = this;
 		var particles, geometry, materials = [], parameters, i, color, size;
 
@@ -31,15 +31,17 @@ var Constll = {
 				//con = constll[0];
 				
 					var starArrs = con.stars;
-					console.log("drawing "+con.abbr);
 					var l = {};
 					
 					var text2 = document.createElement('div');
 					text2.className = "label";
 					text2.innerHTML = con.abbr;
-					console.log(con.abbr);
 					
-					var pos = new THREE.Vector3(starArrs[0][0].x, starArrs[0][0].y, starArrs[0][0].z);
+					var pos = new THREE.Vector3(
+					  starArrs[0][0].x * scaleFactor,
+					  starArrs[0][0].y * scaleFactor,
+					  starArrs[0][0].z * scaleFactor
+					);
 					
 					l.text = text2;
 					l.v = pos;
@@ -51,7 +53,7 @@ var Constll = {
 						
 						stars.forEach(function(star){
 							geometry.vertices.push(
-								new THREE.Vector3(star.x, star.y, star.z)
+								new THREE.Vector3(star.x * scaleFactor, star.y * scaleFactor, star.z * scaleFactor)
 							);
 						});
 						

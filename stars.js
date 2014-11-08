@@ -1,7 +1,7 @@
 var THREE = require('three');
 
 var Stars = {
-	init: function(scene) {
+	init: function(scene, scaleFactor) {
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		geometry = new THREE.Geometry();
@@ -16,9 +16,9 @@ var Stars = {
 				var logga = 10;
 				stars.forEach(function(star) {
 					var vertex = new THREE.Vector3();
-					vertex.x = star.pos[0];
-					vertex.y = star.pos[1];
-					vertex.z = star.pos[2];
+					vertex.x = star.pos[0] * scaleFactor;
+					vertex.y = star.pos[1] * scaleFactor;
+					vertex.z = star.pos[2] * scaleFactor;
 					geometry.vertices.push(vertex);		
 				});
 				
@@ -36,9 +36,7 @@ var Stars = {
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
 				}
 				geometry.colors = colors;
-				
-				
-				
+
 
 				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
 				var sMaterial = new THREE.ShaderMaterial( {
@@ -54,12 +52,12 @@ var Stars = {
 					map: THREE.ImageUtils.loadTexture(
 						"images/map_mask.png"
 					),
-					color: 0xffffff, 
-					size: 0.1, 
-					blending: THREE.NormalBlending, 
-					transparent:true, 
-					depthWrite: false, 
-					vertexColors: true,
+					color          : 0xffffff, 
+					size           : 100, 
+					blending       : THREE.NormalBlending, 
+					transparent    : true, 
+					depthWrite     : false, 
+					vertexColors   : true,
 					sizeAttenuation: true 
 				});
 				 
