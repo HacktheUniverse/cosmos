@@ -3,8 +3,8 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 var stars = require('./stars.js');
-THREE.OBJLoader = require('./lib/OBJLoader.js');
-var loader = new THREE.OBJLoader();
+THREE.ColladaLoader = require('./lib/ColladaLoader.js');
+var loader = new THREE.ColladaLoader();
 var constll = require('./constellations.js');
 
 window.scene = null;
@@ -41,8 +41,8 @@ var init = function() {
 	var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 	//scene.add(sphere);
 
-  var light = new THREE.PointLight('#FF00FF', 5, 0);
-  light.position.set(10,10,10);
+  var light = new THREE.PointLight('#FFFFFF', 5, 0);
+  light.position.set(10,100,10);
   scene.add(light);
   var ambient = new THREE.AmbientLight( 0x334455 );
   scene.add(ambient);
@@ -51,7 +51,9 @@ var init = function() {
   var shipMaterial = new THREE.MeshLambertMaterial({
     color: 0x999999
   });
-  loader.load('./meshes/spaceship.obj', function (object) {
+  /*
+  loader.load('./meshes/spaceship.dae', function(object) {
+    //console.log(material);
     object.traverse(function(child) {
       if(child instanceof THREE.Mesh) {
         child.material = shipMaterial;
@@ -62,6 +64,16 @@ var init = function() {
     object.scale.set(0.1,0.1,0.1);
     scene.add(object);
   }, onProgress, onError);
+  */
+
+  var group = new THREE.Object3D();
+  loader.options.convertUpAxis = true;
+  loader.load( './meshes/spaceship.dae', function ( collada ) {
+    dae = collada.scene;
+    console.log("collada mesh loaded", dae);
+    dae.scale.set(0.3,0.3,0.3);
+    scene.add(dae);
+  });
 
   stars.init(scene);
   constll.init(scene);
