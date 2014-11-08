@@ -6,26 +6,25 @@
 </head>
 <body>
   <div id="container"></div>
+  <div id="controls"></div>
+  
   	<script type="x-shader/x-vertex" id="vertexshader">
 		
             attribute vec3 color;
             varying vec3 vColor;
-            varying vec2 vTextureCoord;
             
             void main() {
                 gl_PointSize = 1.0;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 13.0 );
                 vColor = color;
-                vTextureCoord = vec2(position.x, position.y) / 10.0;
             }
 	</script>
 	
 	<script type="x-shader/x-fragment" id="fragmentshader">
             varying vec3 vColor;
-            varying vec2 vTextureCoord;
             void main() {
-                //gl_FragColor = vec4( vColor, 1 );
-                gl_FragColor = vec4(vColor, 1.0 - (1.8 * (length(vTextureCoord) - 0.05)));
+                gl_FragColor = vec4( vColor, 1 );
+                //gl_FragColor = vec4(vColor, 1.0) * 4.0;
             }
 	</script>
   <script src="./bundle.js"></script>
