@@ -1,11 +1,14 @@
 var _     = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
+THREE.OrbitControls = require('./lib/OrbitControls.js');
 
 window.scene = null;
+window.stats = null;
 window.renderer = null;
 window.camera = null;
 window.cube = null;
+window.container = document.getElementById('container');
 
 //var universe = require('./universe-sphere.js');
 
@@ -16,7 +19,7 @@ var init = function() {
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
-  document.body.appendChild( renderer.domElement );
+  container.appendChild( renderer.domElement );
 
   // GEOMETRY
   var geometry = new THREE.BoxGeometry(1,1,1);
@@ -26,13 +29,13 @@ var init = function() {
 
   initStars(scene);
 
-  /*
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+
   stats = new Stats();
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.bottom = '0px';
   stats.domElement.style.zIndex = 100;
   container.appendChild( stats.domElement );
-  */
 };
 
 
@@ -83,6 +86,8 @@ var render = function() {
   //cube.rotation.y += 0.1;
 
   renderer.render(scene, camera);
+  stats.update();
+  controls.update();
 };
 
 init();
