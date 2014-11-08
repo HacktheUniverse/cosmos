@@ -3,9 +3,9 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 var stars = require('./stars.js');
-//window.spaceshipJson = require('./meshes/spaceship.object');
 THREE.OBJLoader = require('./lib/OBJLoader.js');
 var loader = new THREE.OBJLoader();
+var constll = require('./constellations.js');
 
 window.scene = null;
 window.stats = null;
@@ -36,21 +36,19 @@ var init = function() {
   container.appendChild( renderer.domElement );
 
   // GEOMETRY
-  var geometry = new THREE.BoxGeometry(10,10,10);
-  var material = new THREE.MeshBasicMaterial( { color: '#00ff00' } );
-  cube = new THREE.Mesh( geometry, material );
-  //scene.add(cube);
+  var shipMaterial = new THREE.MeshBasicMaterial( { color: '#AAAAAA' } );
   loader.load('./meshes/spaceship.obj', function (object) {
     object.traverse(function(child) {
       if(child instanceof THREE.Mesh) {
-        child.material = material;
+        child.material = shipMaterial;
       }
     });
-    object.position.y = - 80;
+    //object.position.y = - 80;
     scene.add(object);
   }, onProgress, onError);
 
   stars.init(scene);
+  constll.init(scene);
 
   controls = new THREE.OrbitControls( camera, renderer.domElement );
 

@@ -7,7 +7,7 @@ var Stars = {
 		geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
-		http_request = new XMLHttpRequest();
+		var http_request = new XMLHttpRequest();
 		http_request.onreadystatechange = function() {
 			if (http_request.readyState === 4) {
 				// Javascript function JSON.parse to parse JSON data
@@ -26,7 +26,7 @@ var Stars = {
 					geometry.vertices.push(vertex);
 				});
 
-				particles = new THREE.PointCloud(geometry, new THREE.PointCloudMaterial({size: 1}));
+				particles = new THREE.PointCloud(geometry, new THREE.PointCloudMaterial({size: 0.01}));
 
 				scene.add(particles);
 
