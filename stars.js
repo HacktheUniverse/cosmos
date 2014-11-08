@@ -44,7 +44,7 @@ var Stars = {
 				});
 				
 				geometry.colors = colors;
-
+/*
 				var sMaterial = new THREE.ShaderMaterial( {
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -54,13 +54,13 @@ var Stars = {
 					fragmentShader: document.getElementById('fragmentshader').textContent,
 					side: THREE.DoubleSide
 				});
-				
+*/				
 				var gMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
 						"images/map_mask.png"
 					),
 					color          : 0xffffff, 
-					size           : 25, 
+					size           : 50, 
 					blending       : THREE.NormalBlending, 
 					transparent    : true, 
 					depthWrite     : false, 
@@ -68,9 +68,29 @@ var Stars = {
 					sizeAttenuation: true,
 					fog            : false
 				});
-				 
+				
+				var hMaterial = new THREE.PointCloudMaterial({ 
+					map: THREE.ImageUtils.loadTexture(
+						"images/map_mask_lspm.png"
+					),
+					color          : 0xffffff, 
+					size           : 20, 
+					blending       : THREE.NormalBlending, 
+					transparent    : false, 
+					depthWrite     : false, 
+					vertexColors   : false,
+					sizeAttenuation: true,
+					fog            : false
+				});
+								 
 				particles = new THREE.PointCloud(geometry, gMaterial);
 				scene.add(particles);
+				
+				
+				particles = new THREE.PointCloud(geometry, hMaterial);
+				scene.add(particles);
+				
+				
 				console.log("Stars Born");
 			}
 		};
