@@ -1,15 +1,33 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var _     = require('lodash');
 var THREE = require('three');
+var Stats = require('./lib/Stats.js');
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 var renderer = new THREE.WebGLRenderer();
+var container = document.getElementById('container');
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-},{"lodash":2,"three":3}],2:[function(require,module,exports){
+stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.bottom = '0px';
+stats.domElement.style.zIndex = 100;
+container.appendChild( stats.domElement );
+
+},{"./lib/Stats.js":2,"lodash":3,"three":4}],2:[function(require,module,exports){
+// stats.js r8 - http://github.com/mrdoob/stats.js
+module.exports = function(){var h,a,n=0,o=0,i=Date.now(),u=i,p=i,l=0,q=1E3,r=0,e,j,f,b=[[16,16,48],[0,255,255]],m=0,s=1E3,t=0,d,k,g,c=[[16,48,16],[0,255,0]];h=document.createElement("div");h.style.cursor="pointer";h.style.width="80px";h.style.opacity="0.9";h.style.zIndex="10001";h.addEventListener("mousedown",function(a){a.preventDefault();n=(n+1)%2;n==0?(e.style.display="block",d.style.display="none"):(e.style.display="none",d.style.display="block")},!1);e=document.createElement("div");e.style.textAlign=
+"left";e.style.lineHeight="1.2em";e.style.backgroundColor="rgb("+Math.floor(b[0][0]/2)+","+Math.floor(b[0][1]/2)+","+Math.floor(b[0][2]/2)+")";e.style.padding="0 0 3px 3px";h.appendChild(e);j=document.createElement("div");j.style.fontFamily="Helvetica, Arial, sans-serif";j.style.fontSize="9px";j.style.color="rgb("+b[1][0]+","+b[1][1]+","+b[1][2]+")";j.style.fontWeight="bold";j.innerHTML="FPS";e.appendChild(j);f=document.createElement("div");f.style.position="relative";f.style.width="74px";f.style.height=
+"30px";f.style.backgroundColor="rgb("+b[1][0]+","+b[1][1]+","+b[1][2]+")";for(e.appendChild(f);f.children.length<74;)a=document.createElement("span"),a.style.width="1px",a.style.height="30px",a.style.cssFloat="left",a.style.backgroundColor="rgb("+b[0][0]+","+b[0][1]+","+b[0][2]+")",f.appendChild(a);d=document.createElement("div");d.style.textAlign="left";d.style.lineHeight="1.2em";d.style.backgroundColor="rgb("+Math.floor(c[0][0]/2)+","+Math.floor(c[0][1]/2)+","+Math.floor(c[0][2]/2)+")";d.style.padding=
+"0 0 3px 3px";d.style.display="none";h.appendChild(d);k=document.createElement("div");k.style.fontFamily="Helvetica, Arial, sans-serif";k.style.fontSize="9px";k.style.color="rgb("+c[1][0]+","+c[1][1]+","+c[1][2]+")";k.style.fontWeight="bold";k.innerHTML="MS";d.appendChild(k);g=document.createElement("div");g.style.position="relative";g.style.width="74px";g.style.height="30px";g.style.backgroundColor="rgb("+c[1][0]+","+c[1][1]+","+c[1][2]+")";for(d.appendChild(g);g.children.length<74;)a=document.createElement("span"),
+a.style.width="1px",a.style.height=Math.random()*30+"px",a.style.cssFloat="left",a.style.backgroundColor="rgb("+c[0][0]+","+c[0][1]+","+c[0][2]+")",g.appendChild(a);return{domElement:h,update:function(){i=Date.now();m=i-u;s=Math.min(s,m);t=Math.max(t,m);k.textContent=m+" MS ("+s+"-"+t+")";var a=Math.min(30,30-m/200*30);g.appendChild(g.firstChild).style.height=a+"px";u=i;o++;if(i>p+1E3)l=Math.round(o*1E3/(i-p)),q=Math.min(q,l),r=Math.max(r,l),j.textContent=l+" FPS ("+q+"-"+r+")",a=Math.min(30,30-l/
+100*30),f.appendChild(f.firstChild).style.height=a+"px",p=i,o=0}}};
+
+
+},{}],3:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -6798,7 +6816,7 @@ document.body.appendChild( renderer.domElement );
 }.call(this));
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var self = self || {};/**
  * @author mrdoob / http://mrdoob.com/
  * @author Larry Battle / http://bateru.com/news
@@ -21287,14 +21305,10 @@ THREE.MeshPhongMaterial = function ( parameters ) {
 	THREE.Material.call( this );
 
 	this.color = new THREE.Color( 0xffffff ); // diffuse
-	this.ambient = new THREE.Color( 0xffffff );
+	this.ambient = new THREE.Color( 0x000000 );
 	this.emissive = new THREE.Color( 0x000000 );
 	this.specular = new THREE.Color( 0x111111 );
 	this.shininess = 30;
-
-	this.metal = false;
-	this.gloss = false;
-	this.fresnel = false;
 
 	this.wrapAround = false;
 	this.wrapRGB = new THREE.Vector3( 1, 1, 1 );
@@ -21303,6 +21317,7 @@ THREE.MeshPhongMaterial = function ( parameters ) {
 	this.opacityMap = null;
 
 	this.lightMap = null;
+	this.emissiveMap = null;
 
 	this.bumpMap = null;
 	this.bumpScale = 1;
@@ -21350,8 +21365,6 @@ THREE.MeshPhongMaterial.prototype.clone = function () {
 	material.specular.copy( this.specular );
 	material.shininess = this.shininess;
 
-	material.metal = this.metal;
-
 	material.wrapAround = this.wrapAround;
 	material.wrapRGB.copy( this.wrapRGB );
 
@@ -21359,6 +21372,7 @@ THREE.MeshPhongMaterial.prototype.clone = function () {
 	material.opacityMap = this.opacityMap;
 
 	material.lightMap = this.lightMap;
+	material.emissiveMap = this.emissiveMap;
 
 	material.bumpMap = this.bumpMap;
 	material.bumpScale = this.bumpScale;
@@ -21408,16 +21422,27 @@ THREE.MeshPhysicalMaterial = function ( parameters ) {
 
 	this.falloff = false;
 	this.falloffColor = new THREE.Color( 0xffffff );
+	this.falloffMap = null;
+	this.falloffBlendParams = new THREE.Vector4( 1.0, 0.0, 0.0, 1.0 );
 
 	this.specular = new THREE.Color( 0xffffff );
 	this.specularMap = null;
 	
-	this.reflectivity = 0.5; // between 0 and 1.
-	this.reflectivityMap = null;
 	this.roughness = 0.5;
 	this.roughnessMap = null;
-	this.metallic = 0.5;
+
+	this.reflectivity = 0.02; // between 0 and 1.
+	this.reflectivityMap = null;
+	
+	this.metallic = 0.0;
 	this.metallicMap = null;
+
+	this.translucency = new THREE.Color( 0x000000 );
+	this.translucencyMap = null;
+	this.translucencyNormalAlpha = 0.75;
+	this.translucencyNormalPower = 1.0;
+	this.translucencyViewPower = 2.0;
+	this.translucencyViewAlpha = 0.75;
 
 	this.bumpMap = null;
 	this.bumpScale = 1;
@@ -21426,7 +21451,10 @@ THREE.MeshPhysicalMaterial = function ( parameters ) {
 	this.normalScale = new THREE.Vector2( 1, 1 );
 
 	this.emissive = new THREE.Color( 0x000000 );
-	this.lightMap = null;	// given off arbitrarily by the object in all directions.  Basically GI.
+	this.emissiveMap = null; 	// given off arbitrarily by the object in all directions.  Basically GI.
+
+	this.ambient = new THREE.Color( 0x000000 );
+	this.lightMap = null; // incoming light
 
 	this.envMap = null;  // Incoming environmental light.
 	this.combine = THREE.AddOperation;
@@ -21466,6 +21494,8 @@ THREE.MeshPhysicalMaterial.prototype.clone = function () {
 
 	material.falloff = this.falloff;
 	material.falloffColor.copy( this.falloffColor );
+	material.falloffMap = this.falloffMap;
+	material.falloffBlendParams.copy( this.falloffBlendParams );
 
 	material.specular.copy( this.specular );
 	material.specularMap = this.specularMap;
@@ -21479,6 +21509,13 @@ THREE.MeshPhysicalMaterial.prototype.clone = function () {
 
 	material.shading = this.shading;
 
+	material.translucency.copy( this.translucency );
+	material.translucencyMap = this.translucencyMap;
+	material.translucencyNormalAlpha = this.translucencyNormalAlpha;
+	material.translucencyNormalPower = this.translucencyNormalPower;
+	material.translucencyViewPower = this.translucencyViewPower;
+	material.translucencyViewAlpha = this.translucencyViewAlpha;
+
 	material.bumpMap = this.bumpMap;
 	material.bumpScale = this.bumpScale;
 
@@ -21486,6 +21523,9 @@ THREE.MeshPhysicalMaterial.prototype.clone = function () {
 	material.normalScale.copy( this.normalScale );
 
 	material.emissive.copy( this.emissive );
+	material.emissiveMap = this.emissiveMap;
+
+	material.ambient.copy( this.ambient );
 	material.lightMap = this.lightMap;
 
 	material.envMap = this.envMap;
@@ -24330,35 +24370,21 @@ THREE.ShaderChunk = {
 
 				"}",
 
-			"#else",
-			
-				"#ifdef GLOSS",
-						
-					"float cubeOpacity = clamp( ( cubeColor.x + cubeColor.y + cubeColor.z ) / 3.0, 0.0, 1.0 ) * fresnelReflectivity;",
-	 
-					"specularOpacity = pow( specularOpacity * fresnelReflectivity, 3.0 );",
+			"#else",			
 
-					"gl_FragColor.xyz = gl_FragColor.xyz * ( 1.0 - cubeOpacity ) + cubeColor.xyz * fresnelReflectivity;",
-	 
-					"gl_FragColor.w = ( 1.0 - gl_FragColor.w ) * cubeOpacity + gl_FragColor.w;",
+				"if ( combine == 1 ) {",
 
-				"#else",
+					"gl_FragColor.xyz = mix( gl_FragColor.xyz, cubeColor.xyz, fresnelReflectivity );",
 
-					"if ( combine == 1 ) {",
+				"} else if ( combine == 2 ) {",
 
-						"gl_FragColor.xyz = mix( gl_FragColor.xyz, cubeColor.xyz, fresnelReflectivity );",
+					"gl_FragColor.xyz += cubeColor.xyz * fresnelReflectivity;",
 
-					"} else if ( combine == 2 ) {",
+				"} else {",
 
-						"gl_FragColor.xyz += cubeColor.xyz * fresnelReflectivity;",
+					"gl_FragColor.xyz = mix( gl_FragColor.xyz, gl_FragColor.xyz * cubeColor.xyz, fresnelReflectivity );",
 
-					"} else {",
-
-						"gl_FragColor.xyz = mix( gl_FragColor.xyz, gl_FragColor.xyz * cubeColor.xyz, fresnelReflectivity );",
-
-					"}",
-
-				"#endif",
+				"}",
 
 			"#endif",
 
@@ -24455,7 +24481,7 @@ THREE.ShaderChunk = {
 
 	map_pars_vertex: [
 
-		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP )",
+		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP ) || defined( USE_FALLOFFMAP ) || defined( USE_TRANSLUCENCYMAP )",
 
 			"varying vec2 vUv;",
 			"uniform vec4 offsetRepeat;",
@@ -24466,7 +24492,7 @@ THREE.ShaderChunk = {
 
 	map_pars_fragment: [
 
-		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP )",
+		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP ) || defined( USE_FALLOFFMAP ) || defined( USE_TRANSLUCENCYMAP )",
 
 			"varying vec2 vUv;",
 			"uniform vec4 gainBrightness;",
@@ -24493,7 +24519,7 @@ THREE.ShaderChunk = {
 
 	map_vertex: [
 
-		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP )",
+		"#if defined( USE_MAP ) || defined( USE_BUMPMAP ) || defined( USE_NORMALMAP ) || defined( USE_SPECULARMAP ) || defined( USE_REFLECTIVITYMAP ) || defined( USE_ROUGHNESSMAP ) || defined( USE_METALLICMAP ) || defined( USE_OPACITYMAP ) || defined( USE_FALLOFFMAP ) || defined( USE_TRANSLUCENCYMAP )",
 
 			"vUv = uv * offsetRepeat.zw + offsetRepeat.xy;",
 
@@ -24505,7 +24531,7 @@ THREE.ShaderChunk = {
 
 		"#ifdef USE_MAP",
 
-			"vec4 texelColor = applyGainBrightness( texture2D( map, vUv ), gainBrightness );",
+			"vec4 texelColor = applyGainBrightness( texture2D( map, vUv ), gainBrightness );",		
 
 			"#ifdef GAMMA_INPUT",
 
@@ -24515,11 +24541,23 @@ THREE.ShaderChunk = {
 
 			"gl_FragColor = gl_FragColor * texelColor;",
 
-			"#ifdef PHYSICAL",
+			"#if defined( PHYSICAL ) || defined( PHONG )",
 
-				"diffuseColor = diffuseColor * texelColor.xyz;",
+				"diffuseColor *= texelColor.xyz;",
 
 			"#endif", // PHYSICAL
+
+		"#endif"
+
+	].join("\n"),
+
+	// FALLOFF MAP
+
+	falloffmap_pars_fragment: [
+
+		"#ifdef USE_FALLOFFMAP",
+
+			"uniform sampler2D falloffMap;",
 
 		"#endif"
 
@@ -24572,14 +24610,79 @@ THREE.ShaderChunk = {
 		"#endif"
 
 	].join("\n"),
+
+	// TRANSLUCENCY MAP
+
+	translucencymap_pars_vertex: [
+
+		"#ifdef USE_TRANSLUCENCYMAP",
+
+			"varying vec2 vTranslucencyUv;",
+			"uniform vec4 translucencyOffsetRepeat;",
+
+		"#endif"
+
+	].join("\n"),
+
+	translucencymap_vertex: [
+
+		"#ifdef USE_TRANSLUCENCYMAP",
+
+			"vTranslucencyUv = uv * translucencyOffsetRepeat.zw + translucencyOffsetRepeat.xy;",
+
+		"#endif"
+
+	].join("\n"),
+
+	translucencymap_pars_fragment: [
+
+		"#ifdef USE_TRANSLUCENCYMAP",
+
+			"uniform sampler2D translucencyMap;",
+			"varying vec2 vTranslucencyUv;",
+			"uniform vec4 translucencyGainBrightness;",
+
+		"#endif"
+
+	].join("\n"),
+
+	translucencymap_fragment: [
+
+		"#ifdef USE_TRANSLUCENCYMAP",
+
+			"vec4 texelTranslucency = applyGainBrightness( texture2D( translucencyMap, vTranslucencyUv ), translucencyGainBrightness );",
+
+			"#ifdef GAMMA_INPUT",
+
+				"texelTranslucency.xyz *= texelTranslucency.xyz;",
+
+			"#endif",
+
+			"translucencyColor.xyz *= texelTranslucency.xyz;",
+
+		"#endif"
+
+	].join("\n"),
+
 	// LIGHT MAP
 
 	lightmap_pars_fragment: [
 
-		"#ifdef USE_LIGHTMAP",
+		"#if defined( USE_LIGHTMAP ) || defined( USE_EMISSIVEMAP )",
 
 			"varying vec2 vUv2;",
+
+		"#endif",
+
+		"#if defined( USE_LIGHTMAP )",
+
 			"uniform sampler2D lightMap;",
+
+		"#endif",
+
+		"#if defined( USE_EMISSIVEMAP )",
+
+			"uniform sampler2D emissiveMap;",
 
 		"#endif"
 
@@ -24587,7 +24690,7 @@ THREE.ShaderChunk = {
 
 	lightmap_pars_vertex: [
 
-		"#ifdef USE_LIGHTMAP",
+		"#if defined( USE_LIGHTMAP ) || defined( USE_EMISSIVEMAP )",
 
 			"varying vec2 vUv2;",
 
@@ -24607,13 +24710,14 @@ THREE.ShaderChunk = {
 
 	lightmap_vertex: [
 
-		"#ifdef USE_LIGHTMAP",
+		"#if defined( USE_LIGHTMAP ) || defined( USE_EMISSIVEMAP )",
 
 			"vUv2 = uv2;",
 
 		"#endif"
 
 	].join("\n"),
+
 
 	// BUMP MAP
 
@@ -25187,11 +25291,11 @@ THREE.ShaderChunk = {
 
 		"#endif",
 
-		"vLightFront = vLightFront * diffuse + ambient * ambientLightColor + emissive;",
+		"vLightFront = ( vLightFront + ambientLightColor + ambient) * diffuse + emissive;",
 
 		"#ifdef DOUBLE_SIDED",
 
-			"vLightBack = vLightBack * diffuse + ambient * ambientLightColor + emissive;",
+			"vLightBack = ( vLightFront + ambientLightColor + ambient) * diffuse + emissive;",
 
 		"#endif"
 
@@ -25201,7 +25305,7 @@ THREE.ShaderChunk = {
 
 	lights_physical_pars_vertex: [
 
-		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( FRESNEL ) || defined( USE_ENVMAP )",
+		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( USE_ENVMAP )",
 
 			"varying vec3 vWorldPosition;",
 
@@ -25212,7 +25316,7 @@ THREE.ShaderChunk = {
 
 	lights_physical_vertex: [
 
-		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( FRESNEL ) || defined( USE_ENVMAP )",
+		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( USE_ENVMAP )",
 
 			"vWorldPosition = worldPosition.xyz;",
 
@@ -25325,10 +25429,36 @@ THREE.ShaderChunk = {
 
 		"#endif",
 
-		"#if MAX_POINT_LIGHTS > 0",
 
-			"vec3 pointDiffuse  = vec3( 0.0 );",
-			"vec3 pointSpecular = vec3( 0.0 );",
+		"#ifdef FALLOFF",
+
+			"vec3 modulatedFalloffColor = falloffColor;",
+			
+			"#ifdef USE_FALLOFFMAP",
+
+				"vec4 falloffTexelColor = texture2D( falloffMap, vUv );",
+
+				"#ifdef GAMMA_INPUT",
+
+					"falloffTexelColor.xyz *= falloffTexelColor.xyz;",
+
+				"#endif",
+
+				"modulatedFalloffColor = modulatedFalloffColor * falloffTexelColor.xyz;",
+
+			"#endif",
+
+			"float fm = abs( dot( normal, viewPosition ) );",
+
+			"fm = /*falloffBlendParams.x * fm + falloffBlendParams.y * */ ( fm * fm * ( 3.0 - 2.0 * fm ) );",
+
+			"diffuseColor = mix( modulatedFalloffColor, diffuseColor, fm );",
+
+		"#endif",
+
+		"vec3 totalLighting  = vec3( 0.0 );",
+
+		"#if MAX_POINT_LIGHTS > 0",
 
 			"for ( int i = 0; i < MAX_POINT_LIGHTS; i ++ ) {",
 
@@ -25367,17 +25497,37 @@ THREE.ShaderChunk = {
 			    "vec3 specularColorCoefficient = d * vis * fresnel * fresnelColor;",
 			    "vec3 diffuseColorCoefficient = diffuseColor * ( 1.0 - fresnel * fresnelColor ) / 3.14159;",
 
-				"pointDiffuse  += diffuseColorCoefficient * incidentLight * nDotL;",
-				"pointSpecular  += specularColorCoefficient * incidentLight * nDotL;",
+				"#ifdef TRANSLUCENCY",
+
+				    "diffuseColorCoefficient *= vec3( 1 ) - translucencyColor.xyz;",
+
+				"#endif",
+							    // diffuse
+				"totalLighting  += diffuseColorCoefficient * incidentLight * nDotL;",
+				"totalLighting  += specularColorCoefficient * incidentLight * nDotL;",
+
+				"#ifdef TRANSLUCENCY",
+
+					"float lightNormalTL = mix( 1.0, pow( abs( dot( lVector.xyz, normal ) ), translucencyNormalPower ), translucencyNormalAlpha );",
+
+					"float viewNormalTL = mix( 1.0, pow( abs( dot( viewPosition.xyz, lVector.xyz) ), translucencyViewPower ), translucencyViewAlpha );",
+
+					"totalLighting += lightNormalTL * viewNormalTL * translucencyColor.rgb * incidentLight;",
+
+
+/*					"vec3 translucencyLight = normalize( lVector.xyz + (normal * translucencyNormalAlpha) );",
+
+					"float translucencyDot = pow( clamp( dot(viewPosition.xyz, -translucencyLight), 0.0, 1.0 ), translucencyViewPower ) * translucencyViewAlpha;",
+
+					"totalLighting += translucencyDot * translucencyColor.rgb * incidentLight + incidentLight * nDotL * translucencyColor.xyz * ( 1.0 - fresnel * fresnelColor ) / 3.14159;",*/
+
+				"#endif",
 
 			"}",
 
 		"#endif",
 
 		"#if MAX_SPOT_LIGHTS > 0",
-
-			"vec3 spotDiffuse  = vec3( 0.0 );",
-			"vec3 spotSpecular = vec3( 0.0 );",
 
 			"for ( int i = 0; i < MAX_SPOT_LIGHTS; i ++ ) {",
 
@@ -25424,8 +25574,24 @@ THREE.ShaderChunk = {
 				    "vec3 specularColorCoefficient = d * vis * fresnel * fresnelColor;",
 				    "vec3 diffuseColorCoefficient = diffuseColor * ( 1.0 - fresnel * fresnelColor ) / 3.14159;",
 
-					"spotDiffuse  += diffuseColorCoefficient * incidentLight * nDotL;",
-					"spotSpecular  += specularColorCoefficient * incidentLight * nDotL;",
+					"#ifdef TRANSLUCENCY",
+					
+					    "diffuseColorCoefficient *= vec3( 1 ) - translucencyColor.xyz;",
+
+					"#endif",
+
+					"totalLighting  += diffuseColorCoefficient * incidentLight * nDotL;",
+					"totalLighting  += specularColorCoefficient * incidentLight * nDotL;",
+
+					"#ifdef TRANSLUCENCY",
+
+						"float lightNormalTL = pow( abs( dot( lVector.xyz, normal ) ), translucencyNormalPower ) * translucencyNormalAlpha + (1.0 - translucencyNormalAlpha );",
+
+						"float viewNormalTL = pow( abs( dot( viewPosition.xyz, lVector.xyz) ), translucencyViewPower ) * translucencyViewAlpha + ( 1.0 - translucencyViewAlpha );",
+
+						"totalLighting += lightNormalTL * viewNormalTL * translucencyColor.rgb * incidentLight;",
+
+					"#endif",
 
 				"}",
 
@@ -25434,9 +25600,6 @@ THREE.ShaderChunk = {
 		"#endif",
 
 		"#if MAX_DIR_LIGHTS > 0",
-
-			"vec3 dirDiffuse  = vec3( 0.0 );",
-			"vec3 dirSpecular = vec3( 0.0 );" ,
 
 			"for( int i = 0; i < MAX_DIR_LIGHTS; i ++ ) {",
 
@@ -25469,17 +25632,30 @@ THREE.ShaderChunk = {
 			    "vec3 specularColorCoefficient = d * vis * fresnel * fresnelColor;",
 			    "vec3 diffuseColorCoefficient = diffuseColor * ( 1.0 - fresnel * fresnelColor ) / 3.14159;",
 
-				"dirDiffuse  += diffuseColorCoefficient * incidentLight * nDotL;",
-				"dirSpecular  += specularColorCoefficient * incidentLight * nDotL;",
+				"#ifdef TRANSLUCENCY",
+				
+				    "diffuseColorCoefficient *= vec3( 1 ) - translucencyColor.xyz;",
+
+				"#endif",
+
+				"totalLighting  += diffuseColorCoefficient * incidentLight * nDotL;",
+				"totalLighting  += specularColorCoefficient * incidentLight * nDotL;",
+
+				"#ifdef TRANSLUCENCY",
+
+					"float lightNormalTL = pow( abs( dot( lVector.xyz, normal ) ), translucencyNormalPower ) * translucencyNormalAlpha + (1.0 - translucencyNormalAlpha );",
+
+					"float viewNormalTL = pow( abs( dot( viewPosition.xyz, lVector.xyz) ), translucencyViewPower ) * translucencyViewAlpha + ( 1.0 - translucencyViewAlpha );",
+
+					"totalLighting += lightNormalTL * viewNormalTL * translucencyColor.rgb * incidentLight;",
+
+				"#endif",
 
 			"}",
 
 		"#endif",
 
 		"#if MAX_HEMI_LIGHTS > 0",
-
-			"vec3 hemiDiffuse  = vec3( 0.0 );",
-			"vec3 hemiSpecular = vec3( 0.0 );",
 
 			"for( int i = 0; i < MAX_HEMI_LIGHTS; i ++ ) {",
 
@@ -25493,16 +25669,13 @@ THREE.ShaderChunk = {
 				// based on page 325 of Real-Time Rendering., equation (8.43)
 				"vec3 hemiColor = ( 3.14159 / 2.0 ) * ( ( 1.0 + nDotL ) * hemisphereLightSkyColor[ i ] + ( 1.0 - nDotL ) * hemisphereLightGroundColor[ i ] );",
 								
-				"hemiDiffuse += diffuseColor * hemiColor;",
+				"totalLighting += diffuseColor * hemiColor;",
 			
 			"}",
 
 		"#endif",
 
 		"#if MAX_AREA_LIGHTS > 0",
-
-			"vec3 areaDiffuse  = vec3( 0.0 );",
-			"vec3 areaSpecular = vec3( 0.0 );",
 
 			"for( int i = 0; i < MAX_AREA_LIGHTS; i ++ ) {",
 
@@ -25570,12 +25743,29 @@ THREE.ShaderChunk = {
 				    "fresnelColor = mix( fresnelColor, vec3( 1.0 ), (fresnel - reflectivityStrength) );",
 	    	
 				    // Put it all together
+
 				    "vec3 specularColorCoefficient = d * vis * fresnel * fresnelColor;",
 				    "vec3 diffuseColorCoefficient = diffuseColor * ( 1.0 - fresnel * fresnelColor ) / 3.14159;",
 
-					"areaDiffuse  += diffuseColorCoefficient * incidentLight * nDotL;",
-					"areaSpecular  += specularColorCoefficient * incidentLight * nDotL;",
+					"#ifdef TRANSLUCENCY",
 
+					    "diffuseColorCoefficient *= vec3( 1 ) - translucencyColor.xyz;",
+
+					"#endif",
+
+					"totalLighting  += diffuseColorCoefficient * incidentLight * nDotL;",
+					"totalLighting  += specularColorCoefficient * incidentLight * nDotL;",
+
+
+					"#ifdef TRANSLUCENCY",
+
+						"float lightNormalTL = pow( abs( dot( lVector.xyz, normal ) ), translucencyNormalPower ) * translucencyNormalAlpha + (1.0 - translucencyNormalAlpha );",
+
+						"float viewNormalTL = pow( abs( dot( viewPosition.xyz, lVector.xyz) ), translucencyViewPower ) * translucencyViewAlpha + ( 1.0 - translucencyViewAlpha );",
+
+						"totalLighting += lightNormalTL * viewNormalTL * translucencyColor.rgb * incidentLight;",
+
+					"#endif",
 
 				"}",
 		
@@ -25583,56 +25773,45 @@ THREE.ShaderChunk = {
 
 		"#endif",
 
-		"vec3 totalDiffuse = vec3( 0.0 );",
-		"vec3 totalSpecular = vec3( 0.0 );",
+		"totalLighting += ambientLightColor;",
 
-		"#if MAX_DIR_LIGHTS > 0",
-
-			"totalDiffuse += dirDiffuse;",
-			"totalSpecular += dirSpecular;",
-
-		"#endif",
-
-		"#if MAX_HEMI_LIGHTS > 0",
-
-			"totalDiffuse += hemiDiffuse;",
-			"totalSpecular += hemiSpecular;",
-
-		"#endif",
-
-		"#if MAX_POINT_LIGHTS > 0",
-
-			"totalDiffuse += pointDiffuse;",
-			"totalSpecular += pointSpecular;",
-
-		"#endif",
-
-		"#if MAX_SPOT_LIGHTS > 0",
-
-			"totalDiffuse += spotDiffuse;",
-			"totalSpecular += spotSpecular;",
-
-		"#endif",
-
-		"#if MAX_AREA_LIGHTS > 0",
-
-			"totalDiffuse += areaDiffuse;",
-			"totalSpecular += areaSpecular;",
-
-		"#endif",
-
-		"gl_FragColor.xyz += totalDiffuse;",
-		"gl_FragColor.xyz += totalSpecular;",
+		"gl_FragColor.xyz += totalLighting;",
 
 		"vec3 emissiveLocal = emissive;",
 
+		"#ifdef USE_EMISSIVEMAP",
+
+			"vec3 emissiveColor = texture2D( emissiveMap, vUv2 ).xyz;",
+
+			"#ifdef GAMMA_INPUT",
+
+				"emissiveColor *= emissiveColor;",
+
+			"#endif",
+
+			"emissiveLocal *= emissiveColor;",
+
+		"#endif",
+
+		"gl_FragColor.xyz += emissiveLocal;",
+
+		"vec3 ambientLocal = ambient;",
+
 		"#ifdef USE_LIGHTMAP",
 
-			"emissiveLocal *= texture2D( lightMap, vUv2 ).xyz;",
+			"vec3 ambientColor = texture2D( lightMap, vUv2 ).xyz;",
+
+			"#ifdef GAMMA_INPUT",
+
+				"ambientColor *= ambientColor;",
+
+			"#endif",
+
+			"ambientLocal *= ambientColor;",
 	
 		"#endif",
 
-		"gl_FragColor.xyz += emissiveLocal.xyz;"
+		"gl_FragColor.xyz += diffuseColor * ambientLocal;",
 
 	].join("\n"),
 
@@ -25640,7 +25819,7 @@ THREE.ShaderChunk = {
 
 	lights_phong_pars_vertex: [
 
-		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( FRESNEL ) || defined( USE_ENVMAP )",
+		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( USE_ENVMAP )",
 
 			"varying vec3 vWorldPosition;",
 
@@ -25651,7 +25830,7 @@ THREE.ShaderChunk = {
 
 	lights_phong_vertex: [
 
-		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( FRESNEL ) || defined( USE_ENVMAP )",
+		"#if MAX_SPOT_LIGHTS > 0 || defined( USE_BUMPMAP ) || defined( USE_ENVMAP )",
 
 			"vWorldPosition = worldPosition.xyz;",
 
@@ -25774,7 +25953,7 @@ THREE.ShaderChunk = {
 
 				"float pointDiffuseWeight = max( dotProduct, 0.0 );",
 
-				"pointDiffuse  += diffuse * pointLightColor[ i ] * pointDiffuseWeight * distanceAttenuation;",
+				"pointDiffuse  += pointLightColor[ i ] * pointDiffuseWeight * distanceAttenuation;",
 
 				// specular
 
@@ -25830,7 +26009,7 @@ THREE.ShaderChunk = {
 
 					"#endif",
 
-					"spotDiffuse += diffuse * spotLightColor[ i ] * spotDiffuseWeight * distanceAttenuation * spotEffect;",
+					"spotDiffuse += spotLightColor[ i ] * spotDiffuseWeight * distanceAttenuation * spotEffect;",
 
 					// specular
 
@@ -25878,7 +26057,7 @@ THREE.ShaderChunk = {
 
 				"#endif",
 
-				"dirDiffuse  += diffuse * directionalLightColor[ i ] * dirDiffuseWeight;",
+				"dirDiffuse  += directionalLightColor[ i ] * dirDiffuseWeight;",
 
 				// specular
 
@@ -25936,7 +26115,7 @@ THREE.ShaderChunk = {
 
 				"vec3 hemiColor = mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );",
 
-				"hemiDiffuse += diffuse * hemiColor;",
+				"hemiDiffuse += hemiColor;",
 
 				// specular (sky light)
 
@@ -25997,53 +26176,42 @@ THREE.ShaderChunk = {
 
 		"#endif",
 
-
-		"float fresnelSpecularity = 1.0;",
-
-
-		"#ifdef FRESNEL",
-
-			"float localReflectivity = clamp( reflectivity, 0.0, 1.0 );",
-			"fresnelSpecularity = localReflectivity + ( 1.0 - localReflectivity ) * pow( 1.0 - abs( dot( normal, viewPosition ) ), 5.0 );",
-
-		"#endif",
-
-		"#ifdef METAL",
-
-			"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * ambient + totalSpecular );",
-
-		"#else",
-
-			"#ifdef GLOSS",
-
-				"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * ambient );",
-
-				"float specularOpacity = clamp( ( totalSpecular.x + totalSpecular.y + totalSpecular.z ) / 3.0, 0.0, 1.0 );",
-
-				"specularOpacity = pow( specularOpacity * fresnelSpecularity, 3.0 );",
-
-				"gl_FragColor.xyz = gl_FragColor.xyz * ( 1.0 - specularOpacity ) + totalSpecular * fresnelSpecularity;",
-
-				"gl_FragColor.w = ( 1.0 - gl_FragColor.w ) * specularOpacity + gl_FragColor.w;",
-
-			"#else",
-
-				"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * ambient ) + totalSpecular;",
-
-			"#endif",
-
-		"#endif",
-
-		"vec3 emissiveLocal = emissive;",
+		"vec3 ambientLocal = ambient;",
 
 		"#ifdef USE_LIGHTMAP",
 
-			"emissiveLocal *= texture2D( lightMap, vUv2 ).xyz;",
+			"vec3 ambientColor = texture2D( lightMap, vUv2 ).xyz;",
+
+			"#ifdef GAMMA_INPUT",
+
+				"ambientColor *= ambientColor;",
+
+			"#endif",
+
+			"ambientLocal *= ambientColor;",
 	
 		"#endif",
 
-		"gl_FragColor.xyz += emissiveLocal.xyz;"
+		"gl_FragColor.xyz = diffuseColor * ( totalDiffuse + ambientLightColor + ambientLocal ) + totalSpecular;",
 
+		"vec3 emissiveLocal = emissive;",
+
+		"#ifdef USE_EMISSIVEMAP",
+
+			"vec3 emissiveColor = texture2D( emissiveMap, vUv2 ).xyz;",
+
+			"#ifdef GAMMA_INPUT",
+
+				"emissiveColor *= emissiveColor;",
+
+			"#endif",
+
+			"emissiveLocal *= emissiveColor;",
+
+		"#endif",
+
+		"gl_FragColor.xyz += emissiveLocal.xyz;",
+		
 	].join("\n"),
 
 	// VERTEX COLORS
@@ -26714,6 +26882,7 @@ THREE.UniformsLib = {
 		"gainBrightness" : { type: "v4", value: new THREE.Vector4( 0, 1, 0, 1 ) },
 
 		"lightMap" : { type: "t", value: null },
+		"emissiveMap" : { type: "t", value: null },
 	
 		"envMap" : { type: "t", value: null },
 		"flipEnvMap" : { type: "f", value: -1 },
@@ -26857,9 +27026,12 @@ THREE.ShaderLib = {
 			THREE.UniformsLib[ "specularmap" ],
 
 			{
+				"ambient"  : { type: "c", value: new THREE.Color( 0xffffff ) },
 				"emissive" : { type: "c", value: new THREE.Color( 0x000000 ) },
 				"specular" : { type: "c", value: new THREE.Color( 0xFFFFFF ) },
 				"falloffColor" : { type: "c", value: new THREE.Color( 0xFFFFFF ) },
+				"falloffMap" : { type: "t", value: null },
+				"falloffBlendParams" : { type: "v4", value: new THREE.Vector4( 1, 0, 0, 1 ) },
 
 				"roughness": { type: "f", value: 0.5 },
 				"roughnessMap" : { type: "t", value: null },
@@ -26870,6 +27042,13 @@ THREE.ShaderLib = {
 				"metallicMap" : { type: "t", value: null },
 				"metallicOffsetRepeat" : { type: "v4", value: new THREE.Vector4( 0, 0, 1, 1 ) },
 				"metallicGainBrightness" : { type: "v4", value: new THREE.Vector4( 0, 1, 0, 1 ) },
+
+				"translucency" : { type: "c", value: new THREE.Color( 0x000000 ) },
+				"translucencyMap" : { type: "t", value: null },
+				"translucencyNormalAlpha": { type: "f", value: 0.75 },
+				"translucencyNormalPower": { type: "f", value: 2.0 },
+				"translucencyViewAlpha": { type: "f", value: 0.75 },
+				"translucencyViewPower": { type: "f", value: 2.0 },
 
 				//"reflectivity": { type: "f", value: 0.5 },
 				"reflectivityMap" : { type: "t", value: null }
@@ -26891,6 +27070,7 @@ THREE.ShaderLib = {
 			THREE.ShaderChunk[ "specularmap_pars_vertex" ],
 			THREE.ShaderChunk[ "opacitymap_pars_vertex" ],
 			THREE.ShaderChunk[ "metallicmap_pars_vertex" ],
+			THREE.ShaderChunk[ "translucencymap_pars_vertex" ],
 			THREE.ShaderChunk[ "bumpmap_pars_vertex" ],
 			THREE.ShaderChunk[ "lightmap_pars_vertex" ],
 			THREE.ShaderChunk[ "envmap_pars_vertex" ],
@@ -26908,6 +27088,7 @@ THREE.ShaderLib = {
 				THREE.ShaderChunk[ "opacitymap_vertex" ],
 				THREE.ShaderChunk[ "specularmap_vertex" ],
 				THREE.ShaderChunk[ "metallicmap_vertex" ],
+				THREE.ShaderChunk[ "translucencymap_vertex" ],
 				THREE.ShaderChunk[ "bumpmap_vertex" ],
 				THREE.ShaderChunk[ "lightmap_vertex" ],
 				THREE.ShaderChunk[ "color_vertex" ],
@@ -26940,15 +27121,25 @@ THREE.ShaderLib = {
 			"uniform vec3 diffuse;",
 			"uniform float opacity;",
 
+			"uniform vec3 ambient;",
 			"uniform vec3 emissive;",
 			"uniform vec3 falloffColor;",
+			"uniform vec3 falloffBlendParams;",
 			"uniform vec3 specular;",
 			"uniform float roughness;",
 			"uniform float metallic;",
 
+			"uniform vec3 translucency;",
+			"uniform float translucencyNormalAlpha;",
+			"uniform float translucencyNormalPower;",
+			"uniform float translucencyViewPower;",
+			"uniform float translucencyViewAlpha;",
+
 			THREE.ShaderChunk[ "color_pars_fragment" ],
 			THREE.ShaderChunk[ "map_pars_fragment" ],
+			THREE.ShaderChunk[ "falloffmap_pars_fragment" ],
 			THREE.ShaderChunk[ "opacitymap_pars_fragment" ],
+			THREE.ShaderChunk[ "translucencymap_pars_fragment" ],
 			THREE.ShaderChunk[ "lightmap_pars_fragment" ],
 			THREE.ShaderChunk[ "envmap_pars_fragment" ],
 			THREE.ShaderChunk[ "fog_pars_fragment" ],
@@ -26966,14 +27157,9 @@ THREE.ShaderLib = {
 
 				"gl_FragColor = vec4( vec3 ( 0.0 ), opacity );",
 				"vec3 diffuseColor = diffuse;",
+				"vec3 translucencyColor = translucency;",
 				"vec3 normal = normalize( vNormal );",
 				"vec3 viewPosition = normalize( vViewPosition );",
-
-				"#ifdef FALLOFF",
-
-					"diffuseColor = mix( falloffColor, diffuseColor, abs( dot( normal, viewPosition ) ) );",
-
-				"#endif",
 
 				THREE.ShaderChunk[ "map_fragment" ],
 				THREE.ShaderChunk[ "opacitymap_fragment" ],
@@ -26981,6 +27167,7 @@ THREE.ShaderLib = {
 				THREE.ShaderChunk[ "specularmap_fragment" ],
 				THREE.ShaderChunk[ "roughnessmap_fragment" ],
 				THREE.ShaderChunk[ "metallicmap_fragment" ],
+				THREE.ShaderChunk[ "translucencymap_fragment" ],
 				THREE.ShaderChunk[ "reflectivitymap_fragment" ],
 
 				THREE.ShaderChunk[ "lights_physical_fragment" ],
@@ -27283,6 +27470,8 @@ THREE.ShaderLib = {
 
 		fragmentShader: [
 
+			"#define PHONG",
+	
 			"uniform vec3 diffuse;",
 			"uniform float opacity;",
 
@@ -27307,7 +27496,8 @@ THREE.ShaderLib = {
 			"void main() {",
 
 				"gl_FragColor = vec4( vec3 ( 1.0 ), opacity );",
-		
+				"vec3 diffuseColor = diffuse;",
+			
 				THREE.ShaderChunk[ "map_fragment" ],
 				THREE.ShaderChunk[ "opacitymap_fragment" ],
 				THREE.ShaderChunk[ "alphatest_fragment" ],
@@ -29299,12 +29489,15 @@ THREE.WebGLRenderer = function ( parameters ) {
 		if ( material.map ||
 		     material.opacityMap ||
 		     material.lightMap ||
+		     material.emissiveMap ||
 		     material.bumpMap ||
 		     material.normalMap ||
 		     material.specularMap ||
 		     material.reflectivityMap ||
 		     material.roughnessMap ||
+		     material.falloffMap ||
 		     material.metallicMap ||
+		     material.translucencyMap ||
 		     material instanceof THREE.ShaderMaterial ) {
 
 			return true;
@@ -32371,12 +32564,15 @@ THREE.WebGLRenderer = function ( parameters ) {
 			opacityMap: !!material.opacityMap,
 			envMap: !!material.envMap,
 			lightMap: !!material.lightMap,
+			emissiveMap: !!material.emissiveMap,
 			bumpMap: !!material.bumpMap,
 			normalMap: !!material.normalMap,
 			specularMap: !!material.specularMap,
 			reflectivityMap: !!material.reflectivityMap,
 			roughnessMap: !!material.roughnessMap,
+			translucencyMap: !!material.translucencyMap,
 			metallicMap: !!material.metallicMap,
+			falloffMap: !!material.falloffMap,
 
 			vertexColors: material.vertexColors,
 
@@ -32407,14 +32603,14 @@ THREE.WebGLRenderer = function ( parameters ) {
 			shadowMapDebug: this.shadowMapDebug,
 			shadowMapCascade: this.shadowMapCascade,
 
+			translucency: material.translucency && ( material.translucency.getHex() > 0 ),
+
 			alphaTest: material.alphaTest,
-			metal: material.metal,
-			gloss: material.gloss,
 			falloff: material.falloff,
+			falloffBlendParams: material.falloffBlendParams,
 			reflectivity: material.reflectivity,
 			roughness: material.roughness,
 			metallic: material.metallic,
-			fresnel: material.fresnel,
 			wrapAround: material.wrapAround,
 			doubleSided: material.side === THREE.DoubleSide,
 			flipSided: material.side === THREE.BackSide
@@ -32724,6 +32920,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 		uniforms.map.value = material.map;
 		uniforms.lightMap.value = material.lightMap;
+		uniforms.emissiveMap.value = material.emissiveMap;
 	
 		if ( material.bumpMap ) {
 
@@ -32796,7 +32993,15 @@ THREE.WebGLRenderer = function ( parameters ) {
 			uniforms.metallicGainBrightness.value.set( metallicMap.gainPivot, metallicMap.gain, metallicMap.brightness, 1.0 );
 
 		}
+		
+		if ( material.translucencyMap ) {
 
+			var translucencyMap = material.translucencyMap;
+			uniforms.translucencyMap.value = translucencyMap;
+			//uniforms.translucencyOffsetRepeat.value.set( translucencyMap.offset.x, translucencyMap.offset.y, translucencyMap.repeat.x, translucencyMap.repeat.y );
+			//uniforms.translucencyGainBrightness.value.set( translucencyMap.gainPivot, translucencyMap.gain, translucencyMap.brightness, 1.0 );
+
+		}
 		uniforms.envMap.value = material.envMap;
 		uniforms.flipEnvMap.value = ( material.envMap instanceof THREE.WebGLRenderTargetCube ) ? 1 : -1;
 
@@ -32892,23 +33097,37 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 		uniforms.opacityMap.value = material.opacityMap;
 
+		uniforms.falloffBlendParams.value = material.falloffBlendParams;
+		uniforms.falloffMap.value = material.falloffMap;
+
 		uniforms.roughness.value = material.roughness;
 		uniforms.metallic.value = material.metallic;
-		uniforms.reflectivityMap.value = material.reflectivityMap;
+
 		uniforms.roughnessMap.value = material.roughnessMap;
 		uniforms.metallicMap.value = material.metallicMap;
+		uniforms.reflectivityMap.value = material.reflectivityMap;
+
+		uniforms.translucencyMap.value = material.translucencyMap;
+		uniforms.translucencyNormalAlpha.value = material.translucencyNormalAlpha;
+		uniforms.translucencyNormalPower.value = material.translucencyNormalPower;
+		uniforms.translucencyViewAlpha.value = material.translucencyViewAlpha;
+		uniforms.translucencyViewPower.value = material.translucencyViewPower;
 
 		if ( _this.gammaInput ) {
 
+			uniforms.ambient.value.copyGammaToLinear( material.ambient );
 			uniforms.emissive.value.copyGammaToLinear( material.emissive );
 			uniforms.falloffColor.value.copyGammaToLinear( material.falloffColor );
 			uniforms.specular.value.copyGammaToLinear( material.specular );
+			uniforms.translucency.value.copyGammaToLinear( material.translucency );
 
 		} else {
 
+			uniforms.ambient.value = material.ambient;
 			uniforms.emissive.value = material.emissive;
 			uniforms.falloffColor.value = material.falloffColor;
 			uniforms.specular.value = material.specular;
+			uniforms.translucency.value = material.translucency;
 
 		}
 
@@ -33898,8 +34117,11 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 			parameters.map ? "#define USE_MAP" : "",
 			parameters.opacityMap ? "#define USE_OPACITYMAP" : "",
+			parameters.falloffMap ? "#define USE_FALLOFFMAP" : "",
+			parameters.translucencyMap ? "#define USE_TRANSLUCENCYMAP" : "",
 			parameters.envMap ? "#define USE_ENVMAP" : "",
 			parameters.lightMap ? "#define USE_LIGHTMAP" : "",
+			parameters.emissiveMap ? "#define USE_EMISSIVEMAP" : "",
 			parameters.bumpMap ? "#define USE_BUMPMAP" : "",
 			parameters.reflectivityMap ? "#define USE_REFLECTIVITYMAP" : "",
 			parameters.roughnessMap ? "#define USE_ROUGHNESSMAP" : "",
@@ -33978,6 +34200,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 		].join("\n");
 
+	
 		var prefix_fragment = [
 
 			"precision " + _precision + " float;",
@@ -34005,8 +34228,11 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 			parameters.map ? "#define USE_MAP" : "",
 			parameters.opacityMap ? "#define USE_OPACITYMAP" : "",
+			parameters.falloffMap ? "#define USE_FALLOFFMAP" : "",
+			parameters.translucencyMap ? "#define USE_TRANSLUCENCYMAP" : "",
 			parameters.envMap ? "#define USE_ENVMAP" : "",
 			parameters.lightMap ? "#define USE_LIGHTMAP" : "",
+			parameters.emissiveMap ? "#define USE_EMISSIVEMAP" : "",
 			parameters.bumpMap ? "#define USE_BUMPMAP" : "",
 			parameters.reflectivityMap ? "#define USE_REFLECTIVITYMAP" : "",
 			parameters.roughnessMap ? "#define USE_ROUGHNESSMAP" : "",
@@ -34015,10 +34241,9 @@ THREE.WebGLRenderer = function ( parameters ) {
 			parameters.specularMap ? "#define USE_SPECULARMAP" : "",
 			parameters.vertexColors ? "#define USE_COLOR" : "",
 
-			parameters.metal ? "#define METAL" : "",
-			parameters.gloss ? "#define GLOSS" : "",
+			parameters.translucency ? "#define TRANSLUCENCY" : "",
+
 			parameters.falloff ? "#define FALLOFF" : "",
-			parameters.fresnel ? "#define FRESNEL" : "",
 
 			parameters.wrapAround ? "#define WRAP_AROUND" : "",
 			parameters.doubleSided ? "#define DOUBLE_SIDED" : "",
@@ -34248,7 +34473,6 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 			if ( texture.anisotropy > 1 || texture.__oldAnisotropy ) {
 
-				console.log( "maxAnisotropy", _maxAnisotropy );
 				_gl.texParameterf( textureType, _glExtensionTextureFilterAnisotropic.TEXTURE_MAX_ANISOTROPY_EXT, Math.min( texture.anisotropy, _maxAnisotropy ) );
 				texture.__oldAnisotropy = texture.anisotropy;
 
