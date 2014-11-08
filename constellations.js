@@ -26,7 +26,12 @@ var Constll = {
 					  starArrs[0][0].y * scaleFactor,
 					  starArrs[0][0].z * scaleFactor
 					);
-					labels.addLabel(pos, con.abbr);
+					var name = con.abbr;
+
+					if(con.hasOwnProperty('name')){
+						name = con.name;
+					}
+					labels.addLabel(pos, name);
 					// need to draw the label here
 					starArrs.forEach(function(stars){
 						var geometry = new THREE.Geometry();
