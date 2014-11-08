@@ -5,6 +5,7 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
 var stars    = require('./stars.js');
+var lspm     = require('./lspm.js');
 var constll  = require('./constellations.js');
 var labels   = require('./labels.js');
 var shipLoader = require('./ship.js');
@@ -70,6 +71,7 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene, universeScale);
+  lspm.init(scene, universeScale);
   constll.init(scene, camera, universeScale);
 
   // CONTROLS
