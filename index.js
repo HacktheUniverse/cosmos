@@ -73,7 +73,7 @@ var init = function() {
 
   // Lights!
   var light = new THREE.PointLight('#FFFFFF', 1.5);
-  light.position.set(0,0,0.1);
+  light.position.set(0,0,0.3);
   scene.add(light);
   var ambient = new THREE.AmbientLight('#555555');
   scene.add(ambient);
@@ -122,7 +122,7 @@ var render = function() {
   camera.lookAt(steeringCube.position);
   camera.rotation.z = steeringCube.rotation.z;
   // move around
-  steeringCube.translateZ(-2);
+  steeringCube.translateZ(-1.5);
   //steeringCube.rotateY(0.01);
   steeringCube.rotateY(0.0001 * -steerXY.x);
   steeringCube.rotateX(0.0001 * -steerXY.y);
