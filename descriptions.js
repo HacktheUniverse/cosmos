@@ -48,47 +48,47 @@ var descriptions_data = {
     ],
     stars: [
         {
-            "hip": 11767,
+            "hip": "11767",
             "name": "Polaris (North Star)",
             "description": "It’s the brightest star in Ursa Minor. Stars circle around Polaris in the northern hemisphere."
         },{
-            "hip": 91262,
+            "hip": "91262",
             "name": "Vega",
             "description": "Brightest star in Lyra...But, actually it’s less luminous than most stars in Lyra. Vega just looks brighter because it’s closer! It makes the Summer Triangle with Deneb and Altair."
         },{
-            "hip": 71683,
+            "hip": "71683",
             "name": "Alpha Centauri",
             "description": "Closest star to the Sun. It’s the brightest star in Centaurus. Alpha Centauri is not just one star, but three stars."
         },{
-            "hip": 32349,
+            "hip": "32349",
             "name": "Sirius",
             "description": "aka Dog Star. It’s the brightest star in the night sky and it will continue to be the brightest for the next 210,000 years. It’s both luminous and close."
         },{
-            "hip": 35793,
+            "hip": "35793",
             "name": "VY Canis Majoris",
             "description": "Largest known star. It’s ~1500 times the size of the Sun and also very luminous. It’s a red hypergiant star and it will explode as a hypernova any day."
         },{
-            "hip": 27989,
+            "hip": "27989",
             "name": "Betelgeuse",
             "description": "One of the brightest stars in the night sky. It has a reddish color and irregular variability. It’s a red supergiant star and it will explode in about 100,000 years."
         },{
-            "hip": 36850,
+            "hip": "36850",
             "name": "Castor",
             "description": "One Head of the Gemini twins. Despite the apparent closeness and friendship between them, the two stars are actually far away and moving in different directions."
         },{
-            "hip": 37826,
+            "hip": "37826",
             "name": "Pollux",
             "description": "One Head of the Gemini twins. Despite the apparent closeness and friendship between them, the two stars are actually far away and moving in different directions."
         },{
-            "hip": 98298,
+            "hip": "98298",
             "name": "Cygnus X-1",
             "description": "A blackhole looming within Cygnus"
         },{
-            "hip": 102098,
+            "hip": "102098",
             "name": "Deneb",
             "description": "Brightest star in cygnus, also one of the most luminous near-by stars. It’s part of the Summer Triangle along with Vega and Altair."
         },{
-            "hip": 97649,
+            "hip": "97649",
             "name": "Altair",
             "description": "Brightest star in Aquila, also one of the closest visible stars. Altair, Vega, and Deneb form the Summer Triangle."
         },{
