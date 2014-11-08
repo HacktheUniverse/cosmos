@@ -29,21 +29,37 @@ var onError = function ( xhr ) {
 var init = function() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-  camera.position.z = 50;
+  camera.position.z = -3;
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
   container.appendChild( renderer.domElement );
 
+	// use a "lambert" material rather than "basic" for realistic lighting.
+  var sphereGeometry = new THREE.SphereGeometry( 1, 32, 16 ); 
+	var sphereMaterial = new THREE.MeshLambertMaterial( {color: 0x8888ff} ); 
+	var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+	//scene.add(sphere);
+
+  var light = new THREE.PointLight('#FF00FF', 5, 0);
+  light.position.set(10,10,10);
+  scene.add(light);
+  var ambient = new THREE.AmbientLight( 0x334455 );
+  scene.add(ambient);
+
   // GEOMETRY
-  var shipMaterial = new THREE.MeshBasicMaterial( { color: '#AAAAAA' } );
+  var shipMaterial = new THREE.MeshLambertMaterial({
+    color: 0x999999
+  });
   loader.load('./meshes/spaceship.obj', function (object) {
     object.traverse(function(child) {
       if(child instanceof THREE.Mesh) {
         child.material = shipMaterial;
+        child.material.needsUpdate = true;
+        child.material.side = THREE.DoubleSide;
       }
     });
-    //object.position.y = - 80;
+    object.scale.set(0.1,0.1,0.1);
     scene.add(object);
   }, onProgress, onError);
 

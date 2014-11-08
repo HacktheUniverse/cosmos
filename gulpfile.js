@@ -5,7 +5,7 @@ var uglify     = require('gulp-uglify');
 
 var entry_script = './index.js';
 var paths = {
-  scripts: [entry_script,'./*.js']
+  scripts: ['./*.js']
 };
 
 gulp.task('browserify', function() {
