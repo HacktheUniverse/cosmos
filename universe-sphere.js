@@ -6,7 +6,7 @@ var sphereGeom =  new THREE.SphereGeometry(900000, 32, 16);
 var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
 var material = new THREE.MeshBasicMaterial({
   map: texture,
-  transparent: true,
+  transparent: false,
   opacity: 0.7
 });
 material.side = THREE.BackSide;
