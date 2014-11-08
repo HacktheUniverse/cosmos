@@ -17,6 +17,7 @@ var init = function() {
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
+<<<<<<< HEAD
   var geometry = new THREE.BoxGeometry( 1, 1, 1 );
   var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
   cube = new THREE.Mesh( geometry, material );
@@ -25,6 +26,71 @@ var init = function() {
 
   camera.position.z = 5;
 }
+=======
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  camera.position.set(0,150,200);
+  //camera.lookAt(scene.position);
+  camera.lookAt(0,0,0);
+
+  initStars(scene);
+
+
+  // LIGHT
+	light = new THREE.PointLight(0xffffff);
+	light.position.set(0,150,100);
+
+  scene = new THREE.Scene();
+  scene.add(universe);	
+	scene.add(light);
+
+  stats = new Stats();
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.bottom = '0px';
+  stats.domElement.style.zIndex = 100;
+  container.appendChild( stats.domElement );
+};
+
+
+
+var initStars = function(scene){
+	var particles, geometry, materials = [], parameters, i, color, size;
+	
+	geometry = new THREE.Geometry();
+
+	for ( i = 0; i < 20000; i ++ ) {
+		var vertex = new THREE.Vector3();
+		vertex.x = Math.random() * 2000 - 1000;
+		vertex.y = Math.random() * 2000 - 1000;
+		vertex.z = Math.random() * 2000 - 1000;
+
+		geometry.vertices.push( vertex );
+	}
+
+	parameters = [
+		[ [1, 1, 0.5], 5 ],
+		[ [0.95, 1, 0.5], 4 ],
+		[ [0.90, 1, 0.5], 3 ],
+		[ [0.85, 1, 0.5], 2 ],
+		[ [0.80, 1, 0.5], 1 ]
+	];
+
+	for ( i = 0; i < parameters.length; i ++ ) {
+		color = parameters[i][0];
+		size  = parameters[i][1];
+
+		materials[i] = new THREE.PointCloudMaterial( { size: size } );
+
+		particles = new THREE.PointCloud( geometry, materials[i] );
+
+		particles.rotation.x = Math.random() * 6;
+		particles.rotation.y = Math.random() * 6;
+		particles.rotation.z = Math.random() * 6;
+
+		scene.add( particles );
+	}
+};
+
+>>>>>>> 18a0a81cb15b924318b7d48ef80eee315931f334
 
 var render = function() {
   requestAnimationFrame( render );
