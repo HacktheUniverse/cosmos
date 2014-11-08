@@ -2,12 +2,12 @@ var THREE = require('three');
 var labels   = require('./labels.js');
 
 var Constll = {
-	init: function(scene, camera, scaleFactor) {
+	init: function(scene, scaleFactor) {
 		var that = this;
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		var material = new THREE.LineBasicMaterial({
-			color: 0x00ffff
+			color: 0x00aaaa
 		});
 
 		// Opera 8.0+, Firefox, Chrome, Safari
