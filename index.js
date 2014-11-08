@@ -2,18 +2,22 @@ var _     = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
+var scene, camera, renderer, container;
+
+// meshes and objects
+var universe = require('./universe-sphere.js');
+
 var init = function() {
-  window.scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0,150,400);
   //camera.lookAt(scene.position);
   camera.lookAt(0,0,0);
 
-  var universe = require('./universe-sphere.js');
   scene.add(universe);	
 
-  var renderer = new THREE.WebGLRenderer();
-  var container = document.getElementById('container');
+  renderer = new THREE.WebGLRenderer();
+  container = document.getElementById('container');
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
@@ -33,13 +37,8 @@ function animate() {
 	update();
 }
 
-function update() {
-	if ( keyboard.pressed("z") ) 
-	{ 
-		// do something
-	}
-	
-	controls.update();
+function update() {	
+	//controls.update();
 	stats.update();
 }
 
