@@ -34,13 +34,25 @@ div.label {
 }
 
 .label.described{
-    color: #AFC;
     cursor: pointer;
     padding: 3px;
 }
-.label.described:hover{
+.label.described.constellation{
+    color: #AFC;
+}
+.label.described.star{
+    color: #FCA;
+}
+
+
+.label.described.constellation:hover{
     color: #8FA;
 }
+.label.described.star:hover{
+    color: #FA8;
+}
+
+
 .label.described .description{
     display: none;
 }

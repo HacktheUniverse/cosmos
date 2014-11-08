@@ -24,12 +24,12 @@ var Labels = {
 			}
 		});
 	},
-	addLabel: function(vector, name, description, append){
+	addLabel: function(vector, name, description, type, append){
 		var l = {};
 		
 		var text2 = document.createElement('div');
 		if( description ){
-			text2.className = "label described";
+			text2.className = "label described "+type;
 			text2.innerHTML = "<h3>"+name+"</h3><p class='description'>"+description+"</p>";
 			text2.onclick = function(){ 
 				if( this.className.indexOf("selected") === -1){

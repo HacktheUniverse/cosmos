@@ -43,7 +43,7 @@ var Constll = {
 					} else {
 						description = null;
 					}
-					labels.addLabel(pos, name, description);
+					labels.addLabel(pos, name, description, "constellation");
 					
 					
 					

@@ -39,7 +39,7 @@ var Stars = {
 					
 					var description = descriptions.getForStar(star.hip);
 					if( description ){
-						labels.addLabel(vertex, description.name, description.description);
+						labels.addLabel(vertex, description.name, description.description, "star");
 					}
 				});
 				
