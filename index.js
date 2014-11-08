@@ -58,7 +58,7 @@ container.onmousemove = function(e) {
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(55, ww/wh, 0.1, 100000000*universeScale);
+  camera = new THREE.PerspectiveCamera(55, ww/wh, 0.1, 100000000);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(ww, wh);
