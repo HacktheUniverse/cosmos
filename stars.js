@@ -24,16 +24,18 @@ var Stars = {
 				
 				var colors = [];
 				var colorsh = [];
+				var lumsh = [];
 				for( var i = 0; i < geometry.vertices.length; i++ ) {
 					colors[i] = new THREE.Color();
-					colorint = stars[i].color;
-					if( logga > 0 ){
-						console.log(colorint);
-						logga--;
-					}
-					
+					colorint = stars[i].color;					
 					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
+					lumsh[i] = Math.sqrt(stars[i].luminosity);
+					
+					if( logga > 0 ){
+						console.log(lumsh[i]);
+						logga--;
+					}
 				}
 				geometry.colors = colors;
 
@@ -41,7 +43,8 @@ var Stars = {
 				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
 				var sMaterial = new THREE.ShaderMaterial( {
 					attributes: {
-						color: { type: 'v3', value: colorsh }
+						color: { type: 'v3', value: colorsh },
+						luminosity: { type: 'f', value: lumsh }
 					},
 					vertexShader:   document.getElementById('vertexshader').textContent,
 					fragmentShader: document.getElementById('fragmentshader').textContent,
@@ -53,12 +56,13 @@ var Stars = {
 						"images/map_mask.png"
 					),
 					color          : 0xffffff, 
-					size           : 100, 
+					size           : 25, 
 					blending       : THREE.NormalBlending, 
 					transparent    : true, 
 					depthWrite     : false, 
 					vertexColors   : true,
-					sizeAttenuation: true 
+					sizeAttenuation: true,
+					fog            : false
 				});
 				 
 				particles = new THREE.PointCloud(geometry, gMaterial);
