@@ -1,7 +1,7 @@
 'use strict';
 
 var _     = require('lodash');
-var jquery= require('jquery');
+var $     = require('jquery');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
@@ -145,3 +145,12 @@ var render = function() {
 init();
 console.log("rendering");
 render();
+
+$('#button-data').on('click',function() {
+  $('#menu-search').removeClass('active');
+  $('#menu-data').toggleClass('active');
+});
+$('#button-search').on('click',function() {
+  $('#menu-data').removeClass('active');
+  $('#menu-search').toggleClass('active');
+});

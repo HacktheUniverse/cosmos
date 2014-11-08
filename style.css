@@ -102,8 +102,8 @@ div.label {
   width: 63em;
   z-index: 4;
 }
-#button-explore {
-  background: url("./icons/button_toggle.png");
+#button-data {
+  background-image: url("./icons/button_toggle_inactive.png");
   background-size: 100% 100%;
   height: 100%;
   position: absolute;
@@ -111,14 +111,20 @@ div.label {
     left: 0;
   width: 50%;
 }
+#button-data:hover {
+  background-image: url("./icons/button_toggle.png");
+}
 #button-search {
-  background: url("./icons/search_toggle.png");
+  background-image: url("./icons/search_toggle_inactive.png");
   background-size: 100% 100%;
   height: 100%;
   position: absolute;
     top: 0;
     right: 0;
   width: 50%;
+}
+#button-search:hover {
+  background-image: url("./icons/search_toggle.png");
 }
 
 #menu-data {
@@ -133,13 +139,15 @@ div.label {
   height: 25px;
   width: 569px;
   margin-left: -280px;
+  opacity: 0;
   position: absolute;
     top: 15rem;
     left: 50%;
   transition: height 0.5s;
   z-index: 5;
 }
-#menu-data .active,
-#menu-search .active {
+#menu-data.active,
+#menu-search.active {
   height: 273px;
+  opacity: 1;
 }
