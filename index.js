@@ -131,7 +131,7 @@ var render = function() {
   var scr = steeringCube.rotation;
   var xyz_str = "x:"+scp.x.toFixed(3)+", y:"+scp.y.toFixed(3)+", z:"+scp.z.toFixed(3);
   var rot_str = "rx:"+scr.x.toFixed(3)+", ry:"+scr.y.toFixed(3);
-  coords.innerHTML = xyz_str+"<br />"+rot_str;
+  coords.innerHTML = xyz_str+" &nbsp; | &nbsp; "+rot_str;
 
   camera.updateProjectionMatrix();
   labels.updateLabels(camera, [ship]);
