@@ -19,12 +19,24 @@ var Labels = {
 			item.text.style.left = newPos.x + 'px';
 		});
 	},
-	addLabel: function(vector, text, append){
+	addLabel: function(vector, name, description, append){
 		var l = {};
 		
 		var text2 = document.createElement('div');
-		text2.className = "label";
-		text2.innerHTML = text;
+		if( description ){
+			text2.className = "label described";
+			text2.innerHTML = "<h3>"+name+"</h3><p class='description'>"+description+"</p>";
+			text2.onclick = function(){ 
+				if( this.className.indexOf("selected") === -1){
+					this.className = this.className + " selected";	
+				} else {
+					this.className = this.className.substring(0,this.className.length - 9);	
+				}
+			};
+		} else {
+			text2.className = "label";
+			text2.innerHTML = "<h3>"+name+"</h3>";
+		}
 		
 		l.text = text2;
 		l.v = vector;

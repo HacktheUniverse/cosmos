@@ -124,6 +124,11 @@ var render = function() {
   //steeringCube.rotateY(0.01);
   steeringCube.rotateY(0.0001 * -steerXY.x);
   steeringCube.rotateX(0.0001 * -steerXY.y);
+  
+  camera.rotateY(0.0001 * -steerXY.x);
+  camera.rotateX(0.0001 * -steerXY.y);
+  
+  
   console.log(steerXY);
 
   camera.updateProjectionMatrix();
