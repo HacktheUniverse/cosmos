@@ -6,7 +6,8 @@ var init = function() {
   window.scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0,150,400);
-  camera.lookAt(scene.position);
+  //camera.lookAt(scene.position);
+  camera.lookAt(0,0,0);
 
   var universe = require('./universe-sphere.js');
   scene.add(universe);	
