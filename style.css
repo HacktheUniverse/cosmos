@@ -44,7 +44,7 @@ div.label {
     padding: 3px;
 }
 .label.described.constellation{
-    color: #AFC;
+    color: #76BD91; /*#AFC;*/
 }
 .label.described.star{
     color: #FCA;
