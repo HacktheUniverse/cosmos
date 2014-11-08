@@ -7,38 +7,32 @@ window.renderer = null;
 window.camera = null;
 window.cube = null;
 
-var universe = require('./universe-sphere.js');
+//var universe = require('./universe-sphere.js');
 
 var init = function() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+  camera.position.z = 50;
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
-  var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+  // GEOMETRY
+  var geometry = new THREE.BoxGeometry(1,1,1);
   var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
   cube = new THREE.Mesh( geometry, material );
-  scene.add( cube );
-  scene.add(universe);
-
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  camera.position.set(0,150,200);
-  //camera.lookAt(scene.position);
-  camera.lookAt(0,0,0);
+  scene.add(cube);
 
   //initStars(scene);
 
-  scene = new THREE.Scene();
-  scene.add(universe);	
-	//scene.add(light);
-
+  /*
   stats = new Stats();
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.bottom = '0px';
   stats.domElement.style.zIndex = 100;
   container.appendChild( stats.domElement );
+  */
 };
 
 /*
@@ -91,5 +85,5 @@ var render = function() {
 };
 
 init();
-initStars();
+//initStars();
 render();
