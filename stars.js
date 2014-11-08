@@ -26,7 +26,7 @@ var Stars = {
 					geometry.vertices.push(vertex);
 				});
 
-				particles = new THREE.PointCloud(geometry, new THREE.PointCloudMaterial({size: 1}));
+				particles = new THREE.PointCloud(geometry, new THREE.PointCloudMaterial({size: 0.01}));
 
 				scene.add(particles);
 
