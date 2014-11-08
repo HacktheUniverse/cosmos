@@ -2,8 +2,11 @@ require 'json'
 
 
 
+# http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 
 def rgb_color bv_color, luminosity
+  
+  # http://en.wikipedia.org/wiki/Color_index
   temp = 4600 * ( (1/((0.92*bv_color) + 1.7)) + (1/((0.92*bv_color) + 0.62)) )
   
   temp = temp/100
@@ -65,12 +68,33 @@ stars = []
 #maxes = [0,0,0]
 #mins = [0,0,0]
 
+
+i=0
 str_dats.each do |star_dat|
   unless ['#','d','t'].include? star_dat[0]
-    data = star_dat.split(/ +/)
+    data = star_dat.strip.split(/ +/)
+    
+    
+    hipnum = nil
+    name = []
+    poundfound = false
+    data.each do |dat| 
+      if poundfound
+        if dat.match(/HIP/) 
+          hipnum = dat[3..-1]
+        else
+          name << dat
+        end
+      else
+        poundfound = dat.match(/#/)
+      end
+    end
+    name = name.join(' ')
+    name = nil if name == 'Gli'
     
     star = {
-      name: data.last.strip,
+      hip: hipnum || nil,
+      name: name || nil,
       pos: [
         data[1].to_f, data[2].to_f, data[3].to_f
       ],
@@ -82,6 +106,10 @@ str_dats.each do |star_dat|
     #  maxes[iga] = stariga if stariga > maxes[iga]
     #  mins[iga] = stariga if stariga < mins[iga]
     #end
+    
+    #i+=1
+    #puts star.inspect
+    #return if i==10
     
     stars << star
   end
