@@ -17,31 +17,22 @@ var init = function() {
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
-<<<<<<< HEAD
   var geometry = new THREE.BoxGeometry( 1, 1, 1 );
   var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
   cube = new THREE.Mesh( geometry, material );
   scene.add( cube );
   scene.add(universe);
 
-  camera.position.z = 5;
-}
-=======
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.set(0,150,200);
   //camera.lookAt(scene.position);
   camera.lookAt(0,0,0);
 
-  initStars(scene);
-
-
-  // LIGHT
-	light = new THREE.PointLight(0xffffff);
-	light.position.set(0,150,100);
+  //initStars(scene);
 
   scene = new THREE.Scene();
   scene.add(universe);	
-	scene.add(light);
+	//scene.add(light);
 
   stats = new Stats();
   stats.domElement.style.position = 'absolute';
@@ -50,8 +41,7 @@ var init = function() {
   container.appendChild( stats.domElement );
 };
 
-
-
+/*
 var initStars = function(scene){
 	var particles, geometry, materials = [], parameters, i, color, size;
 	
@@ -89,8 +79,7 @@ var initStars = function(scene){
 		scene.add( particles );
 	}
 };
-
->>>>>>> 18a0a81cb15b924318b7d48ef80eee315931f334
+*/
 
 var render = function() {
   requestAnimationFrame( render );
@@ -102,4 +91,5 @@ var render = function() {
 };
 
 init();
+initStars();
 render();
