@@ -6,7 +6,7 @@ require 'json'
 def rgb_color bv_color, luminosity
   temp = 4600 * ( (1/((0.92*bv_color) + 1.7)) + (1/((0.92*bv_color) + 0.62)) )
   
-  puts temp
+  temp = temp/100
   
   if temp <= 66 
       red = 255
@@ -54,7 +54,7 @@ def rgb_color bv_color, luminosity
       end
   end
   
-  [red, green, blue]
+  [red.to_i, green.to_i, blue.to_i]
   
 end
 
@@ -65,8 +65,6 @@ stars = []
 #maxes = [0,0,0]
 #mins = [0,0,0]
 
-
-i=0
 str_dats.each do |star_dat|
   unless ['#','d','t'].include? star_dat[0]
     data = star_dat.split(/ +/)
@@ -86,16 +84,11 @@ str_dats.each do |star_dat|
     #end
     
     stars << star
-    
-    i+=1
-    puts star.inspect
-    return if i == 10
   end
 end
 
 #puts maxes.inspect
 #puts mins.inspect
 
-str_jsons = File.open('stars.json','w')
-str_jsons
+File.open('../stars.json','w'){ |file| file.write stars.to_json }
 
