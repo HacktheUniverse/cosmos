@@ -73,7 +73,7 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene);
-  constll.init(scene);
+  constll.init(scene, camera);
 
   // ORBIT CONTROLS
   //controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -91,7 +91,9 @@ var render = function() {
   steeringCube.translateZ(-0.1);
   steeringCube.rotateY(-0.001);
 
+  constll.updateLabels(camera);
   renderer.render(scene, camera);
+  
   stats.update();
   //controls.update();
 };
