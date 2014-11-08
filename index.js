@@ -1,15 +1,19 @@
 var _ = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
+THREE.OrbitControls = require('./lib/OrbitControls.js');
 
 window.scene = null;
+window.stats = null;
 window.renderer = null;
 window.camera = null;
 window.cube = null;
+window.container = document.getElementById('container');
 
 //var universe = require('./universe-sphere.js');
 
 var init = function() {
+<<<<<<< HEAD
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 	camera.position.z = 50;
@@ -33,6 +37,71 @@ var init = function() {
 	 stats.domElement.style.zIndex = 100;
 	 container.appendChild( stats.domElement );
 	 */
+=======
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+  camera.position.z = 50;
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( renderer.domElement );
+
+  // GEOMETRY
+  var geometry = new THREE.BoxGeometry(1,1,1);
+  var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  cube = new THREE.Mesh( geometry, material );
+  scene.add(cube);
+
+  initStars(scene);
+
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+  stats = new Stats();
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.bottom = '0px';
+  stats.domElement.style.zIndex = 100;
+  container.appendChild( stats.domElement );
+};
+
+
+var initStars = function(scene){
+	var particles, geometry, materials = [], parameters, i, color, size;
+	
+	geometry = new THREE.Geometry();
+
+	for ( i = 0; i < 2000; i ++ ) {
+		var vertex = new THREE.Vector3();
+		vertex.x = Math.random() * 2000 - 1000;
+		vertex.y = Math.random() * 2000 - 1000;
+		vertex.z = Math.random() * 2000 - 1000;
+
+		geometry.vertices.push( vertex );
+	}
+
+	parameters = [
+		[ [1, 1, 0.5], 5 ],
+		[ [0.95, 1, 0.5], 4 ],
+		[ [0.90, 1, 0.5], 3 ],
+		[ [0.85, 1, 0.5], 2 ],
+		[ [0.80, 1, 0.5], 1 ]
+	];
+
+	for ( i = 0; i < parameters.length; i ++ ) {
+		color = parameters[i][0];
+		size  = parameters[i][1];
+
+		materials[i] = new THREE.PointCloudMaterial( { size: size } );
+
+		particles = new THREE.PointCloud( geometry, materials[i] );
+
+		particles.rotation.x = Math.random() * 6;
+		particles.rotation.y = Math.random() * 6;
+		particles.rotation.z = Math.random() * 6;
+
+		scene.add( particles );
+	}
+	console.log("Stars Born");
+>>>>>>> origin/master
 };
 
 
@@ -42,7 +111,13 @@ var render = function() {
 	//cube.rotation.x += 0.1;
 	//cube.rotation.y += 0.1;
 
+<<<<<<< HEAD
 	renderer.render(scene, camera);
+=======
+  renderer.render(scene, camera);
+  stats.update();
+  controls.update();
+>>>>>>> origin/master
 };
 
 init();
