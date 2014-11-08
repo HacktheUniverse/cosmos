@@ -100,7 +100,7 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene, universeScale);
-  //lspm.init(scene, universeScale);
+  lspm.init(scene, universeScale);
   orbits.init(scene, universeScale);
   constll.init(scene, universeScale);
 
