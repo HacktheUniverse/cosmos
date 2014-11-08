@@ -33,9 +33,6 @@ var init = function() {
   container.appendChild( stats.domElement );
 }
 
-init();
-animate();
-
 function animate() {
   requestAnimationFrame( animate );
 	render();		
@@ -50,3 +47,6 @@ function update() {
 function render() {
 	renderer.render( scene, camera );
 }
+
+init();
+animate();
