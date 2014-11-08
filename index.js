@@ -37,7 +37,7 @@ var onError = function ( xhr ) {
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000000 );
+  camera = new THREE.PerspectiveCamera( 65, window.innerWidth/window.innerHeight, 0.1, 1000000 );
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -61,7 +61,7 @@ var init = function() {
 
   // Lights!
   var light = new THREE.PointLight('#FFFFFF', 1, 0);
-  light.position.set(0,0.1,0);
+  light.position.set(0,0,0.1);
   scene.add(light);
   var ambient = new THREE.AmbientLight( 0x334455 );
   scene.add(ambient);
@@ -88,15 +88,16 @@ var init = function() {
       }
     });
     ship = object;
-    ship.scale.set(100,100,100);
-    scene.add(ship);
+    ship.scale.set(0.1,0.1,0.1);
+    ship.translateY(-0.5);
+    cube.add(ship);
   });
   // camera moves with ship
-  camera.position.set(0,2,2);
-  //camera.up = new THREE.Vector3(0,1,0);
-  //camera.lookAt(15,3,200);
+  // camera.position.set(0,2,2);
+  // camera.up = new THREE.Vector3(0,1,0);
+  // camera.lookAt(15,3,200);
 
-  var cubeGeom = new THREE.BoxGeometry(1,1,1);
+  var cubeGeom = new THREE.BoxGeometry(0.1,0.1,0.1);
 	cube = new THREE.Mesh(cubeGeom, shipMaterial);
 	cube.position.set(0, 0, 0);
 	scene.add(cube);
@@ -112,7 +113,7 @@ var init = function() {
 var render = function() {
   requestAnimationFrame( render );
 
-  var relativeCameraOffset = new THREE.Vector3(0,1,3);
+  var relativeCameraOffset = new THREE.Vector3(0,0,0.3);
   var cameraOffset = relativeCameraOffset.applyMatrix4( cube.matrixWorld );
   camera.position.x = cameraOffset.x;
   camera.position.y = cameraOffset.y;
@@ -120,7 +121,6 @@ var render = function() {
   camera.lookAt( cube.position );
   cube.translateZ(-0.1);
   cube.rotateY(-0.001);
-  ship.position.set(cube.position);
 
   renderer.render(scene, camera);
   stats.update();
