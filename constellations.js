@@ -19,7 +19,7 @@ var Constll = {
 				var constll = JSON.parse(http_request.responseText);
 
 				constll.forEach(function(con) {
-
+				//var con = constll[0];
 					var starArrs = con.stars;
 					var pos = new THREE.Vector3(
 					  starArrs[0][0].x * scaleFactor,
