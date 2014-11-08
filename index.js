@@ -24,7 +24,7 @@ var init = function() {
   cube = new THREE.Mesh( geometry, material );
   scene.add(cube);
 
-  //initStars(scene);
+  initStars(scene);
 
   /*
   stats = new Stats();
@@ -35,13 +35,13 @@ var init = function() {
   */
 };
 
-/*
+
 var initStars = function(scene){
 	var particles, geometry, materials = [], parameters, i, color, size;
 	
 	geometry = new THREE.Geometry();
 
-	for ( i = 0; i < 20000; i ++ ) {
+	for ( i = 0; i < 2000; i ++ ) {
 		var vertex = new THREE.Vector3();
 		vertex.x = Math.random() * 2000 - 1000;
 		vertex.y = Math.random() * 2000 - 1000;
@@ -72,8 +72,9 @@ var initStars = function(scene){
 
 		scene.add( particles );
 	}
+	console.log("Stars Born");
 };
-*/
+
 
 var render = function() {
   requestAnimationFrame( render );
@@ -85,5 +86,4 @@ var render = function() {
 };
 
 init();
-//initStars();
 render();
