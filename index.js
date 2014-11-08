@@ -41,15 +41,15 @@ var init = function() {
   container.appendChild(stats.domElement);
 
   // Lights!
-  var light = new THREE.PointLight('#FFFFFF', 1, 0);
+  var light = new THREE.PointLight('#FFFFFF', 1);
   light.position.set(0,0,0.1);
   scene.add(light);
   var ambient = new THREE.AmbientLight( 0x334455 );
   scene.add(ambient);
 	scene.add(universe);
 
-  var cubeMaterial = new THREE.MeshLambertMaterial({
-    color: '#FF0000'
+  var cubeMaterial = new THREE.MeshBasicMaterial({
+    color: '#00FF00'
   });
 
   shipLoader.load(function(shipModel) {
@@ -57,7 +57,7 @@ var init = function() {
   });
 
   // camera moves with ship
-   camera.position.set(0,200,200);
+   camera.position.set(0,20,20);
   // camera.up = new THREE.Vector3(0,1,0);
   // camera.lookAt(15,3,200);
 

@@ -8,9 +8,9 @@ module.exports = {
 
     var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
     var material = new THREE.MeshBasicMaterial({
-      map: texture,
+      //map: texture,
       transparent: true,
-      opacity: 0.7
+      opacity: 0
     });
     material.side = THREE.BackSide;
     var obj = new THREE.Mesh( sphereGeom.clone(), material );

@@ -19,5 +19,7 @@ div.label {
 	font-weight: 100;
 	height: 15px;
 	position: absolute;
+  user-select: none;
+  -webkit-user-select: none;
 	width: 20px;
 }
