@@ -4,7 +4,7 @@ var THREE = require('three');
 
 module.exports = {
   init: function(scaleFactor) {
-    var sphereGeom =  new THREE.SphereGeometry(900000 * scaleFactor, 32, 16); 
+    var sphereGeom =  new THREE.SphereGeometry(90000000 * scaleFactor, 32, 16); 
 
     var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
     var material = new THREE.MeshBasicMaterial({

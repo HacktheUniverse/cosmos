@@ -27,7 +27,7 @@ window.controls = null;
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 1000000*universeScale);
+  camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 100000000*universeScale);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
