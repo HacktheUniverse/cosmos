@@ -15,6 +15,14 @@ var universe = require('./universe-sphere.js').init(universeScale);
 
 var clock = new THREE.Clock();
 
+var startPosition = new THREE.Vector3(0,1,0);
+
+var steering = false;
+var steerXY  = {
+  x: 0,
+  y: 0
+};
+
 THREE.OrbitControls       = require('./lib/OrbitControls.js');
 THREE.FirstPersonControls = require('./lib/FirstPersonControls.js');
 
@@ -26,12 +34,31 @@ window.steeringCube = null;
 window.container = document.getElementById('container');
 window.controls = null;
 
+var ww = window.innerWidth;
+var wh = window.innerHeight;
+
+container.onmousedown = function() { steering = true; };
+container.onmouseup   = function() { steering = false; };
+container.onmousemove = function(e) {
+  if(steering) {
+    steerXY = {
+      x: e.clientX - (ww/2),
+      y: e.clientY - (wh/2)
+    }
+  } else {
+    steerXY = {
+      x: 0,
+      y: 0
+    }
+  }
+}
+
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 100000000*universeScale);
+  camera = new THREE.PerspectiveCamera(65, ww/wh, 0.1, 100000000*universeScale);
 
   renderer = new THREE.WebGLRenderer();
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize(ww, wh);
   container.appendChild( renderer.domElement );
 
   // STATS
@@ -49,31 +76,30 @@ var init = function() {
   scene.add(ambient);
 	scene.add(universe);
 
-  var cubeMaterial = new THREE.MeshBasicMaterial({
-    color: '#00FF00'
-  });
-
-  shipLoader.load(function(shipModel) {
-    steeringCube.add(shipModel);
-    ship = shipModel;
-  });
-
   // camera moves with ship
    camera.position.set(0,20,20);
   // camera.up = new THREE.Vector3(0,1,0);
   // camera.lookAt(15,3,200);
 
   var cubeGeom = new THREE.BoxGeometry(0.01,0.01,0.01);
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: '#00FF00' });
 	steeringCube = new THREE.Mesh(cubeGeom, cubeMaterial);
-	steeringCube.position.set(0, 0, 0);
+	console.log("start",startPosition);
+	steeringCube.position.set(startPosition.x, startPosition.y, startPosition.z);
 	scene.add(steeringCube);
+	console.log("cube",steeringCube);
+
+  shipLoader.load(function(shipModel) {
+    steeringCube.add(shipModel);
+    ship = shipModel;
+  });
 
   // STAR DATA
   stars.init(scene, universeScale);
   constll.init(scene, camera, universeScale);
 
   // CONTROLS
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
+  // controls = new THREE.OrbitControls( camera, renderer.domElement );
   //controls = new THREE.FirstPersonControls(camera);
   //controls.movementSpeed = 1;
   //controls.lookSpeed = 0.125;
@@ -83,24 +109,27 @@ var init = function() {
 var render = function() {
   requestAnimationFrame( render );
 
-  /*
-  var relativeCameraOffset = new THREE.Vector3(0,0,0.3);
+  var relativeCameraOffset = new THREE.Vector3(0,1,3);
   var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
   camera.position.x = cameraOffset.x;
   camera.position.y = cameraOffset.y;
   camera.position.z = cameraOffset.z;
   camera.lookAt(steeringCube.position);
-  steeringCube.translateZ(-0.1);
-  steeringCube.rotateY(-0.001);
-  */
+  // move around
+  steeringCube.translateZ(-2);
+  //steeringCube.rotateY(0.01);
+  steeringCube.rotateY(0.0001 * -steerXY.x);
+  steeringCube.rotateX(0.0001 * -steerXY.y);
+  console.log(steerXY);
 
-  //camera.updateProjectionMatrix();
+  camera.updateProjectionMatrix();
   labels.updateLabels(camera, [ship]);
   renderer.render(scene, camera);
-  
+
   stats.update();
-  controls.update();
+  //controls.update();
 };
 
 init();
+console.log("rendering");
 render();
