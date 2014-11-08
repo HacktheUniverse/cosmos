@@ -2,6 +2,8 @@
 <html lang="en">
     <head>
         <title>Cosmos</title>
+        <link href='http://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <link type="text/css" rel="stylesheet" href="style.css" />
     </head>
     <body>
@@ -10,9 +12,10 @@
 
         <script type="x-shader/x-vertex" id="vertexshader">
             attribute vec3 color;
+            attribute float luminosity;
             varying vec3 vColor;
             void main() {
-                gl_PointSize = 1.0;
+                gl_PointSize = luminosity;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
                 vColor = color;
             }
