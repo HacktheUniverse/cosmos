@@ -9,6 +9,8 @@ def rgb_color bv_color, luminosity
   # http://en.wikipedia.org/wiki/Color_index
   temp = 4600 * ( (1/((0.92*bv_color) + 1.7)) + (1/((0.92*bv_color) + 0.62)) )
   
+  puts temp.inspect
+  
   temp = temp/100
   
   if temp <= 66 
@@ -65,8 +67,6 @@ end
 
 str_dats = File.open('stars.speck','r')
 stars = []
-#maxes = [0,0,0]
-#mins = [0,0,0]
 
 
 i=0
@@ -74,7 +74,7 @@ str_dats.each do |star_dat|
   unless ['#','d','t'].include? star_dat[0]
     data = star_dat.strip.split(/ +/)
     
-    #puts data.inspect
+    puts data.inspect
     
     hipnum = nil
     name = []
@@ -102,15 +102,9 @@ str_dats.each do |star_dat|
       color: rgb_color(data[3].to_f, data[4].to_f)
     }
     
-    #[0,1,2].each do |iga|
-    #  stariga = star[:pos][iga]
-    #  maxes[iga] = stariga if stariga > maxes[iga]
-    #  mins[iga] = stariga if stariga < mins[iga]
-    #end
-    
-    #i+=1
-    #puts star.inspect
-    #return if i==10
+    i+=1
+    puts star.inspect
+    return if i==10
     
     stars << star
   end
