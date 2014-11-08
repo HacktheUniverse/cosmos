@@ -1,6 +1,7 @@
 'use strict';
 
 var _     = require('lodash');
+var jquery= require('jquery');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 

@@ -78,13 +78,68 @@ div.label {
 }
 
 #coords {
-    background: rgba(25,25,25,0.8);
-    border-radius: 5px;
-    color: #FFF;
-    font-size: 1.2rem;
-    padding: 5px;
-    position: absolute;
-      top: 2px;
-      left: 2px;
-    z-index: 3;
+  background: rgba(25,25,25,0.8);
+  border-radius: 5px;
+  color: #FFF;
+  font-size: 1.2rem;
+  padding: 5px;
+  position: absolute;
+    top: 2px;
+    left: 2px;
+  z-index: 3;
+}
+
+
+
+#buttons {
+  cursor: pointer;
+  font-size: 7px;
+  height: 14.8em;
+  margin-left: -31.5em;
+  position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+  width: 63em;
+  z-index: 4;
+}
+#button-explore {
+  background: url("./icons/button_toggle.png");
+  background-size: 100% 100%;
+  height: 100%;
+  position: absolute;
+    top: 0;
+    left: 0;
+  width: 50%;
+}
+#button-search {
+  background: url("./icons/search_toggle.png");
+  background-size: 100% 100%;
+  height: 100%;
+  position: absolute;
+    top: 0;
+    right: 0;
+  width: 50%;
+}
+
+#menu-data {
+  background: url("./icons/menu_data-toggle.png");
+  background-size: 100% 100%;
+}
+#menu-search {
+  background: url("./icons/menu_explore-search.png");
+  background-size: 100% 100%;
+}
+#menu-data, #menu-search {
+  height: 25px;
+  width: 569px;
+  margin-left: -280px;
+  position: absolute;
+    top: 15rem;
+    left: 50%;
+  transition: height 0.5s;
+  z-index: 5;
+}
+#menu-data .active,
+#menu-search .active {
+  height: 273px;
 }
