@@ -6,7 +6,7 @@ var Orbits = {
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		var material = new THREE.LineBasicMaterial({
-			color: 0xffff00
+			color: 0x00ff00
 		});
 
 		// Opera 8.0+, Firefox, Chrome, Safari
@@ -18,33 +18,22 @@ var Orbits = {
 				var orbits = JSON.parse(http_request.responseText);
 
 				orbits.forEach(function(orbitsObj) {
-					/*
-					var starArrs = con.stars;
-					var pos = new THREE.Vector3(
-					  starArrs[0][0].x * scaleFactor,
-					  starArrs[0][0].y * scaleFactor,
-					  starArrs[0][0].z * scaleFactor
-					);
-					var name = con.abbr;
-
-					if(con.hasOwnProperty('name')){
-						name = con.name;
-					}
-					labels.addLabel(pos, name);
-					// need to draw the label here
-					starArrs.forEach(function(stars){
-						var geometry = new THREE.Geometry();
-						
-						stars.forEach(function(star){
-							geometry.vertices.push(
-								new THREE.Vector3(star.x * scaleFactor, star.y * scaleFactor, star.z * scaleFactor)
+					
+					var posArrs = orbitsObj.steps;
+					//console.log(orbitsObj.name);
+					var geometry = new THREE.Geometry();
+					
+					posArrs.forEach(function(pos){
+						geometry.vertices.push(
+								new THREE.Vector3(pos[0] * scaleFactor, pos[1] * scaleFactor, pos[2] * scaleFactor)
 							);
-						});
-						
-						var line = new THREE.Line( geometry, material );
-						scene.add( line );
 					});
-					*/
+					/*geometry.vertices.push(
+						new THREE.Vector3(posArrs[0][0] * scaleFactor, posArrs[0][1] * scaleFactor, posArrs[0][2] * scaleFactor)
+					);*/
+					var line = new THREE.Line( geometry, material );
+					scene.add( line );
+					
 				});
 
 				console.log("Orbits Drawn");
