@@ -5,7 +5,7 @@ var Constll = {
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		var material = new THREE.LineBasicMaterial({
-			color: 0x0000ff
+			color: 0x00ffff
 		});
 
 		// Opera 8.0+, Firefox, Chrome, Safari
