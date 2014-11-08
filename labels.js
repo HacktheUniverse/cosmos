@@ -4,7 +4,7 @@ var Labels = {
 	projector: new THREE.Projector(),
 	toXYCoords: function(pos, camera) {
 		var vector = pos.clone();
-        projector.projectVector(vector, camera);
+        this.projector.projectVector(vector, camera);
         vector.x = (vector.x + 1)/2 * window.innerWidth;
         vector.y = -(vector.y - 1)/2 * window.innerHeight;
         return vector;

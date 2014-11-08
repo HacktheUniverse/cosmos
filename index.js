@@ -91,11 +91,7 @@ var render = function() {
   camera.lookAt(steeringCube.position);
   steeringCube.translateZ(-0.1);
   steeringCube.rotateY(-0.001);
-
-  if(dae) {
-    camera.position.set(dae.position);
-  }
-
+  camera.updateProjectionMatrix();
   labels.updateLabels(camera);
   renderer.render(scene, camera);
   

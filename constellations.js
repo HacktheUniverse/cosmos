@@ -1,4 +1,5 @@
 var THREE = require('three');
+var labels   = require('./labels.js');
 
 var Constll = {
 	init: function(scene) {
