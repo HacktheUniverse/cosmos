@@ -12,16 +12,17 @@
     <div id="controls"></div>
     <div id="coords"></div>
 
-    <script type="x-shader/x-vertex" id="vertexshader">
-        attribute vec3 color;
-        attribute float luminosity;
-        varying vec3 vColor;
-        void main() {
-            gl_PointSize = luminosity;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-            vColor = color;
-        }
-    </script>
+        <audio src="audio/01 - Cosmos Main Title.mp3" autoplay="true"></audio>
+        <script type="x-shader/x-vertex" id="vertexshader">
+            attribute vec3 color;
+            attribute float luminosity;
+            varying vec3 vColor;
+            void main() {
+                gl_PointSize = luminosity;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+                vColor = color;
+            }
+        </script>
 
     <script type="x-shader/x-fragment" id="fragmentshader">
         varying vec3 vColor;
