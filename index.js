@@ -7,6 +7,7 @@ var Stats = require('./lib/Stats.js');
 var stars    = require('./stars.js');
 var constll  = require('./constellations.js');
 var universe = require('./universe-sphere.js');
+var labels   = require('./labels.js');
 var shipLoader = require('./ship.js');
 
 var universeScale = 100;
@@ -20,17 +21,6 @@ window.camera = null;
 window.steeringCube = null;
 window.container = document.getElementById('container');
 window.controls = null;
-
-var onProgress = function ( xhr ) {
-  if ( xhr.lengthComputable ) {
-    var percentComplete = xhr.loaded / xhr.total * 100;
-    console.log( Math.round(percentComplete, 2) + '% downloaded' );
-  }
-};
-
-var onError = function ( xhr ) {
-};
-
 
 var init = function() {
   scene = new THREE.Scene();
@@ -95,7 +85,8 @@ var render = function() {
   steeringCube.rotateY(-0.001);
   */
 
-  constll.updateLabels(camera);
+  camera.updateProjectionMatrix();
+  labels.updateLabels(camera);
   renderer.render(scene, camera);
   
   stats.update();

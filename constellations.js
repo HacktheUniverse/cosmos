@@ -1,16 +1,7 @@
 var THREE = require('three');
+var labels   = require('./labels.js');
 
 var Constll = {
-	labels: [],
-	updateLabels: function(camera){
-		
-		this.labels.forEach(function(item){
-			
-			var newPos = toXYCoords(item.v, camera);
-			item.text.style.top = newPos.y + 'px';
-			item.text.style.left = newPos.x + 'px';
-		});
-	},
 	init: function(scene, camera, scaleFactor) {
 		var that = this;
 		var particles, geometry, materials = [], parameters, i, color, size;
@@ -28,25 +19,14 @@ var Constll = {
 				var constll = JSON.parse(http_request.responseText);
 
 				constll.forEach(function(con) {
-				//con = constll[0];
-				
+
 					var starArrs = con.stars;
-					var l = {};
-					
-					var text2 = document.createElement('div');
-					text2.className = "label";
-					text2.innerHTML = con.abbr;
-					
 					var pos = new THREE.Vector3(
 					  starArrs[0][0].x * scaleFactor,
 					  starArrs[0][0].y * scaleFactor,
 					  starArrs[0][0].z * scaleFactor
 					);
-					
-					l.text = text2;
-					l.v = pos;
-					that.labels.push(l);
-					document.getElementById("container").appendChild(l.text);
+					labels.addLabel(pos, con.abbr);
 					// need to draw the label here
 					starArrs.forEach(function(stars){
 						var geometry = new THREE.Geometry();
@@ -73,13 +53,3 @@ var Constll = {
 };
 
 module.exports = Constll;
-
-var projector = new THREE.Projector();
-function toXYCoords(pos, camera) {
-
-		var vector = pos.clone();
-        projector.projectVector(vector, camera);
-        vector.x = (vector.x + 1)/2 * window.innerWidth;
-        vector.y = -(vector.y - 1)/2 * window.innerHeight;
-        return vector;
-}
