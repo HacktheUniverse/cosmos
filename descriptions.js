@@ -1,7 +1,7 @@
 var descriptions_data = {
     constellations: [
         {
-            "name": "Cassopeia",
+            "name": "Cassiopeia",
             "nickname": null,
             "description": "Visible all year round in the northern hemisphere"
         },{
