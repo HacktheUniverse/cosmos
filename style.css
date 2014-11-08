@@ -1,27 +1,100 @@
 html,body {
-  /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
-  font-family: "Lato";
-  text-shadow: 0px 0px 5px black;
-  font-size: 6px;
-  margin: 0;
-  padding: 0;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: "Lato";
+    text-shadow: 0px 0px 5px black;
+    font-size: 6px;
+    margin: 0;
+    padding: 0;
 }
 #container {
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
     top: 0;
     left: 0;
-  width: 100%;
+    width: 100%;
+    z-index: 1;
 }
 
 div.label {
-  color: #FFF;
-	font-size: 2.2rem;
-	font-weight: 100;
-	height: 15px;
-	position: absolute;
-  user-select: none;
-  -webkit-user-select: none;
-	width: 20px;
+    color: #FFF;
+    font-size: 2.2rem;
+    font-weight: 100;
+    height: 15px;
+    position: absolute;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 20px;
+    z-index: 2;
 }
+
+.label h3{
+    padding: 3px 0px;
+    margin: 0;
+}
+
+.label.described{
+    cursor: pointer;
+    padding: 3px;
+}
+.label.described.constellation{
+    color: #AFC;
+}
+.label.described.star{
+    color: #FCA;
+}
+
+
+.label.described.constellation:hover{
+    color: #8FA;
+}
+.label.described.star:hover{
+    color: #FA8;
+}
+
+
+.label.described .description{
+    display: none;
+}
+.label.described.selected{
+    width: 240px;
+    height: 160px;
+    background-color: rgba(0,0,0,0.7);
+    display: block;
+}
+
+.label.described.selected .description{
+    display: block;
+}
+
+#coords {
+    background: #000;
+    color: #FFF;
+    font-size: 1.5rem;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+#menu {
+  font-family: "Wingdings",
+  height: 24rem;
+  margin: 0 0 0 -12rem;
+  padding: 0;
+  position: absolute;
+    bottom: 8rem;
+    left: 50%;
+  width: 24rem;
+  z-index: 4;
+}
+#menu li {
+  background: rgba(200,150,0,0.3);
+  border: 2px solid rgba(200,150,0,90);
+  border-radius: 1rem;
+  box-sizing: border-box;
+  float: left;
+  height: 12rem;
+  width: 12rem;
+}
+

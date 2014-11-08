@@ -17,7 +17,8 @@ module.exports = {
       });
       ship = object;
       ship.scale.set(0.1,0.1,0.1);
-      ship.translateY(-0.5);
+      ship.translateY(-0.7);
+      ship.translateZ(2.1);
       callback.apply(null, [ship]);
     });
 

@@ -53,10 +53,10 @@ var LSPM = {
 				
 				var gMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_lspm.png"
+						"images/map_mask.png"
 					),
 					color          : 0xffffff, 
-					size           : 30, 
+					size           : 35, 
 					blending       : THREE.NormalBlending, 
 					transparent    : true, 
 					depthWrite     : false, 
@@ -64,9 +64,27 @@ var LSPM = {
 					sizeAttenuation: true,
 					fog            : false
 				});
+				
+				var hMaterial = new THREE.PointCloudMaterial({ 
+					map: THREE.ImageUtils.loadTexture(
+						"images/map_mask_lspm.png"
+					),
+					color          : 0xffffff, 
+					size           : 30, 
+					blending       : THREE.NormalBlending, 
+					transparent    : true, 
+					depthWrite     : false, 
+					vertexColors   : false,
+					sizeAttenuation: true,
+					fog            : false
+				});
 				 
 				particles = new THREE.PointCloud(geometry, gMaterial);
 				scene.add(particles);
+				
+				particles = new THREE.PointCloud(geometry, hMaterial);
+				scene.add(particles);
+				
 				console.log("LSPM Born");
 			}
 		};
