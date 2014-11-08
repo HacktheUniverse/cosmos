@@ -57,10 +57,10 @@ var Stars = {
 */				
 				var gMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_lspm.png"
+						"images/map_mask.png"
 					),
 					color          : 0xffffff, 
-					size           : 25, 
+					size           : 50, 
 					blending       : THREE.NormalBlending, 
 					transparent    : true, 
 					depthWrite     : false, 
@@ -76,7 +76,7 @@ var Stars = {
 					color          : 0xffffff, 
 					size           : 20, 
 					blending       : THREE.NormalBlending, 
-					transparent    : true, 
+					transparent    : false, 
 					depthWrite     : false, 
 					vertexColors   : false,
 					sizeAttenuation: true,

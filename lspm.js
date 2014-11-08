@@ -56,7 +56,7 @@ var LSPM = {
 						"images/map_mask.png"
 					),
 					color          : 0xffffff, 
-					size           : 35, 
+					size           : 75, 
 					blending       : THREE.NormalBlending, 
 					transparent    : true, 
 					depthWrite     : false, 
@@ -72,7 +72,7 @@ var LSPM = {
 					color          : 0xffffff, 
 					size           : 30, 
 					blending       : THREE.NormalBlending, 
-					transparent    : true, 
+					transparent    : false, 
 					depthWrite     : false, 
 					vertexColors   : false,
 					sizeAttenuation: true,
