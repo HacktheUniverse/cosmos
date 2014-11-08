@@ -3,6 +3,7 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 var stars = require('./stars.js');
+var constll = require('./constellations.js');
 
 window.scene = null;
 window.stats = null;
@@ -29,6 +30,7 @@ var init = function() {
   scene.add(cube);
 
   stars.init(scene);
+  constll.init(scene);
 
   controls = new THREE.OrbitControls( camera, renderer.domElement );
 

@@ -7,7 +7,7 @@ var Stars = {
 		geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
-		http_request = new XMLHttpRequest();
+		var http_request = new XMLHttpRequest();
 		http_request.onreadystatechange = function() {
 			if (http_request.readyState === 4) {
 				// Javascript function JSON.parse to parse JSON data
