@@ -15,3 +15,10 @@ canvas {
   width: 100%;
 }
 */
+
+div.label {
+	position: absolute;
+	width: 20px;
+	height: 15px;
+	background: red;
+}
