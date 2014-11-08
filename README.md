@@ -7,9 +7,9 @@ Cosmosis
 - Data Visualization
 - Education
 
-Demo: 10.20.12.165/cosmos
+Demo: http://hacktheuniverse.github.io/cosmos/
 
-Presentation: https://docs.google.com/presentation/d/1pKExnLUkeNP2eFpOiL54bp_6llPu2RKcepp5WGyXRhc/edit#slide=id.g418881921_043
+Presentation: https://docs.google.com/presentation/d/1pKExnLUkeNP2eFpOiL54bp_6llPu2RKcepp5WGyXRhc/edit?usp=sharing
 
 Team Members:
 + Fernando
