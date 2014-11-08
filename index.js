@@ -92,7 +92,7 @@ var init = function() {
   constll.init(scene);
 
   // ORBIT CONTROLS
-  //controls = new THREE.OrbitControls( camera, renderer.domElement );
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
 };
 
 var render = function() {
@@ -107,6 +107,7 @@ var render = function() {
   }
   */
 
+  /*
   var relativeCameraOffset = new THREE.Vector3(0,2,10);
   var cameraOffset = relativeCameraOffset.applyMatrix4( cube.matrixWorld );
   camera.position.x = cameraOffset.x;
@@ -114,10 +115,11 @@ var render = function() {
   camera.position.z = cameraOffset.z;
   camera.lookAt( cube.position );
   cube.translateZ(-0.1);
+  */
 
   renderer.render(scene, camera);
   stats.update();
-  //controls.update();
+  controls.update();
 };
 
 init();
