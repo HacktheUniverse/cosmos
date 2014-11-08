@@ -3,8 +3,13 @@ var _     = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
-var scene = new THREE.Scene();
+window.scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.set(0,150,400);
+camera.lookAt(scene.position);
+
+var universe = require('./universe-sphere.js');
+scene.add(universe);	
 
 var renderer = new THREE.WebGLRenderer();
 var container = document.getElementById('container');
@@ -17,7 +22,7 @@ stats.domElement.style.bottom = '0px';
 stats.domElement.style.zIndex = 100;
 container.appendChild( stats.domElement );
 
-},{"./lib/Stats.js":2,"lodash":3,"three":4}],2:[function(require,module,exports){
+},{"./lib/Stats.js":2,"./universe-sphere.js":5,"lodash":3,"three":4}],2:[function(require,module,exports){
 // stats.js r8 - http://github.com/mrdoob/stats.js
 module.exports = function(){var h,a,n=0,o=0,i=Date.now(),u=i,p=i,l=0,q=1E3,r=0,e,j,f,b=[[16,16,48],[0,255,255]],m=0,s=1E3,t=0,d,k,g,c=[[16,48,16],[0,255,0]];h=document.createElement("div");h.style.cursor="pointer";h.style.width="80px";h.style.opacity="0.9";h.style.zIndex="10001";h.addEventListener("mousedown",function(a){a.preventDefault();n=(n+1)%2;n==0?(e.style.display="block",d.style.display="none"):(e.style.display="none",d.style.display="block")},!1);e=document.createElement("div");e.style.textAlign=
 "left";e.style.lineHeight="1.2em";e.style.backgroundColor="rgb("+Math.floor(b[0][0]/2)+","+Math.floor(b[0][1]/2)+","+Math.floor(b[0][2]/2)+")";e.style.padding="0 0 3px 3px";h.appendChild(e);j=document.createElement("div");j.style.fontFamily="Helvetica, Arial, sans-serif";j.style.fontSize="9px";j.style.color="rgb("+b[1][0]+","+b[1][1]+","+b[1][2]+")";j.style.fontWeight="bold";j.innerHTML="FPS";e.appendChild(j);f=document.createElement("div");f.style.position="relative";f.style.width="74px";f.style.height=
@@ -46156,4 +46161,28 @@ if (typeof exports !== 'undefined') {
   this['THREE'] = THREE;
 }
 
-},{}]},{},[1])
+},{}],5:[function(require,module,exports){
+var THREE = require('three');
+
+// radius, segmentsWidth, segmentsHeight
+var sphereGeom =  new THREE.SphereGeometry( 5, 32, 16 ); 
+
+var material = new THREE.MeshPhongMaterial({
+  // light
+  specular: '#a9fcff',
+  // intermediate
+  color: '#00abb1',
+  // dark
+  emissive: '#006063',
+  shininess: 100 
+});
+
+var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
+//var material = new THREE.MeshBasicMaterial( { map: texture } );
+//material.side = THREE.BackSide;
+var obj = new THREE.Mesh( sphereGeom.clone(), material );
+obj.position.set(-100, 50, 0);
+
+module.exports = obj;
+
+},{"three":4}]},{},[1])
