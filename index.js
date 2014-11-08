@@ -8,6 +8,7 @@ var stars    = require('./stars.js');
 var constll  = require('./constellations.js');
 var labels   = require('./labels.js');
 var shipLoader = require('./ship.js');
+var ship;
 
 var universeScale = 100;
 var universe = require('./universe-sphere.js').init(universeScale);
@@ -54,6 +55,7 @@ var init = function() {
 
   shipLoader.load(function(shipModel) {
     steeringCube.add(shipModel);
+    ship = shipModel;
   });
 
   // camera moves with ship
@@ -93,7 +95,7 @@ var render = function() {
   */
 
   //camera.updateProjectionMatrix();
-  labels.updateLabels(camera);
+  labels.updateLabels(camera, [ship]);
   renderer.render(scene, camera);
   
   stats.update();
