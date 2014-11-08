@@ -49,24 +49,22 @@ var Stars = {
 					fragmentShader: document.getElementById('fragmentshader').textContent,
 					side: THREE.DoubleSide
 				});
-				 
-				 
-				var pMaterial = new THREE.PointCloudMaterial({
-					color: 0xFFFFFF,
-					size: 1,
-					map: THREE.ImageUtils.loadTexture(
-						"images/particle2.png"
-					),
-					blending: THREE.AdditiveBlending,
-					transparent: true,
-					vertexColors: THREE.VertexColors
-				});
 				
-
-				particles = new THREE.PointCloud(geometry, sMaterial);
-
+				var gMaterial = new THREE.PointCloudMaterial({ 
+					map: THREE.ImageUtils.loadTexture(
+						"images/map_mask.png"
+					),
+					color: 0xffffff, 
+					size: 0.1, 
+					blending: THREE.NormalBlending, 
+					transparent:true, 
+					depthWrite: false, 
+					vertexColors: true,
+					sizeAttenuation: true 
+				});
+				 
+				particles = new THREE.PointCloud(geometry, gMaterial);
 				scene.add(particles);
-
 				console.log("Stars Born");
 			}
 		};
