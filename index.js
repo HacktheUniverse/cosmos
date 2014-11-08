@@ -50,8 +50,8 @@ container.onmousemove = function(e) {
     };
   } else {
     steerXY = {
-      x: 0,
-      y: 0
+      x: steerXY.x / 1.1,
+      y: steerXY.y / 1.1
     };
   }
 };
