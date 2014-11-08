@@ -4,10 +4,10 @@ var Labels = {
 	projector: new THREE.Projector(),
 	toXYCoords: function(pos, camera) {
 		var vector = pos.clone();
-        this.projector.projectVector(vector, camera);
-        vector.x = (vector.x + 1)/2 * window.innerWidth;
-        vector.y = -(vector.y - 1)/2 * window.innerHeight;
-        return vector;
+    this.projector.projectVector(vector, camera);
+    vector.x =  (vector.x + 1)/2 * window.innerWidth;
+    vector.y = -(vector.y - 1)/2 * window.innerHeight;
+    return vector;
 	},
 	labels: [],
 	updateLabels: function(camera, intersects){
@@ -15,7 +15,7 @@ var Labels = {
 		this.labels.forEach(function(item){
 			
 			var newPos = that.toXYCoords(item.v, camera);
-			item.text.style.top = newPos.y + 'px';
+			item.text.style.top  = newPos.y + 'px';
 			item.text.style.left = newPos.x + 'px';
 		});
 	},
