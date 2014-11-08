@@ -2,7 +2,8 @@ var _     = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
-var scene, camera, renderer, container;
+window.scene = null;
+var camera, renderer, container, light;
 
 // meshes and objects
 var universe = require('./universe-sphere.js');
@@ -15,6 +16,11 @@ var init = function() {
   camera.lookAt(0,0,0);
 
   scene.add(universe);	
+
+  // LIGHT
+	light = new THREE.PointLight(0xffffff);
+	light.position.set(0,150,100);
+	scene.add(light);
 
   renderer = new THREE.WebGLRenderer();
   container = document.getElementById('container');
@@ -32,7 +38,7 @@ init();
 animate();
 
 function animate() {
-    requestAnimationFrame( animate );
+  requestAnimationFrame( animate );
 	render();		
 	update();
 }
