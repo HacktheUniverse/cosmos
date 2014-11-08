@@ -1,20 +1,15 @@
 var THREE = require('three');
 
 // radius, segmentsWidth, segmentsHeight
-var sphereGeom =  new THREE.SphereGeometry( 20, 32, 16 ); 
-var material = new THREE.MeshPhongMaterial({
-  // light
-  specular: '#a9fcff',
-  // intermediate
-  color: '#00abb1',
-  // dark
-  emissive: '#006063',
-  shininess: 100 
-});
+var sphereGeom =  new THREE.SphereGeometry(9000, 32, 16); 
 
 var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
-//var material = new THREE.MeshBasicMaterial( { map: texture } );
-//material.side = THREE.BackSide;
+var material = new THREE.MeshBasicMaterial({
+  map: texture,
+  transparent: true,
+  opacity: 0.7
+});
+material.side = THREE.BackSide;
 var obj = new THREE.Mesh( sphereGeom.clone(), material );
 obj.position.set(0, 0, 0);
 

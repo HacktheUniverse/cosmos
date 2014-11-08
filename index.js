@@ -33,7 +33,7 @@ var universe = require('./universe-sphere.js');
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000 );
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -79,8 +79,13 @@ var init = function() {
   });
   // camera moves with ship
   camera.position.set(0,2,2);
-  camera.up = new THREE.Vector3(0,1,0);
-  camera.lookAt(15,3,200);
+  //camera.up = new THREE.Vector3(0,1,0);
+  //camera.lookAt(15,3,200);
+
+  var cubeGeom = new THREE.CubeGeometry(5, 5, 5);
+	cube = new THREE.Mesh(cubeGeom, shipMaterial);
+	cube.position.set(0, 0, 0);
+	scene.add(cube);
 
   // STAR DATA
   stars.init(scene);
@@ -96,9 +101,20 @@ var render = function() {
   //cube.rotation.x += 0.1;
   //cube.rotation.y += 0.1;
 
+  /*
   if(dae) {
     camera.position.set(dae.position);
   }
+  */
+
+  var relativeCameraOffset = new THREE.Vector3(0,2,10);
+  var cameraOffset = relativeCameraOffset.applyMatrix4( cube.matrixWorld );
+  camera.position.x = cameraOffset.x;
+  camera.position.y = cameraOffset.y;
+  camera.position.z = cameraOffset.z;
+  camera.lookAt( cube.position );
+  cube.translateZ(-0.1);
+
   renderer.render(scene, camera);
   stats.update();
   //controls.update();
