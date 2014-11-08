@@ -75,7 +75,7 @@ var init = function() {
   var light = new THREE.PointLight('#FFFFFF', 1.5);
   light.position.set(0,0,0.3);
   scene.add(light);
-  var ambient = new THREE.AmbientLight('#555555');
+  var ambient = new THREE.AmbientLight('#292725');
   scene.add(ambient);
 	scene.add(universe);
 
@@ -85,7 +85,7 @@ var init = function() {
   // camera.lookAt(15,3,200);
 
   var cubeGeom = new THREE.BoxGeometry(0.01,0.01,0.01);
-  var cubeMaterial = new THREE.MeshBasicMaterial({ color: '#00FF00' });
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: '#4488BB' });
 	steeringCube = new THREE.Mesh(cubeGeom, cubeMaterial);
 	console.log("start",startPosition);
 	steeringCube.position.set(startPosition.x, startPosition.y, startPosition.z);

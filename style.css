@@ -39,9 +39,9 @@ div.label {
     margin: 0;
 }
 
-.label.described{
+.label.described {
     cursor: pointer;
-    padding: 3px;
+    padding: 6px;
 }
 .label.described.constellation{
     color: #76BD91; /*#AFC;*/
@@ -59,17 +59,18 @@ div.label {
 }
 
 
-.label.described .description{
+.label.described .description {
     display: none;
 }
-.label.described.selected{
+.label.described.selected {
     background-color: rgba(20,50,60,0.7);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(100,200,200,0.5);
     display: block;
     height: 160px;
-    padding: 10px;
-    width: 240px;
+    overflow: hidden;
+    transition: width 0.2s, height 0.3s;
+    width: 280px;
 }
 
 .label.described.selected .description{
