@@ -57,7 +57,7 @@ container.onmousemove = function(e) {
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(65, ww/wh, 0.1, 100000000*universeScale);
+  camera = new THREE.PerspectiveCamera(55, ww/wh, 0.1, 100000000*universeScale);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(ww, wh);
@@ -113,7 +113,7 @@ var init = function() {
 var render = function() {
   requestAnimationFrame( render );
 
-  var relativeCameraOffset = new THREE.Vector3(0,1,3);
+  var relativeCameraOffset = new THREE.Vector3(0,0,0.2);
   var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
   camera.position.x = cameraOffset.x;
   camera.position.y = cameraOffset.y;
