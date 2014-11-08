@@ -13,11 +13,16 @@ var Stars = {
 				// Javascript function JSON.parse to parse JSON data
 				var stars = JSON.parse(http_request.responseText);
 
+				var logga = true;
 				stars.forEach(function(star) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0];
 					vertex.y = star.pos[1];
 					vertex.z = star.pos[2];
+					if( logga ){
+						console.log(vertex);
+						logga = false;
+					}
 					geometry.vertices.push(vertex);
 				});
 

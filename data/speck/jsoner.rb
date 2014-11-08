@@ -74,6 +74,7 @@ str_dats.each do |star_dat|
   unless ['#','d','t'].include? star_dat[0]
     data = star_dat.strip.split(/ +/)
     
+    #puts data.inspect
     
     hipnum = nil
     name = []
@@ -96,9 +97,9 @@ str_dats.each do |star_dat|
       hip: hipnum || nil,
       name: name || nil,
       pos: [
-        data[1].to_f, data[2].to_f, data[3].to_f
+        data[0].to_f, data[1].to_f, data[2].to_f
       ],
-      color: rgb_color(data[4].to_f, data[5].to_f)
+      color: rgb_color(data[3].to_f, data[4].to_f)
     }
     
     #[0,1,2].each do |iga|
