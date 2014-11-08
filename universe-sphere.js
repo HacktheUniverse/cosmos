@@ -1,7 +1,7 @@
 var THREE = require('three');
 
 // radius, segmentsWidth, segmentsHeight
-var sphereGeom =  new THREE.SphereGeometry( 10, 32, 16 ); 
+var sphereGeom =  new THREE.SphereGeometry( 20, 32, 16 ); 
 var material = new THREE.MeshPhongMaterial({
   // light
   specular: '#a9fcff',

@@ -2,6 +2,7 @@ html,body {
   margin: 0;
   padding: 0;
 }
+/*
 #container {
   height: 100%;
   position: absolute;
@@ -9,3 +10,8 @@ html,body {
     left: 0;
   width: 100%;
 }
+canvas {
+  height: 100%;
+  width: 100%;
+}
+*/
