@@ -1,7 +1,7 @@
 var THREE = require('three');
 
 // radius, segmentsWidth, segmentsHeight
-var sphereGeom =  new THREE.SphereGeometry(9000, 32, 16); 
+var sphereGeom =  new THREE.SphereGeometry(900000, 32, 16); 
 
 var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
 var material = new THREE.MeshBasicMaterial({
