@@ -26,6 +26,26 @@ html,body {
     left: 0;
   z-index: 3;
 }
+#menu {
+  font-family: "Wingdings",
+  height: 24rem;
+  margin: 0 0 0 -12rem;
+  padding: 0;
+  position: absolute;
+    bottom: 8rem;
+    left: 50%;
+  width: 24rem;
+  z-index: 4;
+}
+#menu li {
+  background: rgba(200,150,0,0.3);
+  border: 2px solid rgba(200,150,0,90);
+  border-radius: 1rem;
+  box-sizing: border-box;
+  float: left;
+  height: 12rem;
+  width: 12rem;
+}
 
 div.label {
   color: #FFF;
