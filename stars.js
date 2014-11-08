@@ -55,7 +55,7 @@ var Stars = {
 						"images/map_mask.png"
 					),
 					color: 0xffffff, 
-					size: 0.1, 
+					size: 0.1, // SQRT of Luminosity 
 					blending: THREE.NormalBlending, 
 					transparent:true, 
 					depthWrite: false, 
