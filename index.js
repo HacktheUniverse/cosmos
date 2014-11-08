@@ -28,13 +28,14 @@ var steerXY  = {
 THREE.OrbitControls       = require('./lib/OrbitControls.js');
 THREE.FirstPersonControls = require('./lib/FirstPersonControls.js');
 
-window.scene = null;
-window.stats = null;
+window.scene    = null;
+window.stats    = null;
 window.renderer = null;
-window.camera = null;
+window.camera   = null;
 window.steeringCube = null;
-window.container = document.getElementById('container');
+window.container= document.getElementById('container');
 window.controls = null;
+window.coords   = document.getElementById('coords');
 
 var ww = window.innerWidth;
 var wh = window.innerHeight;
@@ -124,7 +125,12 @@ var render = function() {
   //steeringCube.rotateY(0.01);
   steeringCube.rotateY(0.0001 * -steerXY.x);
   steeringCube.rotateX(0.0001 * -steerXY.y);
-  console.log(steerXY);
+
+  var scp = steeringCube.position;
+  var scr = steeringCube.rotation;
+  var xyz_str = "x:"+scp.x.toFixed(3)+", y:"+scp.y.toFixed(3)+", z:"+scp.z.toFixed(3);
+  var rot_str = "rx:"+scr.x.toFixed(3)+", ry:"+scr.y.toFixed(3);
+  coords.innerHTML = xyz_str+"<br />"+rot_str;
 
   camera.updateProjectionMatrix();
   labels.updateLabels(camera, [ship]);
