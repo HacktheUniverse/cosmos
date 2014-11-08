@@ -52,3 +52,5 @@ var render = function() {
 
 init();
 render();
+
+render();
