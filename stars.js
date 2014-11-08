@@ -12,21 +12,58 @@ var Stars = {
 			if (http_request.readyState === 4) {
 				// Javascript function JSON.parse to parse JSON data
 				var stars = JSON.parse(http_request.responseText);
-
-				var logga = true;
+				
+				var logga = 10;
 				stars.forEach(function(star) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0];
 					vertex.y = star.pos[1];
 					vertex.z = star.pos[2];
-					if( logga ){
-						console.log(vertex);
-						logga = false;
-					}
-					geometry.vertices.push(vertex);
+					geometry.vertices.push(vertex);		
 				});
+				
+				var colors = [];
+				var colorsh = [];
+				for( var i = 0; i < geometry.vertices.length; i++ ) {
+					colors[i] = new THREE.Color();
+					colorint = stars[i].color;
+					if( logga > 0 ){
+						console.log(colorint);
+						logga--;
+					}
+					
+					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
+					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
+				}
+				geometry.colors = colors;
+				
+				
+				
 
-				particles = new THREE.PointCloud(geometry, new THREE.PointCloudMaterial({size: 0.01}));
+				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
+				var sMaterial = new THREE.ShaderMaterial( {
+					attributes: {
+						color: { type: 'v3', value: colorsh }
+					},
+					vertexShader:   document.getElementById('vertexshader').textContent,
+					fragmentShader: document.getElementById('fragmentshader').textContent,
+					side: THREE.DoubleSide
+				});
+				 
+				 
+				var pMaterial = new THREE.PointCloudMaterial({
+					color: 0xFFFFFF,
+					size: 1,
+					map: THREE.ImageUtils.loadTexture(
+						"images/particle2.png"
+					),
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					vertexColors: THREE.VertexColors
+				});
+				
+
+				particles = new THREE.PointCloud(geometry, sMaterial);
 
 				scene.add(particles);
 
