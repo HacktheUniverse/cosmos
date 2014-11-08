@@ -7,6 +7,7 @@ var Stats = require('./lib/Stats.js');
 var stars    = require('./stars.js');
 var constll  = require('./constellations.js');
 var universe = require('./universe-sphere.js');
+var labels   = require('./labels.js');
 var shipLoader = require('./ship.js');
 
 THREE.OrbitControls = require('./lib/OrbitControls.js');
@@ -90,8 +91,8 @@ var render = function() {
   camera.lookAt(steeringCube.position);
   steeringCube.translateZ(-0.1);
   steeringCube.rotateY(-0.001);
-
-  constll.updateLabels(camera);
+  camera.updateProjectionMatrix();
+  labels.updateLabels(camera);
   renderer.render(scene, camera);
   
   stats.update();
