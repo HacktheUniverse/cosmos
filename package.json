@@ -1,0 +1,35 @@
+{
+  "name": "partigl",
+  "version": "1.0.0",
+  "description": "Partiview file viewer in WebGL, see readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bgun/partigl.git"
+  },
+  "keywords": [
+    "webgl",
+    "partiview",
+    "hacktheuniverse"
+  ],
+  "author": "Ben Gundersen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bgun/partigl/issues"
+  },
+  "homepage": "https://github.com/bgun/partigl",
+  "devDependencies": {
+    "gulp": "^3.8.9",
+    "gulp-browserify": "^0.5.0",
+    "gulp-concat": "^2.4.1",
+    "gulp-todo": "^1.0.0",
+    "gulp-uglify": "^1.0.1"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "three": "^0.66.7"
+  }
+}
