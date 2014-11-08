@@ -67,12 +67,12 @@ var LSPM = {
 				
 				var hMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_lspm.png"
+						"images/map_mask_orb.png"
 					),
 					color          : 0xffffff, 
 					size           : 30, 
 					blending       : THREE.NormalBlending, 
-					transparent    : false, 
+					transparent    : true, 
 					depthWrite     : false, 
 					vertexColors   : false,
 					sizeAttenuation: true,
