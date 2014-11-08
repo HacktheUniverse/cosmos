@@ -32,10 +32,14 @@ var Labels = {
 			text2.className = "label described "+type;
 			text2.innerHTML = "<h3>"+name+"</h3><p class='description'>"+description+"</p>";
 			text2.onclick = function(){ 
-				if( this.className.indexOf("selected") === -1){
+				var positiveSelect = this.className.indexOf("selected") === -1;
+				Array.prototype.forEach.call(document.getElementsByClassName("selected"), function(el) {
+					el.className = el.className.substring(0,el.className.length - 9);	
+				});
+				if( positiveSelect ){
 					this.className = this.className + " selected";	
 				} else {
-					this.className = this.className.substring(0,this.className.length - 9);	
+					this.className = this.className.split(" ").filter(function(clazz){ return clazz !== "selected"; }).join(" ");
 				}
 			};
 		} else {
