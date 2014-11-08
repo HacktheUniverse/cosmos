@@ -37,6 +37,7 @@ var Constll = {
 					var text2 = document.createElement('div');
 					text2.className = "label";
 					text2.innerHTML = con.abbr;
+					console.log(con.abbr);
 					
 					var pos = new THREE.Vector3(starArrs[0][0].x, starArrs[0][0].y, starArrs[0][0].z);
 					
