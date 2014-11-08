@@ -5,14 +5,20 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 
 var stars    = require('./stars.js');
+var lspm     = require('./lspm.js');
 var constll  = require('./constellations.js');
-var universe = require('./universe-sphere.js');
 var labels   = require('./labels.js');
+var orbits   = require('./orbits.js');
 var shipLoader = require('./ship.js');
+var ship;
 
 var universeScale = 100;
+var universe = require('./universe-sphere.js').init(universeScale);
 
-THREE.OrbitControls = require('./lib/OrbitControls.js');
+var clock = new THREE.Clock();
+
+THREE.OrbitControls       = require('./lib/OrbitControls.js');
+THREE.FirstPersonControls = require('./lib/FirstPersonControls.js');
 
 window.scene = null;
 window.stats = null;
@@ -24,7 +30,7 @@ window.controls = null;
 
 var init = function() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera( 65, window.innerWidth/window.innerHeight, 0.1, 1000000 );
+  camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 100000000*universeScale);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -38,23 +44,24 @@ var init = function() {
   container.appendChild(stats.domElement);
 
   // Lights!
-  var light = new THREE.PointLight('#FFFFFF', 1, 0);
+  var light = new THREE.PointLight('#FFFFFF', 1);
   light.position.set(0,0,0.1);
   scene.add(light);
   var ambient = new THREE.AmbientLight( 0x334455 );
   scene.add(ambient);
 	scene.add(universe);
 
-  var cubeMaterial = new THREE.MeshLambertMaterial({
-    color: '#FF0000'
+  var cubeMaterial = new THREE.MeshBasicMaterial({
+    color: '#00FF00'
   });
 
   shipLoader.load(function(shipModel) {
     steeringCube.add(shipModel);
+    ship = shipModel;
   });
 
   // camera moves with ship
-   camera.position.set(0,2,2);
+   camera.position.set(0,20,20);
   // camera.up = new THREE.Vector3(0,1,0);
   // camera.lookAt(15,3,200);
 
@@ -65,10 +72,16 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene, universeScale);
-  constll.init(scene, camera, universeScale);
+  lspm.init(scene, universeScale);
+  orbits.init(scene, universeScale);
+  constll.init(scene, universeScale);
 
-  // ORBIT CONTROLS
+  // CONTROLS
   controls = new THREE.OrbitControls( camera, renderer.domElement );
+  //controls = new THREE.FirstPersonControls(camera);
+  //controls.movementSpeed = 1;
+  //controls.lookSpeed = 0.125;
+  //controls.lookVertical = true;
 };
 
 var render = function() {
@@ -85,8 +98,8 @@ var render = function() {
   steeringCube.rotateY(-0.001);
   */
 
-  camera.updateProjectionMatrix();
-  labels.updateLabels(camera);
+  //camera.updateProjectionMatrix();
+  labels.updateLabels(camera, [ship]);
   renderer.render(scene, camera);
   
   stats.update();

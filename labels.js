@@ -10,7 +10,7 @@ var Labels = {
         return vector;
 	},
 	labels: [],
-	updateLabels: function(camera){
+	updateLabels: function(camera, intersects){
 		var that = this;
 		this.labels.forEach(function(item){
 			
