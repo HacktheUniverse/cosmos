@@ -1,4 +1,6 @@
 var THREE = require('three');
+var labels   = require('./labels.js');
+var descriptions = require('./descriptions.js');
 
 var Stars = {
 	init: function(scene, scaleFactor) {
@@ -14,33 +16,35 @@ var Stars = {
 				var stars = JSON.parse(http_request.responseText);
 				
 				var logga = 10;
-				stars.forEach(function(star) {
+				var colors = [];
+				var colorsh = [];
+				var lumsh = [];
+				stars.forEach(function(star, i) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0] * scaleFactor;
 					vertex.y = star.pos[1] * scaleFactor;
 					vertex.z = star.pos[2] * scaleFactor;
 					geometry.vertices.push(vertex);		
-				});
-				
-				var colors = [];
-				var colorsh = [];
-				var lumsh = [];
-				for( var i = 0; i < geometry.vertices.length; i++ ) {
+					
 					colors[i] = new THREE.Color();
-					colorint = stars[i].color;					
+					colorint = star.color;					
 					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
-					lumsh[i] = Math.sqrt(stars[i].luminosity);
+					lumsh[i] = Math.sqrt(star.luminosity);
 					
 					if( logga > 0 ){
 						console.log(lumsh[i]);
 						logga--;
 					}
-				}
+					
+					var description = descriptions.getForStar(star.hip);
+					if( description ){
+						labels.addLabel(vertex, description.name, description.description, "star");
+					}
+				});
+				
 				geometry.colors = colors;
 
-
-				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
 				var sMaterial = new THREE.ShaderMaterial( {
 					attributes: {
 						color: { type: 'v3', value: colorsh },

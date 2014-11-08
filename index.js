@@ -47,14 +47,14 @@ container.onmousemove = function(e) {
     steerXY = {
       x: e.clientX - (ww/2),
       y: e.clientY - (wh/2)
-    }
+    };
   } else {
     steerXY = {
       x: 0,
       y: 0
-    }
+    };
   }
-}
+};
 
 var init = function() {
   scene = new THREE.Scene();
