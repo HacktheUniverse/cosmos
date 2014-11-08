@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Cosmos</title>
-        <link href='http://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div id="container"></div>
-        <div id="controls"></div>
+<meta charset="utf-8">
+<head>
+  <title>Cosmos</title>
+  <link href='http://fonts.googleapis.com/css?family=Rajdhani' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="container"></div>
+    <div id="controls"></div>
+    <div id="coords"></div>
+    <div id="buttons">
+      <div id="button-data"></div>
+      <div id="button-search"></div>
+    </div>
+    <div id="menu-data" class="menu"></div>
+    <div id="menu-search"  class="menu"></div>
 
+        <audio src="audio/01 - Cosmos Main Title.mp3" autoplay="true"></audio>
         <script type="x-shader/x-vertex" id="vertexshader">
             attribute vec3 color;
             attribute float luminosity;
@@ -21,12 +30,12 @@
             }
         </script>
 
-        <script type="x-shader/x-fragment" id="fragmentshader">
-            varying vec3 vColor;
-            void main() {
-                gl_FragColor = vec4( vColor, 1.0 ); // TODO: Do Alpha by Distance?
-            }
-        </script>
-        <script src="./bundle.js"></script>
-    </body>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        varying vec3 vColor;
+        void main() {
+            gl_FragColor = vec4( vColor, 1.0 ); // TODO: Do Alpha by Distance?
+        }
+    </script>
+    <script src="./bundle.js"></script>
+</body>
 </html>

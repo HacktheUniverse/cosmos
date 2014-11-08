@@ -6,7 +6,7 @@ var Orbits = {
 		var particles, geometry, materials = [], parameters, i, color, size;
 
 		var material = new THREE.LineBasicMaterial({
-			color: 0x00ff00
+			color: '#00C362'
 		});
 
 		// Opera 8.0+, Firefox, Chrome, Safari

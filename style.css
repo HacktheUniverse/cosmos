@@ -1,27 +1,153 @@
 html,body {
-  /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
-  font-family: "Lato";
-  text-shadow: 0px 0px 5px black;
-  font-size: 6px;
-  margin: 0;
-  padding: 0;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    font-family: "Lato";
+    text-shadow: 0px 0px 5px black;
+    font-size: 10px;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+}
+body {
+  overflow: auto;
 }
 #container {
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
     top: 0;
     left: 0;
-  width: 100%;
+    width: 100%;
+    z-index: 1;
 }
 
 div.label {
+    color: #FFF;
+    font-size: 1.3rem;
+    font-weight: 100;
+    height: 15px;
+    position: absolute;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 20px;
+    z-index: 2;
+}
+
+.label h3{
+    padding: 3px 0px;
+    margin: 0;
+}
+
+.label.described {
+    cursor: pointer;
+    padding: 6px;
+}
+.label.described.constellation{
+    color: #76BD91; /*#AFC;*/
+}
+.label.described.star{
+    color: #FCA;
+}
+
+
+.label.described.constellation:hover{
+    color: #8FA;
+}
+.label.described.star:hover{
+    color: #FA8;
+}
+
+
+.label.described .description {
+    display: none;
+}
+.label.described.selected {
+    background-color: rgba(20,50,60,0.7);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(100,200,200,0.5);
+    display: block;
+    height: 160px;
+    overflow: hidden;
+    transition: width 0.2s, height 0.3s;
+    width: 280px;
+}
+
+.label.described.selected .description{
+    display: block;
+}
+
+#coords {
+  background: rgba(25,25,25,0.8);
+  border-radius: 5px;
   color: #FFF;
-	font-size: 2.2rem;
-	font-weight: 100;
-	height: 15px;
-	position: absolute;
-  user-select: none;
-  -webkit-user-select: none;
-	width: 20px;
+  font-size: 1.2rem;
+  padding: 5px;
+  position: absolute;
+    top: 2px;
+    left: 2px;
+  z-index: 3;
+}
+
+
+
+#buttons {
+  cursor: pointer;
+  font-size: 7px;
+  height: 14.8em;
+  margin-left: -31.5em;
+  position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+  width: 63em;
+  z-index: 4;
+}
+#button-data {
+  background-image: url("./icons/button_toggle_inactive.png");
+  background-size: 100% 100%;
+  height: 100%;
+  position: absolute;
+    top: 0;
+    left: 0;
+  width: 50%;
+}
+#button-data:hover {
+  background-image: url("./icons/button_toggle.png");
+}
+#button-search {
+  background-image: url("./icons/search_toggle_inactive.png");
+  background-size: 100% 100%;
+  height: 100%;
+  position: absolute;
+    top: 0;
+    right: 0;
+  width: 50%;
+}
+#button-search:hover {
+  background-image: url("./icons/search_toggle.png");
+}
+
+#menu-data {
+  background: url("./icons/menu_data-toggle.png");
+  background-size: 100% 100%;
+}
+#menu-search {
+  background: url("./icons/menu_explore-search.png");
+  background-size: 100% 100%;
+}
+#menu-data, #menu-search {
+  height: 25px;
+  width: 569px;
+  margin-left: -280px;
+  opacity: 0;
+  position: absolute;
+    top: 15rem;
+    left: 50%;
+  transition: height 0.5s;
+  z-index: 5;
+}
+#menu-data.active,
+#menu-search.active {
+  height: 273px;
+  opacity: 1;
 }
