@@ -3,6 +3,9 @@ var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 var stars = require('./stars.js');
+//window.spaceshipJson = require('./meshes/spaceship.object');
+THREE.OBJLoader = require('./lib/OBJLoader.js');
+var loader = new THREE.OBJLoader();
 
 window.scene = null;
 window.stats = null;
@@ -10,6 +13,16 @@ window.renderer = null;
 window.camera = null;
 window.cube = null;
 window.container = document.getElementById('container');
+
+var onProgress = function ( xhr ) {
+  if ( xhr.lengthComputable ) {
+    var percentComplete = xhr.loaded / xhr.total * 100;
+    console.log( Math.round(percentComplete, 2) + '% downloaded' );
+  }
+};
+
+var onError = function ( xhr ) {
+};
 
 //var universe = require('./universe-sphere.js');
 
@@ -23,10 +36,19 @@ var init = function() {
   container.appendChild( renderer.domElement );
 
   // GEOMETRY
-  var geometry = new THREE.BoxGeometry(1,1,1);
-  var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  var geometry = new THREE.BoxGeometry(10,10,10);
+  var material = new THREE.MeshBasicMaterial( { color: '#00ff00' } );
   cube = new THREE.Mesh( geometry, material );
-  scene.add(cube);
+  //scene.add(cube);
+  loader.load('./meshes/spaceship.obj', function (object) {
+    object.traverse(function(child) {
+      if(child instanceof THREE.Mesh) {
+        child.material = material;
+      }
+    });
+    object.position.y = - 80;
+    scene.add(object);
+  }, onProgress, onError);
 
   stars.init(scene);
 
@@ -51,6 +73,4 @@ var render = function() {
 };
 
 init();
-render();
-
 render();
