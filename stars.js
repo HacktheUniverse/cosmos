@@ -23,6 +23,7 @@ var Stars = {
 				});
 				
 				var colors = [];
+				var colorsh = [];
 				for( var i = 0; i < geometry.vertices.length; i++ ) {
 					colors[i] = new THREE.Color();
 					colorint = stars[i].color;
@@ -32,6 +33,7 @@ var Stars = {
 					}
 					
 					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
+					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
 				}
 				geometry.colors = colors;
 				
@@ -39,6 +41,15 @@ var Stars = {
 				
 
 				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
+				var sMaterial = new THREE.ShaderMaterial( {
+					attributes: {
+						color: { type: 'v3', value: colorsh }
+					},
+					vertexShader:   document.getElementById('vertexshader').textContent,
+					fragmentShader: document.getElementById('fragmentshader').textContent,
+					side: THREE.DoubleSide
+				});
+				 
 				 
 				var pMaterial = new THREE.PointCloudMaterial({
 					color: 0xFFFFFF,
@@ -52,7 +63,7 @@ var Stars = {
 				});
 				
 
-				particles = new THREE.PointCloud(geometry, pMaterial);
+				particles = new THREE.PointCloud(geometry, sMaterial);
 
 				scene.add(particles);
 
