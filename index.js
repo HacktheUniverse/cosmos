@@ -2,6 +2,7 @@ var _     = require('lodash');
 var THREE = require('three');
 var Stats = require('./lib/Stats.js');
 THREE.OrbitControls = require('./lib/OrbitControls.js');
+var stars = require('./stars.js');
 
 window.scene = null;
 window.stats = null;
@@ -27,7 +28,7 @@ var init = function() {
   cube = new THREE.Mesh( geometry, material );
   scene.add(cube);
 
-  initStars(scene);
+  stars.init(scene);
 
   controls = new THREE.OrbitControls( camera, renderer.domElement );
 
@@ -37,47 +38,6 @@ var init = function() {
   stats.domElement.style.zIndex = 100;
   container.appendChild( stats.domElement );
 };
-
-
-var initStars = function(scene){
-	var particles, geometry, materials = [], parameters, i, color, size;
-	
-	geometry = new THREE.Geometry();
-
-	for ( i = 0; i < 2000; i ++ ) {
-		var vertex = new THREE.Vector3();
-		vertex.x = Math.random() * 2000 - 1000;
-		vertex.y = Math.random() * 2000 - 1000;
-		vertex.z = Math.random() * 2000 - 1000;
-
-		geometry.vertices.push( vertex );
-	}
-
-	parameters = [
-		[ [1, 1, 0.5], 5 ],
-		[ [0.95, 1, 0.5], 4 ],
-		[ [0.90, 1, 0.5], 3 ],
-		[ [0.85, 1, 0.5], 2 ],
-		[ [0.80, 1, 0.5], 1 ]
-	];
-
-	for ( i = 0; i < parameters.length; i ++ ) {
-		color = parameters[i][0];
-		size  = parameters[i][1];
-
-		materials[i] = new THREE.PointCloudMaterial( { size: size } );
-
-		particles = new THREE.PointCloud( geometry, materials[i] );
-
-		particles.rotation.x = Math.random() * 6;
-		particles.rotation.y = Math.random() * 6;
-		particles.rotation.z = Math.random() * 6;
-
-		scene.add( particles );
-	}
-	console.log("Stars Born");
-};
-
 
 var render = function() {
   requestAnimationFrame( render );
