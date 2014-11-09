@@ -51,8 +51,8 @@ container.onmousemove = function(e) {
     };
   } else {
     steerXY = {
-      x: steerXY.x / 1.1,
-      y: steerXY.y / 1.1
+      x: steerXY.x,
+      y: steerXY.y
     };
   }
 };

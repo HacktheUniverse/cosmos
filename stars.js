@@ -44,7 +44,7 @@ var Stars = {
 				});
 				
 				geometry.colors = colors;
-/*
+
 				var sMaterial = new THREE.ShaderMaterial( {
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -54,7 +54,7 @@ var Stars = {
 					fragmentShader: document.getElementById('fragmentshader').textContent,
 					side: THREE.DoubleSide
 				});
-*/				
+/*				
 				var gMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
 						"images/map_mask.png"
@@ -86,8 +86,8 @@ var Stars = {
 				particles = new THREE.PointCloud(geometry, gMaterial);
 				scene.add(particles);
 				
-				
-				particles = new THREE.PointCloud(geometry, hMaterial);
+*/				
+				particles = new THREE.PointCloud(geometry, sMaterial);
 				scene.add(particles);
 				
 				

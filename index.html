@@ -19,10 +19,12 @@
     <div id="menu-search"  class="menu"></div>
 
         <audio src="audio/01 - Cosmos Main Title.mp3" autoplay="true"></audio>
+        
         <script type="x-shader/x-vertex" id="vertexshader">
             attribute vec3 color;
             attribute float luminosity;
             varying vec3 vColor;
+            varying float vLuminosity;
             void main() {
                 gl_PointSize = luminosity;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
@@ -32,8 +34,10 @@
 
     <script type="x-shader/x-fragment" id="fragmentshader">
         varying vec3 vColor;
+        varying float vLuminosity;
         void main() {
-            gl_FragColor = vec4( vColor, 1.0 ); // TODO: Do Alpha by Distance?
+            gl_FragColor = vec4( vColor, 1.0 );
+            gl_pointSize = vLuminosity;
         }
     </script>
     <script src="./bundle.js"></script>
