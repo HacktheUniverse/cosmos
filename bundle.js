@@ -53581,7 +53581,7 @@ var Stars = {
 					side: THREE.DoubleSide,
 					blending: THREE.AdditiveBlending,
 					transparent: true,
-					depthTest: false
+					depthTest: true
 				});
 /*				
 				var gMaterial = new THREE.PointCloudMaterial({ 
