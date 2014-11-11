@@ -247,8 +247,8 @@ container.onmousemove = function(e) {
     };
   } else {
     steerXY = {
-      x: steerXY.x / 1.1,
-      y: steerXY.y / 1.1
+      x: steerXY.x,
+      y: steerXY.y
     };
   }
 };
@@ -259,6 +259,7 @@ var init = function() {
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(ww, wh);
+  //renderer.setClearColor(0x000000, 1.0);
   container.appendChild( renderer.domElement );
 
   // STATS
@@ -274,7 +275,7 @@ var init = function() {
   scene.add(light);
   var ambient = new THREE.AmbientLight('#292725');
   scene.add(ambient);
-	scene.add(universe);
+  scene.add(universe);
 
   // camera moves with ship
    camera.position.set(0,20,20);
@@ -296,8 +297,8 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene, universeScale);
-  lspm.init(scene, universeScale);
-  orbits.init(scene, universeScale);
+//  lspm.init(scene, universeScale);
+//  orbits.init(scene, universeScale);
   constll.init(scene, universeScale);
 
   // CONTROLS
@@ -331,7 +332,7 @@ var render = function() {
   coords.innerHTML = xyz_str+" &nbsp; | &nbsp; "+rot_str;
 
   camera.updateProjectionMatrix();
-  labels.updateLabels(camera, [ship]);
+  labels.updateLabels(camera, [ship]);  
   renderer.render(scene, camera);
 
   stats.update();
@@ -53523,6 +53524,8 @@ var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
 
+var logga = 10;
+
 var Stars = {
 	init: function(scene, scaleFactor) {
 		var particles, geometry, materials = [], parameters, i, color, size;
@@ -53536,7 +53539,6 @@ var Stars = {
 				// Javascript function JSON.parse to parse JSON data
 				var stars = JSON.parse(http_request.responseText);
 				
-				var logga = 10;
 				var colors = [];
 				var colorsh = [];
 				var lumsh = [];
@@ -53551,7 +53553,7 @@ var Stars = {
 					colorint = star.color;					
 					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
-					lumsh[i] = Math.sqrt(star.luminosity);
+					lumsh[i] = Math.pow(star.luminosity, 0.25);
 					
 					if( logga > 0 ){
 						console.log(lumsh[i]);
@@ -53565,17 +53567,23 @@ var Stars = {
 				});
 				
 				geometry.colors = colors;
-/*
+
 				var sMaterial = new THREE.ShaderMaterial( {
+					uniforms: {
+						cutoff: { type: 'f', value: 0.25}
+					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
 						luminosity: { type: 'f', value: lumsh }
 					},
 					vertexShader:   document.getElementById('vertexshader').textContent,
 					fragmentShader: document.getElementById('fragmentshader').textContent,
-					side: THREE.DoubleSide
+					side: THREE.DoubleSide,
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					depthTest: false
 				});
-*/				
+/*				
 				var gMaterial = new THREE.PointCloudMaterial({ 
 					map: THREE.ImageUtils.loadTexture(
 						"images/map_mask.png"
@@ -53607,8 +53615,8 @@ var Stars = {
 				particles = new THREE.PointCloud(geometry, gMaterial);
 				scene.add(particles);
 				
-				
-				particles = new THREE.PointCloud(geometry, hMaterial);
+*/				
+				particles = new THREE.PointCloud(geometry, sMaterial);
 				scene.add(particles);
 				
 				
