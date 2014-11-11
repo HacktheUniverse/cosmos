@@ -51,8 +51,8 @@ container.onmousemove = function(e) {
     };
   } else {
     steerXY = {
-      x: steerXY.x / 1.1,
-      y: steerXY.y / 1.1
+      x: steerXY.x,
+      y: steerXY.y
     };
   }
 };
@@ -63,6 +63,7 @@ var init = function() {
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(ww, wh);
+  //renderer.setClearColor(0x000000, 1.0);
   container.appendChild( renderer.domElement );
 
   // STATS
@@ -78,7 +79,7 @@ var init = function() {
   scene.add(light);
   var ambient = new THREE.AmbientLight('#292725');
   scene.add(ambient);
-	scene.add(universe);
+  scene.add(universe);
 
   // camera moves with ship
    camera.position.set(0,20,20);
@@ -100,8 +101,8 @@ var init = function() {
 
   // STAR DATA
   stars.init(scene, universeScale);
-  lspm.init(scene, universeScale);
-  orbits.init(scene, universeScale);
+//  lspm.init(scene, universeScale);
+//  orbits.init(scene, universeScale);
   constll.init(scene, universeScale);
 
   // CONTROLS
@@ -135,7 +136,7 @@ var render = function() {
   coords.innerHTML = xyz_str+" &nbsp; | &nbsp; "+rot_str;
 
   camera.updateProjectionMatrix();
-  labels.updateLabels(camera, [ship]);
+  labels.updateLabels(camera, [ship]);  
   renderer.render(scene, camera);
 
   stats.update();

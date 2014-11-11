@@ -8,6 +8,7 @@ html,body {
     overflow: hidden;
     padding: 0;
     width: 100%;
+    cursor: crosshair;
 }
 body {
   overflow: auto;
