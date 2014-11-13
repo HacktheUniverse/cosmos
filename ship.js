@@ -19,7 +19,9 @@ module.exports = {
       ship = object;
       ship.scale.set(0.1,0.1,0.1);
       ship.translateY(-0.7);
-      ship.translateZ(1.6);
+	  ship.translateX(-0.1);
+	  ship.rotateY(Math.PI * 1.5);
+	  
       callback.apply(null, [ship]);
     });
 

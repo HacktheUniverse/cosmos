@@ -18,7 +18,7 @@ var universe = require('./universe-sphere.js').init(universeScale);
 
 var clock = new THREE.Clock();
 
-var startPosition = new THREE.Vector3(0, 1, 0);
+var startPosition = new THREE.Vector3(0, 0, 0);
 
 var steering = false;
 var steerXY = {
@@ -66,19 +66,11 @@ container.onmousemove = function(e) {
 
 var init = function() {
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
-
+	
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(ww, wh);
 	//renderer.setClearColor(0x000000, 1.0);
 	container.appendChild(renderer.domElement);
-
-	// STATS
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.zIndex = 100;
-	container.appendChild(stats.domElement);
 
 	// Lights!
 	var light = new THREE.PointLight('#FFFFFF', 1.5);
@@ -88,31 +80,30 @@ var init = function() {
 	scene.add(ambient);
 	scene.add(universe);
 
-	// camera moves with ship
-	camera.position.set(0, 20, 20);
-	// camera.up = new THREE.Vector3(0,1,0);
-	// camera.lookAt(15,3,200);
-
-	var cubeGeom = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+	var cubeGeom = new THREE.BoxGeometry(0.001, 0.001, 0.001);
 	var cubeMaterial = new THREE.MeshBasicMaterial({
 		color: '#4488BB', 
 		transparent: true, 
 		opacity: 0.0});
 	steeringCube = new THREE.Mesh(cubeGeom, cubeMaterial);
-	console.log("start", startPosition);
 	steeringCube.position.set(startPosition.x, startPosition.y, startPosition.z);
 	scene.add(steeringCube);
-	console.log("cube", steeringCube);
 
 	shipLoader.load(function(shipModel) {
 		steeringCube.add(shipModel);
 		ship = shipModel;
 	});
+	
+	// this stops the jitter
+	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
+	camera.position.set(-0.2, 0, 0);
+	camera.lookAt(steeringCube.position);
+	steeringCube.add(camera);
 
 	// STAR DATA
 	stars.init(scene, universeScale);
-//  lspm.init(scene, universeScale);
-//  orbits.init(scene, universeScale);
+	lspm.init(scene, universeScale);
+	//orbits.init(scene, universeScale);
 	constll.init(scene, universeScale);
 
 	// CONTROLS
@@ -121,22 +112,31 @@ var init = function() {
 	//controls.movementSpeed = 1;
 	//controls.lookSpeed = 0.125;
 	//controls.lookVertical = true;
+	
+	// STATS
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.bottom = '0px';
+	stats.domElement.style.zIndex = 100;
+	container.appendChild(stats.domElement);
 };
 
-var render = function() {
+var render = function(fl) {
 	requestAnimationFrame(render);
 		
-	// set camera
-	var relativeCameraOffset = new THREE.Vector3(0, 0, 0.2);
-	var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
-	camera.position.x = cameraOffset.x;
-	camera.position.y = cameraOffset.y;
-	camera.position.z = cameraOffset.z;
-	camera.lookAt(steeringCube.position);
-	camera.rotation.z = steeringCube.rotation.z;
+	// set camera - no longer needed because camera is attached to steering cube
+	//	var relativeCameraOffset = new THREE.Vector3(-0.2, 0, 0);
+	//	var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
+	//camera.position.x = cameraOffset.x;
+	//camera.position.y = cameraOffset.y;
+	//camera.position.z = cameraOffset.z;
+	//camera.lookAt(steeringCube.position);
+	//camera.rotation.x = steeringCube.rotation.x;
+	//camera.rotation.y = steeringCube.rotation.y;
+	//camera.rotation.z = steeringCube.rotation.z;
 	
 	// forward
-	steeringCube.translateZ(-1);
+	steeringCube.translateX(1);
 	
 	// steering inertia
 	if (steering) {
@@ -148,7 +148,7 @@ var render = function() {
 	}
 	// steering
 	steeringCube.rotateY(0.00005 * -steerXY.x);
-	steeringCube.rotateX(0.00005 * -steerXY.y);
+	steeringCube.rotateZ(0.00005 * -steerXY.y);
 
 	// speedometer
 	var scp = steeringCube.position;

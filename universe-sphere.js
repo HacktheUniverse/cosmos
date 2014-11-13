@@ -2,7 +2,7 @@ var THREE = require('three');
 
 // radius, segmentsWidth, segmentsHeight
 var sphereGeom =  new THREE.SphereGeometry(9000000, 32, 16); 
-var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
+var texture = THREE.ImageUtils.loadTexture( './images/milkyway_pan.jpg' );
 
 module.exports = {
   init: function(scaleFactor) {

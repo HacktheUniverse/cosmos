@@ -61,8 +61,8 @@ var descriptions_data = {
             "description": "Closest star to the Sun. It’s the brightest star in Centaurus. Alpha Centauri is not just one star, but three stars."
         },{
             "hip": "32349",
-            "name": "Sirius",
-            "description": "aka Dog Star. It’s the brightest star in the night sky and it will continue to be the brightest for the next 210,000 years. It’s both luminous and close."
+            "name": "Sirius (Dog Star)",
+            "description": "It’s the brightest star in the night sky and it will continue to be the brightest for the next 210,000 years. It’s both luminous and close."
         },{
             "hip": "35793",
             "name": "VY Canis Majoris",
@@ -95,7 +95,15 @@ var descriptions_data = {
             "hip": null,
             "name": "Sun",
             "description": "Closest star to the Earth. The Sun is a medium-sized, middle-aged star at 4.6 billion years old. It’s also the only star that does not belong to a constellation. The energy the Earth receives from the Sun is much more than we consume. (But we don’t fully utilize it)"
-        }
+        },{
+			"hip": "21421",
+			"name": "Aldebaran",
+			"description": "Brightest Star in Taurus. Aldebaran is a giant orange star approximately 44.2 times the diameter of our sun."
+		},{
+			"hip": "24608",
+			"name": "Capella (Little Goat)",
+			"description": "6th brightest star in the sky. Capella is actually a closely bound binary star system with two giants."
+		}
     ]
 };
 

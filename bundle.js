@@ -139,8 +139,8 @@ var descriptions_data = {
             "description": "Closest star to the Sun. It’s the brightest star in Centaurus. Alpha Centauri is not just one star, but three stars."
         },{
             "hip": "32349",
-            "name": "Sirius",
-            "description": "aka Dog Star. It’s the brightest star in the night sky and it will continue to be the brightest for the next 210,000 years. It’s both luminous and close."
+            "name": "Sirius (Dog Star)",
+            "description": "It’s the brightest star in the night sky and it will continue to be the brightest for the next 210,000 years. It’s both luminous and close."
         },{
             "hip": "35793",
             "name": "VY Canis Majoris",
@@ -173,7 +173,15 @@ var descriptions_data = {
             "hip": null,
             "name": "Sun",
             "description": "Closest star to the Earth. The Sun is a medium-sized, middle-aged star at 4.6 billion years old. It’s also the only star that does not belong to a constellation. The energy the Earth receives from the Sun is much more than we consume. (But we don’t fully utilize it)"
-        }
+        },{
+			"hip": "21421",
+			"name": "Aldebaran",
+			"description": "Brightest Star in Taurus. Aldebaran is a giant orange star approximately 44.2 times the diameter of our sun."
+		},{
+			"hip": "24608",
+			"name": "Capella (Little Goat)",
+			"description": "6th brightest star in the sky. Capella is actually a closely bound binary star system with two giants."
+		}
     ]
 };
 
@@ -214,7 +222,7 @@ var universe = require('./universe-sphere.js').init(universeScale);
 
 var clock = new THREE.Clock();
 
-var startPosition = new THREE.Vector3(0, 1, 0);
+var startPosition = new THREE.Vector3(0, 0, 0);
 
 var steering = false;
 var steerXY = {
@@ -262,19 +270,11 @@ container.onmousemove = function(e) {
 
 var init = function() {
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
-
+	
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(ww, wh);
 	//renderer.setClearColor(0x000000, 1.0);
 	container.appendChild(renderer.domElement);
-
-	// STATS
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.zIndex = 100;
-	container.appendChild(stats.domElement);
 
 	// Lights!
 	var light = new THREE.PointLight('#FFFFFF', 1.5);
@@ -284,31 +284,30 @@ var init = function() {
 	scene.add(ambient);
 	scene.add(universe);
 
-	// camera moves with ship
-	camera.position.set(0, 20, 20);
-	// camera.up = new THREE.Vector3(0,1,0);
-	// camera.lookAt(15,3,200);
-
-	var cubeGeom = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+	var cubeGeom = new THREE.BoxGeometry(0.001, 0.001, 0.001);
 	var cubeMaterial = new THREE.MeshBasicMaterial({
 		color: '#4488BB', 
 		transparent: true, 
 		opacity: 0.0});
 	steeringCube = new THREE.Mesh(cubeGeom, cubeMaterial);
-	console.log("start", startPosition);
 	steeringCube.position.set(startPosition.x, startPosition.y, startPosition.z);
 	scene.add(steeringCube);
-	console.log("cube", steeringCube);
 
 	shipLoader.load(function(shipModel) {
 		steeringCube.add(shipModel);
 		ship = shipModel;
 	});
+	
+	// this stops the jitter
+	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
+	camera.position.set(-0.2, 0, 0);
+	camera.lookAt(steeringCube.position);
+	steeringCube.add(camera);
 
 	// STAR DATA
 	stars.init(scene, universeScale);
-//  lspm.init(scene, universeScale);
-//  orbits.init(scene, universeScale);
+	lspm.init(scene, universeScale);
+	//orbits.init(scene, universeScale);
 	constll.init(scene, universeScale);
 
 	// CONTROLS
@@ -317,22 +316,31 @@ var init = function() {
 	//controls.movementSpeed = 1;
 	//controls.lookSpeed = 0.125;
 	//controls.lookVertical = true;
+	
+	// STATS
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.bottom = '0px';
+	stats.domElement.style.zIndex = 100;
+	container.appendChild(stats.domElement);
 };
 
-var render = function() {
+var render = function(fl) {
 	requestAnimationFrame(render);
 		
-	// set camera
-	var relativeCameraOffset = new THREE.Vector3(0, 0, 0.2);
-	var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
-	camera.position.x = cameraOffset.x;
-	camera.position.y = cameraOffset.y;
-	camera.position.z = cameraOffset.z;
-	camera.lookAt(steeringCube.position);
-	camera.rotation.z = steeringCube.rotation.z;
+	// set camera - no longer needed because camera is attached to steering cube
+	//	var relativeCameraOffset = new THREE.Vector3(-0.2, 0, 0);
+	//	var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
+	//camera.position.x = cameraOffset.x;
+	//camera.position.y = cameraOffset.y;
+	//camera.position.z = cameraOffset.z;
+	//camera.lookAt(steeringCube.position);
+	//camera.rotation.x = steeringCube.rotation.x;
+	//camera.rotation.y = steeringCube.rotation.y;
+	//camera.rotation.z = steeringCube.rotation.z;
 	
 	// forward
-	steeringCube.translateZ(-1);
+	steeringCube.translateX(1);
 	
 	// steering inertia
 	if (steering) {
@@ -344,7 +352,7 @@ var render = function() {
 	}
 	// steering
 	steeringCube.rotateY(0.00005 * -steerXY.x);
-	steeringCube.rotateX(0.00005 * -steerXY.y);
+	steeringCube.rotateZ(0.00005 * -steerXY.y);
 
 	// speedometer
 	var scp = steeringCube.position;
@@ -1542,76 +1550,43 @@ var LSPM = {
 				// Javascript function JSON.parse to parse JSON data
 				var stars = JSON.parse(http_request.responseText);
 				
-				var logga = 10;
+				var colors = [];
+				var colorsh = [];
+				var lumsh = [];
 				stars.forEach(function(star) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0] * scaleFactor;
 					vertex.y = star.pos[1] * scaleFactor;
 					vertex.z = star.pos[2] * scaleFactor;
 					geometry.vertices.push(vertex);		
+
+					var color = new THREE.Color();
+					colors.push(color);
+					colorint = star.color;					
+					color.setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
+					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
+					lumsh[i] = Math.pow(star.luminosity, 0.25);
 				});
 				
-				var colors = [];
-				var colorsh = [];
-				var lumsh = [];
-				for( var i = 0; i < geometry.vertices.length; i++ ) {
-					colors[i] = new THREE.Color();
-					colorint = stars[i].color;					
-					colors[i].setRGB( colorint[0]/255, colorint[1]/255, colorint[2]/255 );
-					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
-					lumsh[i] = Math.sqrt(stars[i].luminosity);
-					
-					if( logga > 0 ){
-						console.log(lumsh[i]);
-						logga--;
-					}
-				}
 				geometry.colors = colors;
 
-
-				// var pMaterial = new THREE.PointCloudMaterial({size: 0.01});
 				var sMaterial = new THREE.ShaderMaterial( {
+					uniforms: {
+						cutoff: { type: 'f', value: 0.25}
+					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
 						luminosity: { type: 'f', value: lumsh }
 					},
 					vertexShader:   document.getElementById('vertexshader').textContent,
 					fragmentShader: document.getElementById('fragmentshader').textContent,
-					side: THREE.DoubleSide
-				});
-				
-				var gMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask.png"
-					),
-					color          : 0xffffff, 
-					size           : 75, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : true,
-					sizeAttenuation: true,
-					fog            : false
-				});
-				
-				var hMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_orb.png"
-					),
-					color          : 0xffffff, 
-					size           : 30, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : false,
-					sizeAttenuation: true,
-					fog            : false
+					side: THREE.DoubleSide,
+					blending: THREE.AdditiveBlending,
+					transparent: true,
+					depthTest: true
 				});
 				 
-				particles = new THREE.PointCloud(geometry, gMaterial);
-				scene.add(particles);
-				
-				particles = new THREE.PointCloud(geometry, hMaterial);
+				particles = new THREE.PointCloud(geometry, sMaterial);
 				scene.add(particles);
 				
 				console.log("LSPM Born");
@@ -53535,7 +53510,9 @@ module.exports = {
       ship = object;
       ship.scale.set(0.1,0.1,0.1);
       ship.translateY(-0.7);
-      ship.translateZ(1.6);
+	  ship.translateX(-0.1);
+	  ship.rotateY(Math.PI * 1.5);
+	  
       callback.apply(null, [ship]);
     });
 
@@ -53546,8 +53523,6 @@ module.exports = {
 var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
-
-var logga = 10;
 
 var Stars = {
 	init: function(scene, scaleFactor) {
@@ -53578,18 +53553,13 @@ var Stars = {
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
 					lumsh[i] = Math.pow(star.luminosity, 0.25);
 					
-					if( logga > 0 ){
-						console.log(lumsh[i]);
-						logga--;
-					}
-					
 					var description = descriptions.getForStar(star.hip);
 					if( description ){
 						labels.addLabel(vertex, description.name, description.description, "star");
 					}
 				});
 				
-				geometry.colors = colors;
+				geometry.colors = colors; // For Some reason, this is still necessary...
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
@@ -53606,42 +53576,9 @@ var Stars = {
 					transparent: true,
 					depthTest: true
 				});
-/*				
-				var gMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask.png"
-					),
-					color          : 0xffffff, 
-					size           : 50, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : true,
-					sizeAttenuation: true,
-					fog            : false
-				});
-				
-				var hMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_orb.png"
-					),
-					color          : 0xffffff, 
-					size           : 20, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : false,
-					sizeAttenuation: true,
-					fog            : false
-				});
-								 
-				particles = new THREE.PointCloud(geometry, gMaterial);
-				scene.add(particles);
-				
-*/				
+	
 				particles = new THREE.PointCloud(geometry, sMaterial);
 				scene.add(particles);
-				
 				
 				console.log("Stars Born");
 			}
@@ -53659,7 +53596,7 @@ var THREE = require('three');
 
 // radius, segmentsWidth, segmentsHeight
 var sphereGeom =  new THREE.SphereGeometry(9000000, 32, 16); 
-var texture = THREE.ImageUtils.loadTexture( './images/mellinger-optmw.png' );
+var texture = THREE.ImageUtils.loadTexture( './images/milkyway_pan.jpg' );
 
 module.exports = {
   init: function(scaleFactor) {
