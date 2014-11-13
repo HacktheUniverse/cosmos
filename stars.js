@@ -2,8 +2,6 @@ var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
 
-var logga = 10;
-
 var Stars = {
 	init: function(scene, scaleFactor) {
 		var particles, geometry, materials = [], parameters, i, color, size;
@@ -33,18 +31,13 @@ var Stars = {
 					colorsh[i] = [colorint[0]/255, colorint[1]/255, colorint[2]/255];
 					lumsh[i] = Math.pow(star.luminosity, 0.25);
 					
-					if( logga > 0 ){
-						console.log(lumsh[i]);
-						logga--;
-					}
-					
 					var description = descriptions.getForStar(star.hip);
 					if( description ){
 						labels.addLabel(vertex, description.name, description.description, "star");
 					}
 				});
 				
-				geometry.colors = colors;
+				geometry.colors = colors; // For Some reason, this is still necessary...
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
@@ -61,42 +54,9 @@ var Stars = {
 					transparent: true,
 					depthTest: true
 				});
-/*				
-				var gMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask.png"
-					),
-					color          : 0xffffff, 
-					size           : 50, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : true,
-					sizeAttenuation: true,
-					fog            : false
-				});
-				
-				var hMaterial = new THREE.PointCloudMaterial({ 
-					map: THREE.ImageUtils.loadTexture(
-						"images/map_mask_orb.png"
-					),
-					color          : 0xffffff, 
-					size           : 20, 
-					blending       : THREE.NormalBlending, 
-					transparent    : true, 
-					depthWrite     : false, 
-					vertexColors   : false,
-					sizeAttenuation: true,
-					fog            : false
-				});
-								 
-				particles = new THREE.PointCloud(geometry, gMaterial);
-				scene.add(particles);
-				
-*/				
+	
 				particles = new THREE.PointCloud(geometry, sMaterial);
 				scene.add(particles);
-				
 				
 				console.log("Stars Born");
 			}

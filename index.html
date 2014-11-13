@@ -34,8 +34,8 @@
                 vColor = color;
                 
                 vec4 currpos = vec4( position, 1.0 );
-                vDist = distance(modelViewMatrix*currpos, vec4(0.0, 0.0, 0.0, 1.0)) / 50000.0;
-                vLum = luminosity / 100.0;
+                vDist = distance(modelViewMatrix*currpos, vec4(0.0, 0.0, 0.0, 1.0)) / 30000.0;
+                vLum = luminosity / 70.0;
                 gl_PointSize = 1.0 + (10.0 * vLum / vDist);
                 
                 gl_Position = projectionMatrix * modelViewMatrix * currpos;
