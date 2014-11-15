@@ -2,11 +2,12 @@
 var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
+var lines = [];
+var shown = false;
 
 var Constll = {
-	init: function(scene, scaleFactor) {
-		var that = this;
-		var particles, geometry, materials = [], parameters, i, color, size;
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
 
 		var material = new THREE.LineBasicMaterial({
 			color: '#5566ee'
@@ -59,8 +60,11 @@ var Constll = {
 						});
 						
 						var line = new THREE.Line( geometry, material );
+						lines.push(line);
 						scene.add( line );
 					});
+					
+					callback();
 					
 				});
 
@@ -69,8 +73,26 @@ var Constll = {
 		};
 		http_request.open("GET", "data/constellations.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		lines.forEach(function(line){
+			this.scene.remove(line);
+		}, this);
+		shown = false;
+	},
+	show: function(){
+		lines.forEach(function(line){
+			this.scene.add(line);
+		}, this);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = Constll;
@@ -305,10 +327,18 @@ var init = function() {
 	steeringCube.add(camera);
 
 	// STAR DATA
-	stars.init(scene, universeScale);
-	lspm.init(scene, universeScale);
-	//orbits.init(scene, universeScale);
-	constll.init(scene, universeScale);
+	stars.init(scene, universeScale, function(){
+		stars.show();
+	});
+	lspm.init(scene, universeScale, function(){
+		// don't show automatically
+	});
+	orbits.init(scene, universeScale, function(){
+		// don't show automatically
+	});
+	constll.init(scene, universeScale, function(){
+		constll.show();
+	});
 
 	// CONTROLS
 	// controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -381,7 +411,21 @@ $('#button-search').on('click', function() {
 	$('#menu-data').removeClass('active');
 	$('#menu-search').toggleClass('active');
 });
-
+$(".menuItem#constellations").addClass("active");
+$(".menuItem").click(function(ev){
+	$(this).toggleClass("active");
+	switch(this.id){
+		case "nearest":
+			lspm.toggle();
+			break;
+		case "constellations":
+			constll.toggle();
+			break;
+		case "orbits":
+			orbits.toggle();
+			break;
+	}
+});
 },{"./constellations.js":1,"./labels.js":4,"./lib/FirstPersonControls.js":5,"./lib/OrbitControls.js":7,"./lib/Stats.js":8,"./lspm.js":9,"./orbits.js":13,"./ship.js":14,"./stars.js":15,"./universe-sphere.js":16,"jquery":10,"lodash":11,"three":12}],4:[function(require,module,exports){
 var THREE = require('three');
 
@@ -1536,12 +1580,13 @@ a.style.width="1px",a.style.height=Math.random()*30+"px",a.style.cssFloat="left"
 
 },{}],9:[function(require,module,exports){
 var THREE = require('three');
+var particles, shown = false;
+
 
 var LSPM = {
-	init: function(scene, scaleFactor) {
-		var particles, geometry, materials = [], parameters, i, color, size;
-
-		geometry = new THREE.Geometry();
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
+		var geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
 		var http_request = new XMLHttpRequest();
@@ -1553,7 +1598,7 @@ var LSPM = {
 				var colors = [];
 				var colorsh = [];
 				var lumsh = [];
-				stars.forEach(function(star) {
+				stars.forEach(function(star, i) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0] * scaleFactor;
 					vertex.y = star.pos[1] * scaleFactor;
@@ -1572,7 +1617,7 @@ var LSPM = {
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						cutoff: { type: 'f', value: 0.25}
+						cutoff: { type: 'f', value: 0.1}
 					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -1587,15 +1632,30 @@ var LSPM = {
 				});
 				 
 				particles = new THREE.PointCloud(geometry, sMaterial);
-				scene.add(particles);
 				
 				console.log("LSPM Born");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/lspm.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		this.scene.remove(particles);
+		shown = false;
+	},
+	show: function(){
+		this.scene.add(particles);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = LSPM;
@@ -53440,12 +53500,12 @@ if (typeof exports !== 'undefined') {
 
 },{}],13:[function(require,module,exports){
 var THREE = require('three');
+var lines = [];
+var shown = false;
 
 var Orbits = {
-	init: function(scene, scaleFactor) {
-		var that = this;
-		var particles, geometry, materials = [], parameters, i, color, size;
-
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
 		var material = new THREE.LineBasicMaterial({
 			color: '#00C362'
 		});
@@ -53473,17 +53533,36 @@ var Orbits = {
 						new THREE.Vector3(posArrs[0][0] * scaleFactor, posArrs[0][1] * scaleFactor, posArrs[0][2] * scaleFactor)
 					);*/
 					var line = new THREE.Line( geometry, material );
-					scene.add( line );
-					
+					lines.push(line);
 				});
 
 				console.log("Orbits Drawn");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/starorbits.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		lines.forEach(function(line){
+			this.scene.remove(line);
+		}, this);
+		shown = false;
+	},
+	show: function(){
+		lines.forEach(function(line){
+			this.scene.add(line);
+		}, this);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = Orbits;
@@ -53523,12 +53602,12 @@ module.exports = {
 var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
+var particles;
 
 var Stars = {
-	init: function(scene, scaleFactor) {
-		var particles, geometry, materials = [], parameters, i, color, size;
-
-		geometry = new THREE.Geometry();
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
+		var geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
 		var http_request = new XMLHttpRequest();
@@ -53563,7 +53642,7 @@ var Stars = {
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						cutoff: { type: 'f', value: 0.25}
+						cutoff: { type: 'f', value: 0.1}
 					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -53578,15 +53657,21 @@ var Stars = {
 				});
 	
 				particles = new THREE.PointCloud(geometry, sMaterial);
-				scene.add(particles);
 				
 				console.log("Stars Born");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/stars.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		this.scene.remove(particles);
+	},
+	show: function(){
+		this.scene.add(particles);
 	}
-
 };
 
 module.exports = Stars;

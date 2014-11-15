@@ -1,10 +1,10 @@
 var THREE = require('three');
+var lines = [];
+var shown = false;
 
 var Orbits = {
-	init: function(scene, scaleFactor) {
-		var that = this;
-		var particles, geometry, materials = [], parameters, i, color, size;
-
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
 		var material = new THREE.LineBasicMaterial({
 			color: '#00C362'
 		});
@@ -32,17 +32,36 @@ var Orbits = {
 						new THREE.Vector3(posArrs[0][0] * scaleFactor, posArrs[0][1] * scaleFactor, posArrs[0][2] * scaleFactor)
 					);*/
 					var line = new THREE.Line( geometry, material );
-					scene.add( line );
-					
+					lines.push(line);
 				});
 
 				console.log("Orbits Drawn");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/starorbits.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		lines.forEach(function(line){
+			this.scene.remove(line);
+		}, this);
+		shown = false;
+	},
+	show: function(){
+		lines.forEach(function(line){
+			this.scene.add(line);
+		}, this);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = Orbits;

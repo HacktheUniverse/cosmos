@@ -1,10 +1,11 @@
 var THREE = require('three');
+var particles, shown = false;
+
 
 var LSPM = {
-	init: function(scene, scaleFactor) {
-		var particles, geometry, materials = [], parameters, i, color, size;
-
-		geometry = new THREE.Geometry();
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
+		var geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
 		var http_request = new XMLHttpRequest();
@@ -16,7 +17,7 @@ var LSPM = {
 				var colors = [];
 				var colorsh = [];
 				var lumsh = [];
-				stars.forEach(function(star) {
+				stars.forEach(function(star, i) {
 					var vertex = new THREE.Vector3();
 					vertex.x = star.pos[0] * scaleFactor;
 					vertex.y = star.pos[1] * scaleFactor;
@@ -35,7 +36,7 @@ var LSPM = {
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						cutoff: { type: 'f', value: 0.25}
+						cutoff: { type: 'f', value: 0.1}
 					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -50,15 +51,30 @@ var LSPM = {
 				});
 				 
 				particles = new THREE.PointCloud(geometry, sMaterial);
-				scene.add(particles);
 				
 				console.log("LSPM Born");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/lspm.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		this.scene.remove(particles);
+		shown = false;
+	},
+	show: function(){
+		this.scene.add(particles);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = LSPM;

@@ -101,10 +101,18 @@ var init = function() {
 	steeringCube.add(camera);
 
 	// STAR DATA
-	stars.init(scene, universeScale);
-	lspm.init(scene, universeScale);
-	//orbits.init(scene, universeScale);
-	constll.init(scene, universeScale);
+	stars.init(scene, universeScale, function(){
+		stars.show();
+	});
+	lspm.init(scene, universeScale, function(){
+		// don't show automatically
+	});
+	orbits.init(scene, universeScale, function(){
+		// don't show automatically
+	});
+	constll.init(scene, universeScale, function(){
+		constll.show();
+	});
 
 	// CONTROLS
 	// controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -176,4 +184,19 @@ $('#button-data').on('click', function() {
 $('#button-search').on('click', function() {
 	$('#menu-data').removeClass('active');
 	$('#menu-search').toggleClass('active');
+});
+$(".menuItem#constellations").addClass("active");
+$(".menuItem").click(function(ev){
+	$(this).toggleClass("active");
+	switch(this.id){
+		case "nearest":
+			lspm.toggle();
+			break;
+		case "constellations":
+			constll.toggle();
+			break;
+		case "orbits":
+			orbits.toggle();
+			break;
+	}
 });

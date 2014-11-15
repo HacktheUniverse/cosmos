@@ -1,12 +1,12 @@
 var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
+var particles;
 
 var Stars = {
-	init: function(scene, scaleFactor) {
-		var particles, geometry, materials = [], parameters, i, color, size;
-
-		geometry = new THREE.Geometry();
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
+		var geometry = new THREE.Geometry();
 
 		// Opera 8.0+, Firefox, Chrome, Safari
 		var http_request = new XMLHttpRequest();
@@ -41,7 +41,7 @@ var Stars = {
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						cutoff: { type: 'f', value: 0.25}
+						cutoff: { type: 'f', value: 0.1}
 					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
@@ -56,15 +56,21 @@ var Stars = {
 				});
 	
 				particles = new THREE.PointCloud(geometry, sMaterial);
-				scene.add(particles);
 				
 				console.log("Stars Born");
+				
+				callback();
 			}
 		};
 		http_request.open("GET", "data/stars.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		this.scene.remove(particles);
+	},
+	show: function(){
+		this.scene.add(particles);
 	}
-
 };
 
 module.exports = Stars;

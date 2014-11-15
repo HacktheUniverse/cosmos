@@ -1,7 +1,6 @@
 html,body {
     /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: "Lato";
-    text-shadow: 0px 0px 5px black;
     font-size: 10px;
     height: 100%;
     margin: 0;
@@ -33,6 +32,7 @@ div.label {
     -webkit-user-select: none;
     width: 20px;
     z-index: 2;
+    text-shadow: 0px 0px 5px black;
 }
 
 .label h3{
@@ -92,6 +92,8 @@ div.label {
 
 
 
+
+
 #buttons {
   cursor: pointer;
   font-size: 7px;
@@ -128,27 +130,87 @@ div.label {
   background-image: url("./icons/search_toggle.png");
 }
 
+
+
+
+
 #menu-data {
-  background: url("./icons/menu_data-toggle.png");
-  background-size: 100% 100%;
+ 
 }
+
 #menu-search {
-  background: url("./icons/menu_explore-search.png");
-  background-size: 100% 100%;
+
 }
-#menu-data, #menu-search {
+.menu {
   height: 25px;
   width: 569px;
   margin-left: -280px;
   opacity: 0;
   position: absolute;
-    top: 15rem;
-    left: 50%;
+  top: 15rem;
+  left: 50%;
   transition: height 0.5s;
   z-index: 5;
+  display: none;
 }
-#menu-data.active,
-#menu-search.active {
+.menu.active{
   height: 273px;
   opacity: 1;
+  display: block;
+}
+
+
+
+.menuHeading{
+    background-color: #433;
+    font-size: 24px;
+    line-height: 24px;
+    color: white;
+    padding: 16px
+}
+.menuHeading.search{
+    background-image: url('icons/icon_magnifying-glass.png');
+    background-size: 36px 36px;
+    background-position: 510px 10px;
+    background-repeat: no-repeat;
+}
+.menuItem{
+    padding: 16px 60px;
+    color: black;
+    background-repeat: no-repeat;
+    background-size: 42px 42px;
+    background-position: 6px 6px;
+    background-color: #AAA;
+    font-size: 22px;
+    cursor: pointer;
+}
+.menuItem:hover{
+    background-color: #999;
+}
+.menuItem.active{
+    background-color: #59A;
+    color: white;
+}
+.menuItem.active:hover{
+    background-color: #489;
+}
+
+.menuItem#constellations{
+    background-image: url('icons/icon_constellation.png');
+}
+.menuItem#nearest{
+    background-image: url('icons/icon_nearest-star.png');
+}
+.menuItem#orbits{
+    background-image: url('icons/icon_orbit.png');
+}
+
+.menuItem#polaris{
+    background-image: url('icons/icon_star.png');
+}
+.menuItem#sagittarius{
+    background-image: url('icons/icon_constellation.png');
+}
+.menuItem#ursa_major{
+    background-image: url('icons/icon_constellation.png');
 }

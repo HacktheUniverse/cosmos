@@ -1,11 +1,12 @@
 var THREE = require('three');
 var labels   = require('./labels.js');
 var descriptions = require('./descriptions.js');
+var lines = [];
+var shown = false;
 
 var Constll = {
-	init: function(scene, scaleFactor) {
-		var that = this;
-		var particles, geometry, materials = [], parameters, i, color, size;
+	init: function(scene, scaleFactor, callback) {
+		this.scene = scene;
 
 		var material = new THREE.LineBasicMaterial({
 			color: '#5566ee'
@@ -58,8 +59,11 @@ var Constll = {
 						});
 						
 						var line = new THREE.Line( geometry, material );
+						lines.push(line);
 						scene.add( line );
 					});
+					
+					callback();
 					
 				});
 
@@ -68,8 +72,26 @@ var Constll = {
 		};
 		http_request.open("GET", "data/constellations.json", true);
 		http_request.send();
+	},
+	hide: function(){
+		lines.forEach(function(line){
+			this.scene.remove(line);
+		}, this);
+		shown = false;
+	},
+	show: function(){
+		lines.forEach(function(line){
+			this.scene.add(line);
+		}, this);
+		shown = true;
+	},
+	toggle: function(){
+		if( shown ){
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
-
 };
 
 module.exports = Constll;
