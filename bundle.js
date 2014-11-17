@@ -252,7 +252,6 @@ var universe = require('./universe-sphere.js').init(universeScale);
 var clock = new THREE.Clock();
 
 var startPosition = new THREE.Vector3(0, 0, 0);
-
 var steering = false;
 var steerXY = {
 	x: 0,
@@ -261,6 +260,7 @@ var steerXY = {
 var naturalVelocity = 50 / 1000; // parsecs per millisecond
 var hyperspaceVelocity = 2.0;
 var hyperspace = false;
+var brake = false;
 var velocity = naturalVelocity;
 var last_frame = 0;
 
@@ -301,8 +301,24 @@ container.onmousemove = function(e) {
 	}
 };
 document.onkeydown =  function(e) {
-	if( e.which === 72 ){ // H-Key means hyperspace
-		hyperspace = !hyperspace;
+	console.log(e.which);
+	switch(e.which){
+		case 32:
+			hyperspace = true;
+			break;
+		case 16:
+			brake = true;
+			break;
+	}
+};
+document.onkeyup =  function(e) {
+	switch(e.which){
+		case 32:
+			hyperspace = false;
+			break;
+		case 16:
+			brake = false;
+			break;
 	}
 };
 
@@ -372,16 +388,18 @@ var render = function(frame_time) {
 		return;
 	}
 
-	// forward
-	if( hyperspace ){
-		velocity += (hyperspaceVelocity - velocity) * .01;
+	// Forward
+	if( brake ){
+		velocity += (0 - velocity) * .05;
+	} else if( hyperspace ){
+		velocity += (hyperspaceVelocity - velocity) * .05;
 	} else {
-		velocity += (naturalVelocity - velocity) * .01;
+		velocity += (naturalVelocity - velocity) * .05;
 	}
 	ship.translateZ(-velocity * (frame_time - last_frame)); // velocity * dT
 	last_frame = frame_time;
 	
-	// steering inertia
+	// Orientation
 	if (steering) {
 		steerXY.x -= .05 * (steerXY.x - mouse.x);
 		steerXY.y -= .05 * (steerXY.y - mouse.y);
@@ -389,7 +407,6 @@ var render = function(frame_time) {
 		steerXY.x = steerXY.x * .95;
 		steerXY.y = steerXY.y * .95;
 	}
-	// steering
 	ship.rotateY(0.00005 * -steerXY.x);
 	ship.rotateX(0.00005 * -steerXY.y);
 
@@ -400,7 +417,7 @@ var render = function(frame_time) {
 	var rot_str = "rx:" + scr.x.toFixed(3) + ", ry:" + scr.y.toFixed(3);
 	coords.innerHTML = xyz_str + " &nbsp; | &nbsp; " + rot_str;
 
-	camera.updateProjectionMatrix();
+	//camera.updateProjectionMatrix();
 	labels.updateLabels(camera, [ship]);
 	renderer.render(scene, camera);
 
