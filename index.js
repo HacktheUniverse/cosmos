@@ -25,6 +25,8 @@ var steerXY = {
 	x: 0,
 	y: 0
 };
+var velocity = 50 / 1000; // parsecs per millisecond
+var last_frame = 0;
 
 THREE.OrbitControls = require('./lib/OrbitControls.js');
 THREE.FirstPersonControls = require('./lib/FirstPersonControls.js');
@@ -33,7 +35,6 @@ window.scene = null;
 window.stats = null;
 window.renderer = null;
 window.camera = null;
-window.steeringCube = null;
 window.container = document.getElementById('container');
 window.controls = null;
 window.coords = document.getElementById('coords');
@@ -80,26 +81,19 @@ var init = function() {
 	scene.add(ambient);
 	scene.add(universe);
 
-	var cubeGeom = new THREE.BoxGeometry(0.001, 0.001, 0.001);
-	var cubeMaterial = new THREE.MeshBasicMaterial({
-		color: '#4488BB', 
-		transparent: true, 
-		opacity: 0.0});
-	steeringCube = new THREE.Mesh(cubeGeom, cubeMaterial);
-	steeringCube.position.set(startPosition.x, startPosition.y, startPosition.z);
-	scene.add(steeringCube);
-
+	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
+	
 	shipLoader.load(function(shipModel) {
-		steeringCube.add(shipModel);
 		ship = shipModel;
+		
+		ship.rotateY(Math.PI * 1.5); // orient toward galactic center
+		scene.add(ship);
+		
+		camera.position.set(0, 6.05, 1); // looks like you're sitting in the chair
+		camera.rotateX(Math.PI * 0.05);
+		ship.add(camera);
 	});
 	
-	// this stops the jitter
-	camera = new THREE.PerspectiveCamera(55, ww / wh, 0.1, 100000000);
-	camera.position.set(-0.2, 0, 0);
-	camera.lookAt(steeringCube.position);
-	steeringCube.add(camera);
-
 	// STAR DATA
 	stars.init(scene, universeScale, function(){
 		stars.show();
@@ -129,22 +123,17 @@ var init = function() {
 	container.appendChild(stats.domElement);
 };
 
-var render = function(fl) {
+var render = function(frame_time) {
 	requestAnimationFrame(render);
-		
-	// set camera - no longer needed because camera is attached to steering cube
-	//	var relativeCameraOffset = new THREE.Vector3(-0.2, 0, 0);
-	//	var cameraOffset = relativeCameraOffset.applyMatrix4(steeringCube.matrixWorld);
-	//camera.position.x = cameraOffset.x;
-	//camera.position.y = cameraOffset.y;
-	//camera.position.z = cameraOffset.z;
-	//camera.lookAt(steeringCube.position);
-	//camera.rotation.x = steeringCube.rotation.x;
-	//camera.rotation.y = steeringCube.rotation.y;
-	//camera.rotation.z = steeringCube.rotation.z;
 	
+	if( !ship ){
+		last_frame = frame_time;
+		return;
+	}
+
 	// forward
-	steeringCube.translateX(1);
+	ship.translateZ(-velocity * (frame_time - last_frame)); // velocity * dT
+	last_frame = frame_time;
 	
 	// steering inertia
 	if (steering) {
@@ -155,12 +144,12 @@ var render = function(fl) {
 		steerXY.y = steerXY.y * .95;
 	}
 	// steering
-	steeringCube.rotateY(0.00005 * -steerXY.x);
-	steeringCube.rotateZ(0.00005 * -steerXY.y);
+	ship.rotateY(0.00005 * -steerXY.x);
+	ship.rotateX(0.00005 * -steerXY.y);
 
 	// speedometer
-	var scp = steeringCube.position;
-	var scr = steeringCube.rotation;
+	var scp = ship.position;
+	var scr = ship.rotation;
 	var xyz_str = "x:" + scp.x.toFixed(3) + ", y:" + scp.y.toFixed(3) + ", z:" + scp.z.toFixed(3);
 	var rot_str = "rx:" + scr.x.toFixed(3) + ", ry:" + scr.y.toFixed(3);
 	coords.innerHTML = xyz_str + " &nbsp; | &nbsp; " + rot_str;
@@ -175,7 +164,7 @@ var render = function(fl) {
 
 init();
 console.log("rendering");
-render();
+render(0);
 
 $('#button-data').on('click', function() {
 	$('#menu-search').removeClass('active');
