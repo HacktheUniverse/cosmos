@@ -23,11 +23,36 @@ var Constll = {
 				constll.forEach(function(con) {
 				//var con = constll[0];
 					var starArrs = con.stars;
+										
+					var sumX=0, sumY=0, sumZ=0;
+					
+					// need to draw the label here
+					starArrs.forEach(function(stars){
+						var geometry = new THREE.Geometry();
+						stars.forEach(function(star){
+							star.x = Number(star.x) * scaleFactor;
+							star.y = Number(star.y) * scaleFactor;
+							star.z = Number(star.z) * scaleFactor;
+							geometry.vertices.push( 
+								new THREE.Vector3(star.x, star.y, star.z)
+							);
+							sumX += star.x;
+							sumY += star.y;
+							sumZ += star.z;
+						});
+						var line = new THREE.Line( geometry, material );
+						lines.push(line);
+						scene.add( line );
+					});
+					
 					var pos = new THREE.Vector3(
-					  starArrs[0][0].x * scaleFactor,
-					  starArrs[0][0].y * scaleFactor,
-					  starArrs[0][0].z * scaleFactor
+					  sumX / (2 * starArrs.length),
+					  sumY / (2 * starArrs.length),
+					  sumZ / (2 * starArrs.length)
 					);
+			
+					console.log(pos);
+			
 					var name = con.abbr;
 
 					if(con.hasOwnProperty('name')){
@@ -46,25 +71,7 @@ var Constll = {
 					}
 					labels.addLabel(pos, name, description, "constellation");
 					
-					
-					
-					// need to draw the label here
-					starArrs.forEach(function(stars){
-						var geometry = new THREE.Geometry();
-						
-						stars.forEach(function(star){
-							geometry.vertices.push(
-								new THREE.Vector3(star.x * scaleFactor, star.y * scaleFactor, star.z * scaleFactor)
-							);
-						});
-						
-						var line = new THREE.Line( geometry, material );
-						lines.push(line);
-						scene.add( line );
-					});
-					
 					callback();
-					
 				});
 
 				console.log("Constellations Drawn");

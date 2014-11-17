@@ -66,7 +66,7 @@
                     discard;
                 }
                 float intensity = 1.0 + vLum - vDist;
-                if( radius < cutoff){
+                if( vDist > 0.5 || radius < cutoff ){
                     gl_FragColor = vec4( vec3(1.0,1.0,1.0) * intensity, 1.0);
                 } else {
                     float alpha = 1.0 - min( (radius-cutoff)*(1.0/(0.5-cutoff)), 1.0);

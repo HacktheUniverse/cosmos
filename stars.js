@@ -41,7 +41,7 @@ var Stars = {
 
 				var sMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						cutoff: { type: 'f', value: 0.1}
+						cutoff: { type: 'f', value: 0.2}
 					},
 					attributes: {
 						color: { type: 'v3', value: colorsh },
