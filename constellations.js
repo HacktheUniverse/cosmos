@@ -24,7 +24,7 @@ var Constll = {
 				//var con = constll[0];
 					var starArrs = con.stars;
 										
-					var sumX=0, sumY=0, sumZ=0;
+					var sumX=0, sumY=0, sumZ=0, sumStars=0;
 					
 					// need to draw the label here
 					starArrs.forEach(function(stars){
@@ -39,6 +39,7 @@ var Constll = {
 							sumX += star.x;
 							sumY += star.y;
 							sumZ += star.z;
+							sumStars++;
 						});
 						var line = new THREE.Line( geometry, material );
 						lines.push(line);
@@ -46,17 +47,16 @@ var Constll = {
 					});
 					
 					var pos = new THREE.Vector3(
-					  sumX / (2 * starArrs.length),
-					  sumY / (2 * starArrs.length),
-					  sumZ / (2 * starArrs.length)
+					  sumX / sumStars,
+					  sumY / sumStars,
+					  sumZ / sumStars
 					);
 			
-					console.log(pos);
-			
-					var name = con.abbr;
-
+					var name;
 					if(con.hasOwnProperty('name')){
 						name = con.name;
+					} else {
+						 name = con.abbr;
 					}
 					
 					var description = descriptions.getForConstellation(name);
