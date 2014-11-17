@@ -258,7 +258,10 @@ var steerXY = {
 	x: 0,
 	y: 0
 };
-var velocity = 50 / 1000; // parsecs per millisecond
+var naturalVelocity = 50 / 1000; // parsecs per millisecond
+var hyperspaceVelocity = 2.0;
+var hyperspace = false;
+var velocity = naturalVelocity;
 var last_frame = 0;
 
 THREE.OrbitControls = require('./lib/OrbitControls.js');
@@ -295,6 +298,11 @@ container.onmousemove = function(e) {
 	if (steering) {
 		mouse.x = e.clientX - cw;
 		mouse.y = e.clientY - ch;
+	}
+};
+document.onkeydown =  function(e) {
+	if( e.which === 72 ){ // H-Key means hyperspace
+		hyperspace = !hyperspace;
 	}
 };
 
@@ -365,6 +373,11 @@ var render = function(frame_time) {
 	}
 
 	// forward
+	if( hyperspace ){
+		velocity += (hyperspaceVelocity - velocity) * .01;
+	} else {
+		velocity += (naturalVelocity - velocity) * .01;
+	}
 	ship.translateZ(-velocity * (frame_time - last_frame)); // velocity * dT
 	last_frame = frame_time;
 	
