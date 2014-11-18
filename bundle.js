@@ -301,22 +301,21 @@ container.onmousemove = function(e) {
 	}
 };
 document.onkeydown =  function(e) {
-	console.log(e.which);
 	switch(e.which){
-		case 32:
+		case 16:
 			hyperspace = true;
 			break;
-		case 16:
+		case 17:
 			brake = true;
 			break;
 	}
 };
 document.onkeyup =  function(e) {
 	switch(e.which){
-		case 32:
+		case 16:
 			hyperspace = false;
 			break;
-		case 16:
+		case 17:
 			brake = false;
 			break;
 	}
