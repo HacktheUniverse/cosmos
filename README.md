@@ -8,6 +8,8 @@ interface to stellar data using a game-like environment.
 Cosmosis was built in 24 hours at the AMNH [Hack the Universe 2014](http://www.amnh.org/calendar/hack-the-universe)
 event, winning the Visualization category.
 
+Demo from Hack the Universe presentations: http://youtu.be/sxbEKVFXlFI?list=UUIuhq9LTleLC-GMdAOvvZcg
+
 Links
 -----
 - [Demo](http://hacktheuniverse.github.io/cosmos/)
